@@ -1,3 +1,9 @@
+---
+title: "Freshwater v3 Theme Docs"
+layout: default
+---
+
+{% raw %}
 # Freshwater v3.0.0
 
 **Based on Dawn 15.4.0**
@@ -495,3 +501,4 @@ For issues or questions:
 **Last Updated:** 2025-01-27  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.0.0
+{% endraw %}
