@@ -376,55 +376,57 @@ The mobile drawer navigation uses custom blocks that can be added through the Sh
 
 ### Desktop Mega Menu Navigation
 
-The desktop mega menu uses a custom submenu system that requires manual code updates.
+The desktop mega menu uses a block-based system that can be configured through the Shopify theme editor.
 
 **Files:**
-- `snippets/0-header-mega-menu.liquid` - Main mega menu structure
-- `snippets/0-theme-submenu.liquid` - Custom submenu content (manually edited)
+- `sections/0-header.liquid` - Header section that renders the mega menu (line 188: `render '0-header-mega-menu'`)
+- `snippets/0-header-mega-menu.liquid` - Main mega menu structure that renders standard menu links and calls the submenu renderer
+- `snippets/0-theme-submenu.liquid` - Custom submenu content renderer that displays `mega_menu_nav_item` blocks
 
 **How to Update:**
 
-1. **Main Menu Structure:**
-   - The main menu structure is controlled by `snippets/0-header-mega-menu.liquid`
-   - This file renders the standard Dawn mega menu structure
+1. **Via Theme Editor (Recommended):**
+   - Go to **Theme Editor** → **Header** section
+   - Scroll to the **Blocks** section
+   - Click **Add block** → Select **Mega Menu Nav Item**
+   - Configure each block:
+     - **Parent menu item handle:** Enter the handle of the top-level menu item this card belongs to (e.g., `about`, `contact`, `catalog`)
+       - To find the handle: Look at the menu item URL or use the lowercase, hyphenated version of the menu item name
+     - **Image (optional):** Upload an image for the navigation card
+     - **Text (optional):** Add text to display below the image
+     - **URL:** Set the destination URL for the navigation card
+   - Add multiple blocks with the same `menu_item_handle` to create multiple cards for that menu item
+   - Reorder blocks by dragging
+
+2. **How It Works:**
+   - When a menu item has child links, `0-header-mega-menu.liquid` renders the standard Dawn menu structure
    - On line 70, it calls `{% render '0-theme-submenu', link: link %}` to inject custom submenu content
+   - `0-theme-submenu.liquid` accesses `section.blocks` directly (snippets have access to the section context when rendered from a section)
+   - It loops through all `mega_menu_nav_item` blocks in the section
+   - It matches blocks where `block.settings.menu_item_handle` equals the current menu item's handle (`link.handle`)
+   - Matching blocks are rendered as navigation cards with images and text
+   - The cards are wrapped in a `.mega-menu-submenu` container
 
-2. **Custom Submenu Content:**
-   - Edit `snippets/0-theme-submenu.liquid` to add custom submenu content
-   - The file uses a `case` statement based on the menu link handle
-   - Example structure:
-     ```liquid
-     {%- case link_handle -%}
-         {%- when 'catalog' -%}
-             <!-- Custom HTML for catalog submenu -->
-         {%- when 'contact' -%}
-             <!-- Custom HTML for contact submenu -->
-     {%- endcase -%}
-     ```
+3. **Block Structure:**
+   - Each `mega_menu_nav_item` block creates a navigation card
+   - Cards are displayed in a grid layout (styled via CSS in `0-freshwater.css.liquid`)
+   - Each card can have:
+     - An image (optional)
+     - Text (optional)
+     - A clickable URL
 
-3. **Adding a New Submenu:**
-   - Determine the menu link handle (usually the lowercase, hyphenated version of the menu item name)
-   - Add a new `when` case in `0-theme-submenu.liquid`
-   - Add your custom HTML structure within that case
-   - Use Bootstrap classes (`container`, `row`, `column`, `col-*`) for layout
-   - Use `mega-menu__link` class for links to match styling
+4. **Styling:**
+   - Base styles for `.mega-menu-submenu` and `.mega-menu-submenu__item` are defined in `assets/0-freshwater.css.liquid` (lines 682-699)
+   - To customize the appearance, override these styles in `assets/0-client.css.liquid`
+   - Available classes:
+     - `.mega-menu-submenu` - Container for all navigation cards
+     - `.mega-menu-submenu__item` - Individual navigation card wrapper
+     - `.mega-menu-submenu__link` - Link styling for each card
 
-4. **Example:**
-   ```liquid
-   {%- when 'products' -%}
-       <div class="container">
-           <div class="row">
-               <div class="column col-4">
-                   <a href="/collections/example" class="mega-menu__link">
-                       <img src="https://example.com/image.jpg" alt="Example">
-                       <br>Example Text
-                   </a>
-               </div>
-           </div>
-       </div>
-   ```
-
-**Note:** The mega menu is only displayed when **Header** → **Desktop menu type** is set to **Mega menu** in the theme settings.
+**Note:** 
+- The mega menu is only displayed when **Header** → **Desktop menu type** is set to **Mega menu** in the theme settings
+- The menu item must have child links for the mega menu dropdown to appear
+- Custom navigation cards appear alongside the standard menu links in the dropdown
 
 ---
 
