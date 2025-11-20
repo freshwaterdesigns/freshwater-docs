@@ -443,7 +443,11 @@ When upgrading to a new Dawn version:
    - `config/settings_schema.json`
 3. **DO** merge any new Dawn features into your modified files
 4. **DO** keep all your `0-` prefixed files (they won't conflict)
-5. **DO** test thoroughly after upgrading
+5. **DO** update locale files (`locales/*.schema.json`) if you've added custom schema translations:
+   - Compare your custom locale entries with the new Dawn locale files
+   - Merge any new Dawn translations while preserving your custom entries
+   - Example: If you added `options__4` with "Freshwater" to `en.default.schema.json`, ensure it's added to all other locale files as well
+6. **DO** test thoroughly after upgrading
 
 ### Naming Convention
 
@@ -500,7 +504,7 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-01-27  
+**Last Updated:** 2025-11-20  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.0.0
 
