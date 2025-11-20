@@ -68,7 +68,10 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-theme-freshwater-1.liquid` - Freshwater head includes (fonts, jQuery, Bootstrap, Slick, custom CSS)
 - `0-theme-freshwater-2.liquid` - Freshwater body includes (Lazyload, custom JS)
 - `0-header-mega-menu.liquid` - Custom mega menu with submenu support (adds `{% render '0-theme-submenu', link: link %}`)
-- `0-theme-submenu.liquid` - Custom submenu renderer
+- `0-header-freshwater-menu.liquid` - Custom Freshwater menu with empty dropdowns (adds `{% render '0-theme-submenu-freshwater', link: link %}`)
+- `0-theme-submenu.liquid` - Custom submenu renderer for mega menu (displays `mega_menu_nav_item` blocks)
+- `0-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
+- `0-header-drawer.liquid` - Mobile drawer navigation renderer
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
 - `0-icon-1.liquid` - Custom icon renderer
@@ -143,7 +146,10 @@ cp freshwater-v3/snippets/0-* your-dawn-theme/snippets/
 - `0-theme-freshwater-1.liquid`
 - `0-theme-freshwater-2.liquid`
 - `0-header-mega-menu.liquid`
+- `0-header-freshwater-menu.liquid`
 - `0-theme-submenu.liquid`
+- `0-theme-submenu-freshwater.liquid`
+- `0-header-drawer.liquid`
 - `0-json-ld-org.liquid`
 - `0-json-ld-prod.liquid`
 - All `0-block-*` snippets
@@ -225,22 +231,26 @@ Check that all references point to `0-` prefixed files:
    - Should reference `0-theme-dawn-*` and `0-theme-freshwater-*` snippets
 
 2. **In `sections/header.liquid`:**
-   - Should reference `0-header-mega-menu`
+   - Should conditionally reference `0-header-mega-menu` or `0-header-freshwater-menu` based on menu type setting
 
 3. **In `snippets/0-header-mega-menu.liquid`:**
    - Should reference `0-theme-submenu`
 
-4. **In `snippets/0-theme-freshwater-1.liquid`:**
+4. **In `snippets/0-header-freshwater-menu.liquid`:**
+   - Should reference `0-theme-submenu-freshwater`
+
+5. **In `snippets/0-theme-freshwater-1.liquid`:**
    - Should reference `0-jquery.js`, `0-slick.*`, `0-bootstrap.*`, `0-freshwater.css`, `0-client.css`
 
-5. **In `snippets/0-theme-freshwater-2.liquid`:**
+6. **In `snippets/0-theme-freshwater-2.liquid`:**
    - Should reference `0-lazyload.min.js`, `0-freshwater.js`, `0-client.js`
 
 ### Step 9: Test the Installation
 
 1. Upload the theme to your Shopify store
 2. Test key functionality:
-   - Header mega menu
+   - Header menus (mega menu, Freshwater menu, dropdown menu)
+   - Mobile drawer navigation with custom blocks
    - Custom sections (hero, marquee, multi-column)
    - JavaScript functionality (carousels, lazy loading)
    - Console logs (add `?debug_mode=true` to URL)
@@ -253,7 +263,11 @@ After installation, configure:
 1. **Color Schemes:** Set custom header, subheader, and icon colors
 2. **Button Styles:** Configure the 3 button style options
 3. **Typography:** Set custom font families and weights
-4. **Menu:** Ensure mega menu is selected in header settings
+4. **Menu:** 
+   - Select desktop menu type (Dropdown, Mega menu, Drawer, or Freshwater)
+   - Configure mobile drawer blocks if using custom navigation
+   - Add mega menu nav item blocks if using mega menu
+   - Customize Freshwater menu dropdowns in `0-theme-submenu-freshwater.liquid` if using Freshwater menu
 
 ---
 
@@ -335,7 +349,19 @@ The mobile drawer navigation uses custom blocks that can be added through the Sh
    - Reorder blocks by dragging
 
 2. **Block Types Available:**
-   - `header` - Header block for displaying titles/text in the mobile drawer
+   All blocks are prefixed with "Mobile Nav - " in the theme editor for clarity:
+   - **Mobile Nav - Header** - Header block for displaying titles/text
+   - **Mobile Nav - Body** - Rich text content block
+   - **Mobile Nav - Button** - Button with URL and styling options
+   - **Mobile Nav - HTML** - Raw HTML content
+   - **Mobile Nav - Liquid** - Liquid template code
+   - **Mobile Nav - Graphic** - Image block with optional link
+   - **Mobile Nav - Video** - Video block with optional link
+   - **Mobile Nav - Accordion** - Expandable accordion content
+   - **Mobile Nav - Rating** - Star/heart rating display
+   - **Mobile Nav - List** - List with icons/images
+   
+   Each block type supports width options (100%, 50%, 33.3%) for masonry-style layouts.
 
 3. **Fallback Behavior:**
    - If no blocks are added (`section.blocks.size == 0`), the drawer falls back to the default Dawn menu navigation
@@ -403,6 +429,51 @@ The desktop mega menu uses a block-based system that can be configured through t
 - The mega menu is only displayed when **Header** → **Desktop menu type** is set to **Mega menu** in the theme settings
 - The menu item must have child links for the mega menu dropdown to appear
 - Custom navigation cards appear alongside the standard menu links in the dropdown
+
+### Desktop Freshwater Menu Navigation
+
+The Freshwater desktop menu provides a customizable dropdown system where each menu item can have completely custom content.
+
+**Files:**
+- `sections/0-header.liquid` - Header section that conditionally renders the Freshwater menu (line 188: `render '0-header-freshwater-menu'`)
+- `snippets/0-header-freshwater-menu.liquid` - Main Freshwater menu structure that renders menu links with empty dropdowns
+- `snippets/0-theme-submenu-freshwater.liquid` - Custom submenu content renderer with hardcoded conditionals for each menu handle
+
+**How to Update:**
+
+1. **Enable Freshwater Menu:**
+   - Go to **Theme Editor** → **Header** section
+   - Set **Desktop menu type** to **Freshwater**
+
+2. **Customize Dropdown Content:**
+   - Edit `snippets/0-theme-submenu-freshwater.liquid`
+   - Add conditionals for each menu item handle:
+     ```liquid
+     {%- if link_handle == 'your-menu-handle' -%}
+         Your custom content here
+     {%- elsif link_handle == 'another-handle' -%}
+         More custom content
+     {%- endif -%}
+     ```
+   - The `link_handle` is automatically derived from the menu item's handle (e.g., `about`, `shop`, `contact`)
+   - You can add any HTML, Liquid, or block content within each conditional
+
+3. **How It Works:**
+   - When a menu item has child links, `0-header-freshwater-menu.liquid` renders an empty dropdown container
+   - On line 30, it calls `{% render '0-theme-submenu-freshwater', link: link %}` to inject custom content
+   - `0-theme-submenu-freshwater.liquid` receives the `link` object and checks `link.handle` against hardcoded conditionals
+   - Matching conditionals render their custom content
+   - Unlike the mega menu, the Freshwater menu does NOT render standard menu child links - only custom content
+
+4. **Styling:**
+   - The Freshwater menu uses the same CSS as the mega menu (`component-mega-menu.css`)
+   - Customize dropdown content styling in `assets/0-client.css.liquid`
+   - The dropdown container uses the `.mega-menu__content` class
+
+**Note:** 
+- The Freshwater menu is only displayed when **Header** → **Desktop menu type** is set to **Freshwater** in the theme settings
+- The menu item must have child links for the dropdown to appear (even though child links aren't displayed)
+- Each dropdown starts completely empty - all content must be added via `0-theme-submenu-freshwater.liquid`
 
 ---
 
