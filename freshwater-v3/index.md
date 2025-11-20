@@ -330,16 +330,12 @@ The mobile drawer navigation uses custom blocks that can be added through the Sh
 1. **Via Theme Editor (Recommended):**
    - Go to **Theme Editor** → **Header** section
    - Scroll to the **Blocks** section
-   - Click **Add block** → Select **Mobile Nav Item** or **Mobile Nav 2 Items**
-   - Configure each block:
-     - **Mobile Nav Item:** Single item with image (optional) and text
-     - **Mobile Nav 2 Items:** Two items side-by-side, each with image (optional) and text
-   - Set URL, image, text, and overlay text options for each item
+   - Click **Add block** → Select **Header**
+   - Configure the header block with text, styling, and layout options
    - Reorder blocks by dragging
 
 2. **Block Types Available:**
-   - `mobile_nav_item` - Single navigation item
-   - `mobile_nav_item_2` - Two navigation items side-by-side
+   - `header` - Header block for displaying titles/text in the mobile drawer
 
 3. **Fallback Behavior:**
    - If no blocks are added (`section.blocks.size == 0`), the drawer falls back to the default Dawn menu navigation
@@ -347,30 +343,10 @@ The mobile drawer navigation uses custom blocks that can be added through the Sh
    - Default navigation uses the menu set in **Header** → **Menu** setting
 
 4. **Styling Overrides:**
-   - Base styles for `.fresh-mobile-drawer` and related classes are defined in `assets/0-freshwater.css.liquid` (lines 452-511)
-   - To customize the mobile drawer appearance, override these styles in `assets/0-client.css.liquid`
-   - Available classes to override:
-     - `.fresh-mobile-drawer` - Container padding and text alignment
-     - `.fresh-mobile-drawer__items`, `.fresh-mobile-drawer__item` - List styling
-     - `.fresh-mobile-drawer__item` - Item spacing and font reset
-     - `.fresh-mobile-drawer__item--double` - Grid layout for two-item blocks
-     - `.fresh-mobile-drawer__a` - Link styling (background, color, padding)
-     - `.fresh-mobile-drawer__img` - Image sizing
-     - `.fresh-mobile-drawer__item--overlay-text` - Overlay text container positioning
-     - `.fresh-mobile-drawer__text` - Text styling
-     - `.fresh-mobile-drawer__item--overlay-text .fresh-mobile-drawer__text` - Overlay text specific styling
-   - Example override in `0-client.css.liquid`:
-     ```css
-     @media (max-width: 767px) {
-         .fresh-mobile-drawer__a {
-             background-color: #your-color;
-             padding: 10px 15px;
-         }
-         .fresh-mobile-drawer__text {
-             font-size: 1.6rem;
-         }
-     }
-     ```
+   - Header blocks use the standard header block styling (see `snippets/0-block-header-1.liquid` for available settings)
+   - Base styles for `.fresh-mobile-drawer` container are defined in `assets/0-freshwater.css.liquid` (lines 452-511)
+   - To customize the mobile drawer appearance, override styles in `assets/0-client.css.liquid`
+   - The `.fresh-mobile-drawer` container wraps all blocks in the mobile drawer
 
 **Note:** The drawer is rendered by `sections/0-header.liquid` which calls `render '0-header-drawer'` on line 142.
 
