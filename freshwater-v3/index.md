@@ -549,7 +549,16 @@ The Freshwater footer provides a customizable footer system that can completely 
    - Mobile layout: All blocks stack vertically at 100% width
    - CSS is located in `assets/0-freshwater.css.liquid` (lines 689-730)
    - Customize footer styling in `assets/0-client.css.liquid`
-   - The footer container uses the `.footer` class and respects the color scheme setting
+   - The footer container uses the `.footer` class and supports separate desktop (`color_scheme--md`) and mobile (`color_scheme--sm`) color scheme settings
+   - The footer section has `id="freshSection--{{ section.id }}"` for block-specific CSS targeting
+   - Block-specific CSS should use `#freshSection--{{ section.id }}` selectors (same pattern as other custom sections)
+
+6. **Block Schema Details:**
+   - All blocks support desktop (`--md`) and mobile (`--sm`) settings for full customization
+   - **Footer - Accordion** block includes full icon options (44+ icons) for both start and end icons
+   - **Footer - Graphic** and **Footer - Video** blocks support optional link URLs
+   - **Footer - Button** block supports full-width option for both desktop and mobile
+   - Each block maintains all schema settings from their corresponding `0-one-column-1.liquid` block definitions
 
 **Note:** 
 - The Freshwater footer is disabled by default
@@ -557,6 +566,7 @@ The Freshwater footer provides a customizable footer system that can completely 
 - All footer section settings (color scheme, padding, margin) still apply to the Freshwater footer
 - Blocks support both desktop (`--md`) and mobile (`--sm`) settings for full customization
 - Width options are applied via flexbox masonry layout on desktop, with automatic stacking on mobile
+- The footer uses the same color scheme pattern as other custom sections (`color-{{ section.settings.color_scheme--md }}--md color-{{ section.settings.color_scheme--sm }}--sm`)
 
 ---
 
