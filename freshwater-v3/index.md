@@ -616,6 +616,35 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ---
 
+## 🔒 GitHub Repository Management
+
+### Branch Protection Rules
+
+This repository uses GitHub Rulesets to protect all branches from unauthorized commits. The ruleset configuration ensures that:
+
+- **Only authorized users/apps can push to branches:**
+  - Cursor App (`cursor`)
+  - Organization admins
+  
+- **Shopify bot commits are blocked:**
+  - The Shopify theme editor's GitHub integration (`shopify[bot]`) is **not** allowed to commit directly to any branch
+  - This prevents accidental overwrites from theme editor changes
+  
+- **Protected rules:**
+  - Restrict updates: Only users with bypass permission can update matching refs
+  - Restrict deletions: Only users with bypass permission can delete matching refs
+  - Block force pushes: Force pushes are prevented
+
+**Important:** All changes must be made locally via Git and pushed through Cursor or by organization admins. Changes made through the Shopify theme editor will **not** be automatically synced to GitHub.
+
+**To make changes:**
+1. Make edits locally in Cursor or your preferred editor
+2. Commit changes via Git
+3. Push to GitHub through Cursor or as an org admin
+4. If you need to sync Shopify theme editor changes, manually copy them to your local files and commit
+
+---
+
 ## 🤝 Contributing
 
 When adding new features:
@@ -644,7 +673,7 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-11-20  
+**Last Updated:** 2025-11-21  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.0.0
 
