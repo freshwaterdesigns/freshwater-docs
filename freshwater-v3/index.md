@@ -52,21 +52,18 @@ These native Dawn files have been modified and should be tracked for upgrades:
 ### Custom Files (0- Prefixed)
 
 #### Assets
-- `0-freshwater.js.liquid` - Core Freshwater JavaScript with debug utility
+- `0-freshwater.js.liquid` - Core Freshwater JavaScript with debug utility (vanilla JS, no jQuery dependency)
 - `0-freshwater.css.liquid` - Core Freshwater CSS
 - `0-client.js.liquid` - Client-specific JavaScript (editable)
 - `0-client.css.liquid` - Client-specific CSS (editable)
-- `0-jquery.js` - jQuery library (noConflict)
-- `0-slick.min.js` / `0-slick.css` / `0-slick-theme.css.liquid` - Slick carousel library
+- `0-tiny-slider.min.js` / `0-tiny-slider.css` - Tiny-Slider carousel library (vanilla JS)
 - `0-lazyload.min.js` - Vanilla Lazyload library
 - `0-bootstrap.min-1.css` - Bootstrap CSS
 - `0-magnify.js` - Image magnify library
-- Slick font files (`0-slick.eot`, `0-slick.woff`, `0-slick.ttf`, `0-slick.svg`)
-- `0-ajax-loader.gif` - Slick loader image
 
 #### Snippets
 - `0-theme-dawn-1.liquid` through `0-theme-dawn-4.liquid` - Split Dawn theme.liquid head/body sections
-- `0-theme-freshwater-1.liquid` - Freshwater head includes (fonts, jQuery, Bootstrap, Slick, custom CSS)
+- `0-theme-freshwater-1.liquid` - Freshwater head includes (fonts, Bootstrap, Tiny-Slider, custom CSS)
 - `0-theme-freshwater-2.liquid` - Freshwater body includes (Lazyload, custom JS)
 - `0-header-mega-menu.liquid` - Custom mega menu with submenu support (adds `{% render '0-theme-submenu', link: link %}`)
 - `0-header-freshwater-menu.liquid` - Custom Freshwater menu with empty dropdowns (adds `{% render '0-theme-submenu-freshwater', link: link %}`)
@@ -125,14 +122,11 @@ cp freshwater-v3/assets/0-* your-dawn-theme/assets/
 - `0-freshwater.css.liquid`
 - `0-client.js.liquid`
 - `0-client.css.liquid`
-- `0-jquery.js`
-- `0-slick.min.js`
-- `0-slick.css`
-- `0-slick-theme.css.liquid`
+- `0-tiny-slider.min.js`
+- `0-tiny-slider.css`
 - `0-lazyload.min.js`
 - `0-bootstrap.min-1.css`
 - `0-magnify.js`
-- Slick font files and loader image
 
 ### Step 3: Add Custom Snippets
 
@@ -263,7 +257,7 @@ Check that all references point to `0-` prefixed files:
    - Should reference `0-theme-submenu-freshwater`
 
 6. **In `snippets/0-theme-freshwater-1.liquid`:**
-   - Should reference `0-jquery.js`, `0-slick.*`, `0-bootstrap.*`, `0-freshwater.css`, `0-client.css`
+   - Should reference `0-tiny-slider.*`, `0-bootstrap.*`, `0-freshwater.css`, `0-client.css`
 
 7. **In `snippets/0-theme-freshwater-2.liquid`:**
    - Should reference `0-lazyload.min.js`, `0-freshwater.js`, `0-client.js`
@@ -275,7 +269,7 @@ Check that all references point to `0-` prefixed files:
    - Header menus (mega menu, Freshwater menu, dropdown menu)
    - Mobile drawer navigation with custom blocks
    - Custom sections (hero, marquee, multi-column)
-   - JavaScript functionality (carousels, lazy loading)
+   - JavaScript functionality (Tiny-Slider carousels, lazy loading)
    - Console logs (add `?debug_mode=true` to URL)
 3. Check browser console for errors
 4. Verify all custom sections appear in theme editor
@@ -338,11 +332,12 @@ if (window.Freshwater) {
 
 ### JavaScript Libraries
 
-- **jQuery** (`0-jquery.js`) - Loaded with noConflict as `$0`
-- **Slick Carousel** (`0-slick.*`) - For carousel functionality
+- **Tiny-Slider** (`0-tiny-slider.*`) - Vanilla JS carousel library (no jQuery dependency)
 - **Vanilla Lazyload** (`0-lazyload.min.js`) - For lazy loading images
 - **Bootstrap** (`0-bootstrap.min-1.css`) - CSS framework
 - **Magnify** (`0-magnify.js`) - Image zoom functionality
+
+**Note:** Freshwater uses vanilla JavaScript exclusively. All carousel functionality is handled by Tiny-Slider, which does not require jQuery.
 
 ### Custom Sections
 
@@ -594,7 +589,7 @@ When upgrading to a new Dawn version:
 - All custom files use `0-` prefix
 - All custom functions use `fresh` prefix (e.g., `freshGlobalInit`)
 - All custom variables use `fresh` prefix (e.g., `freshWindowResizeTimeout`)
-- jQuery instance is `$0` (noConflict)
+- Carousel initialization: `freshInitCarouselsTiny()` (uses Tiny-Slider, vanilla JS)
 
 ### Console Logging
 
@@ -613,6 +608,10 @@ This separation allows you to control Freshwater logs independently while keepin
   - Performance optimizations
   - Event delegation improvements
   - Comprehensive documentation
+  - **Migrated from Slick Carousel (jQuery) to Tiny-Slider (vanilla JS)**
+    - Removed jQuery dependency
+    - All carousel functionality now uses Tiny-Slider
+    - Improved performance and reduced bundle size
 
 ---
 
@@ -673,7 +672,7 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-11-21  
+**Last Updated:** 2025-01-21  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.0.0
 
