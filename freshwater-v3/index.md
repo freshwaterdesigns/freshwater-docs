@@ -333,6 +333,8 @@ if (window.Freshwater) {
 ### JavaScript Libraries
 
 - **Tiny-Slider** (`0-tiny-slider.*`) - Vanilla JS carousel library (no jQuery dependency)
+  - **Version:** 2.9.4 (UMD build)
+  - **Note:** We use version 2.9.4 specifically due to a bug in newer versions (2.9.5+) that causes `HierarchyRequestError: Failed to execute 'appendChild' on 'Node': Only one element on document allowed` when initializing carousels. Version 2.9.4 is stable and works correctly with our implementation.
 - **Vanilla Lazyload** (`0-lazyload.min.js`) - For lazy loading images
 - **Bootstrap** (`0-bootstrap.min-1.css`) - CSS framework
 - **Magnify** (`0-magnify.js`) - Image zoom functionality
@@ -610,7 +612,8 @@ This separation allows you to control Freshwater logs independently while keepin
   - Comprehensive documentation
   - **Migrated from Slick Carousel (jQuery) to Tiny-Slider (vanilla JS)**
     - Removed jQuery dependency
-    - All carousel functionality now uses Tiny-Slider
+    - All carousel functionality now uses Tiny-Slider v2.9.4 (UMD build)
+    - Using v2.9.4 specifically due to `HierarchyRequestError` bug in v2.9.5+
     - Improved performance and reduced bundle size
 
 ---
