@@ -36,10 +36,10 @@ These native Dawn files have been modified and should be tracked for upgrades:
    - Replaced Dawn theme snippets with `0-theme-dawn-*` versions
    - Added `0-theme-freshwater-1` and `0-theme-freshwater-2` snippets
    - Added custom body classes (`fresh`, template-specific classes)
-   - Line 37: Changed `{% sections 'footer-group' %}` to `{% section '0-footer' %}`
+   - Changed `{% sections 'footer-group' %}` to `{% section '0-footer' %}`
 
 2. **`sections/header.liquid`**
-   - Line 188: Changed `render 'header-mega-menu'` to `render '0-header-mega-menu'`
+   - Changed `render 'header-mega-menu'` to `render '0-header-mega-menu'`
 
 3. **`config/settings_schema.json`**
    - Added extensive custom settings for:
@@ -70,6 +70,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-theme-submenu.liquid` - Custom submenu renderer for mega menu (displays `mega_menu_nav_item` blocks)
 - `0-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
 - `0-header-drawer.liquid` - Mobile drawer navigation renderer
+- `0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer footer placeholder
 - `0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
@@ -88,12 +89,14 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-slide-1.liquid` / `0-slide-2.liquid` - Custom slide templates
 
 #### Sections
+- `0-header.liquid` - Custom header section with Freshwater menu options and mobile drawer footer toggle
 - `0-hero-1.liquid` / `0-hero-2.liquid` - Custom hero sections
 - `0-main-product.liquid` - Custom product page section
 - `0-marquee-1.liquid` - Custom marquee section
 - `0-multi-column-1.liquid` - Custom multi-column section
 - `0-one-column-1.liquid` - Custom one-column section
 - `0-two-column-1.liquid` - Custom two-column section
+- `0-footer.liquid` - Custom footer section with Freshwater footer toggle
 
 ---
 
@@ -183,26 +186,14 @@ cp freshwater-v3/layout/theme.liquid your-dawn-theme/layout/theme.liquid
 **Key changes:**
 - Head section uses `0-theme-dawn-1`, `0-theme-dawn-2`, and `0-theme-freshwater-1`
 - Body section uses `0-theme-dawn-3`, `0-theme-dawn-4`, and `0-theme-freshwater-2`
-- Footer section uses `0-footer` instead of `footer-group` (line 37)
+- Footer section uses `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
 - Added custom body classes
 
-### Step 6: Modify `layout/theme.liquid`
-
-Update line 37 in `layout/theme.liquid`:
-
-**Find:**
-```liquid
-{% sections 'footer-group' %}
-```
-
-**Replace with:**
-```liquid
-{% section '0-footer' %}
-```
+**Important:** After copying the file, verify that `{% section '0-footer' %}` is used instead of `{% sections 'footer-group' %}`.
 
 ### Step 7: Modify `sections/header.liquid`
 
-Update line 188 in `sections/header.liquid`:
+In `sections/header.liquid`, find and replace:
 
 **Find:**
 ```liquid
@@ -242,13 +233,13 @@ Check that all references point to `0-` prefixed files:
 
 1. **In `layout/theme.liquid`:**
    - Should reference `0-theme-dawn-*` and `0-theme-freshwater-*` snippets
-   - Should reference `0-footer` section (line 37)
+   - Should use `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
 
 2. **In `sections/header.liquid`:**
    - Should conditionally reference `0-header-mega-menu` or `0-header-freshwater-menu` based on menu type setting
 
 3. **In `sections/0-footer.liquid`:**
-   - Should reference `0-footer-freshwater` snippet when Freshwater footer is enabled
+   - Should reference `0-footer-freshwater` snippet when `fresh_footer_enable` setting is `true`
 
 4. **In `snippets/0-header-mega-menu.liquid`:**
    - Should reference `0-theme-submenu`
@@ -267,7 +258,7 @@ Check that all references point to `0-` prefixed files:
 1. Upload the theme to your Shopify store
 2. Test key functionality:
    - Header menus (mega menu, Freshwater menu, dropdown menu)
-   - Mobile drawer navigation with custom blocks
+   - Mobile drawer navigation (default Dawn menu)
    - Custom sections (hero, marquee, multi-column)
    - JavaScript functionality (Tiny-Slider carousels, lazy loading)
    - Console logs (add `?debug_mode=true` to URL)
@@ -282,7 +273,6 @@ After installation, configure:
 3. **Typography:** Set custom font families and weights
 4. **Menu:** 
    - Select desktop menu type (Dropdown, Mega menu, Drawer, or Freshwater)
-   - Configure mobile drawer blocks if using custom navigation
    - Add mega menu nav item blocks if using mega menu
    - Customize Freshwater menu dropdowns in `0-theme-submenu-freshwater.liquid` if using Freshwater menu
 
@@ -328,6 +318,23 @@ if (window.Freshwater) {
 }
 ```
 
+**Quick Debug Recipe:**
+
+1. Open a storefront URL and append `?debug_mode=true`
+2. Open DevTools console (F12 or right-click → Inspect → Console tab)
+3. Run helpers like `Freshwater.checkCarousels()` for Tiny-Slider debugging
+4. All Freshwater console logs will appear with the 🔹 Freshwater prefix
+
+**Example:**
+```
+https://your-store.myshopify.com/?debug_mode=true
+```
+
+Then in console:
+```javascript
+Freshwater.checkCarousels()  // Check carousel initialization
+```
+
 **Note:** Only `0-` prefixed files use this utility. Native Dawn files use standard `console.log/error`.
 
 ### JavaScript Libraries
@@ -355,53 +362,33 @@ All custom sections support:
 
 ### Mobile Drawer Navigation
 
-The mobile drawer navigation uses custom blocks that can be added through the Shopify theme editor.
+The mobile drawer navigation can display either the default Dawn menu navigation or a custom Freshwater footer placeholder.
 
-**File:** `snippets/0-header-drawer.liquid`
+**Files:**
+- `snippets/0-header-drawer.liquid` - Mobile drawer renderer
+- `snippets/0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer footer placeholder
 
-**How to Update:**
+**How It Works:**
 
-1. **Via Theme Editor (Recommended):**
+1. **Default Navigation (Default):**
+   - The mobile drawer displays the default Dawn menu navigation
+   - Navigation uses the menu set in **Header** → **Menu** setting
+   - The drawer supports all standard Dawn menu features (multi-level menus, submenus, etc.)
+
+2. **Freshwater Footer (Optional):**
    - Go to **Theme Editor** → **Header** section
-   - Scroll to the **Blocks** section
-   - Click **Add block** → Select **Header**
-   - Configure the header block with text, styling, and layout options
-   - Reorder blocks by dragging
+   - Under **Freshwater Mobile Drawer Footer**, check **Enable Freshwater Mobile Drawer Footer**
+   - When enabled, the mobile drawer content is replaced with a custom Freshwater footer placeholder
+   - Edit `snippets/0-header-drawer-freshwater.liquid` to customize the footer content with your HTML
 
-2. **Block Types Available:**
-   All blocks are prefixed with "Mobile Nav - " in the theme editor for clarity:
-   - **Mobile Nav - Header** - Header block for displaying titles/text
-   - **Mobile Nav - Body** - Rich text content block
-   - **Mobile Nav - Button** - Button with URL and styling options
-   - **Mobile Nav - HTML** - Raw HTML content
-   - **Mobile Nav - Liquid** - Liquid template code
-   - **Mobile Nav - Graphic** - Image block with optional link
-   - **Mobile Nav - Video** - Video block with optional link
-   - **Mobile Nav - Accordion** - Expandable accordion content
-   - **Mobile Nav - Rating** - Star/heart rating display
-   - **Mobile Nav - List** - List with icons/images
-   
-   Each block type supports width options (100%, 50%, 33.3%) for masonry-style layouts.
-
-3. **Fallback Behavior:**
-   - If no blocks are added (`section.blocks.size == 0`), the drawer falls back to the default Dawn menu navigation
-   - The custom navigation is rendered in the `fresh-mobile-drawer` container
-   - Default navigation uses the menu set in **Header** → **Menu** setting
-
-4. **Styling Overrides:**
-   - Header blocks use the standard header block styling (see `snippets/0-block-header-1.liquid` for available settings)
-   - Base styles for `.fresh-mobile-drawer` container are defined in `assets/0-freshwater.css.liquid` (lines 452-511)
-   - To customize the mobile drawer appearance, override styles in `assets/0-client.css.liquid`
-   - The `.fresh-mobile-drawer` container wraps all blocks in the mobile drawer
-
-**Note:** The drawer is rendered by `sections/0-header.liquid` which calls `render '0-header-drawer'` on line 142.
+**Note:** The drawer is rendered by `sections/0-header.liquid` which calls `render '0-header-drawer'`.
 
 ### Desktop Mega Menu Navigation
 
 The desktop mega menu uses a block-based system that can be configured through the Shopify theme editor.
 
 **Files:**
-- `sections/0-header.liquid` - Header section that renders the mega menu (line 188: `render '0-header-mega-menu'`)
+- `sections/0-header.liquid` - Header section that renders the mega menu (calls `render '0-header-mega-menu'`)
 - `snippets/0-header-mega-menu.liquid` - Main mega menu structure that renders standard menu links and calls the submenu renderer
 - `snippets/0-theme-submenu.liquid` - Custom submenu content renderer that displays `mega_menu_nav_item` blocks
 
@@ -422,7 +409,7 @@ The desktop mega menu uses a block-based system that can be configured through t
 
 2. **How It Works:**
    - When a menu item has child links, `0-header-mega-menu.liquid` renders the standard Dawn menu structure
-   - On line 70, it calls `{% render '0-theme-submenu', link: link %}` to inject custom submenu content
+   - It calls `{% render '0-theme-submenu', link: link %}` to inject custom submenu content
    - `0-theme-submenu.liquid` accesses `section.blocks` directly (snippets have access to the section context when rendered from a section)
    - It loops through all `mega_menu_nav_item` blocks in the section
    - It matches blocks where `block.settings.menu_item_handle` equals the current menu item's handle (`link.handle`)
@@ -455,7 +442,7 @@ The desktop mega menu uses a block-based system that can be configured through t
 The Freshwater desktop menu provides a customizable dropdown system where each menu item can have completely custom content.
 
 **Files:**
-- `sections/0-header.liquid` - Header section that conditionally renders the Freshwater menu (line 188: `render '0-header-freshwater-menu'`)
+- `sections/0-header.liquid` - Header section that conditionally renders the Freshwater menu (calls `render '0-header-freshwater-menu'`)
 - `snippets/0-header-freshwater-menu.liquid` - Main Freshwater menu structure that renders menu links with empty dropdowns
 - `snippets/0-theme-submenu-freshwater.liquid` - Custom submenu content renderer with hardcoded conditionals for each menu handle
 
@@ -480,7 +467,7 @@ The Freshwater desktop menu provides a customizable dropdown system where each m
 
 3. **How It Works:**
    - When a menu item has child links, `0-header-freshwater-menu.liquid` renders an empty dropdown container
-   - On line 30, it calls `{% render '0-theme-submenu-freshwater', link: link %}` to inject custom content
+   - It calls `{% render '0-theme-submenu-freshwater', link: link %}` to inject custom content
    - `0-theme-submenu-freshwater.liquid` receives the `link` object and checks `link.handle` against hardcoded conditionals
    - Matching conditionals render their custom content
    - Unlike the mega menu, the Freshwater menu does NOT render standard menu child links - only custom content
@@ -497,73 +484,45 @@ The Freshwater desktop menu provides a customizable dropdown system where each m
 
 ### Freshwater Footer
 
-The Freshwater footer provides a customizable footer system that can completely replace the default Dawn footer.
+The Freshwater footer provides a simple placeholder system that can replace the default Dawn footer with custom HTML.
 
 **Files:**
-- `sections/0-footer.liquid` - Custom footer section that conditionally renders Freshwater footer or default footer
-- `snippets/0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
-- `layout/theme.liquid` - Updated to render `0-footer` section instead of `footer-group` (line 37)
+- `sections/0-footer.liquid` - Custom footer section that conditionally renders Freshwater footer placeholder or default footer
+- `snippets/0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (HTML placeholder by default)
+- `layout/theme.liquid` - Updated to render `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
 
 **How to Update:**
 
 1. **Enable Freshwater Footer:**
    - Go to **Theme Editor** → **Footer** section (or **0-footer** section)
    - Check the **Enable Freshwater Footer** checkbox
-   - The default footer will be replaced with the Freshwater footer
+   - The default footer will be replaced with the Freshwater footer placeholder
 
-2. **Add Blocks to Footer:**
-   - In the **Theme Editor** → **Footer** section (or **0-footer** section), click **Add block**
-   - Available block types:
-     - **Footer - Header** - Custom header text with styling options
-     - **Footer - Body** - Rich text content
-     - **Footer - Button** - Call-to-action buttons
-     - **Footer - HTML** - Custom HTML code
-     - **Footer - Liquid** - Custom Liquid code
-     - **Footer - Graphic** - Images with optional links
-     - **Footer - Video** - Video content with optional links
-     - **Footer - Accordion** - Collapsible content sections
-     - **Footer - Rating** - Star/heart ratings
-     - **Footer - List** - Custom lists with icons
-   - Each block supports width options (100%, 75%, 50%, 33.3%, 25%) for desktop masonry layout
-   - On mobile, all blocks automatically stack at 100% width
+2. **Customize Footer Content:**
+   - Edit `snippets/0-footer-freshwater.liquid` to add your custom HTML footer content
+   - The placeholder file contains a simple structure that you can replace with your own HTML
+   - The footer container uses the `.footer` class and supports separate desktop (`color_scheme--md`) and mobile (`color_scheme--sm`) color scheme settings
+   - The footer section has `id="freshSection--{{ section.id }}"` for CSS targeting
 
-3. **Customize Footer Content:**
-   - Blocks are rendered via `snippets/0-footer-freshwater.liquid`
-   - Each block type uses its corresponding `0-block-*` snippet (e.g., `0-block-header-1`, `0-block-body-1`)
-   - Blocks are wrapped in `.fresh-footer-blocks__item` containers with width classes
-   - All blocks maintain their desktop and mobile schema settings
-
-4. **How It Works:**
+3. **How It Works:**
    - `0-footer.liquid` checks if `section.settings.fresh_footer_enable` is `true`
    - If enabled, it renders the footer container and calls `{% render '0-footer-freshwater', section: section %}`
-   - `0-footer-freshwater.liquid` iterates through `section.blocks` and renders each block based on its type
-   - Blocks are wrapped in divs with width classes (e.g., `fresh-footer-blocks__item--width-50`)
+   - `0-footer-freshwater.liquid` renders your custom HTML content
    - If disabled (default), it renders the standard Dawn footer with all blocks and settings
    - The footer section maintains all original Dawn footer settings (newsletter, social, payment, etc.) even when Freshwater footer is enabled
 
-5. **Styling:**
-   - Desktop masonry layout: Blocks flow naturally based on their width settings (100%, 75%, 50%, 33.3%, 25%)
-   - Mobile layout: All blocks stack vertically at 100% width
-   - CSS is located in `assets/0-freshwater.css.liquid` (lines 689-730)
+4. **Styling:**
    - Customize footer styling in `assets/0-client.css.liquid`
    - The footer container uses the `.footer` class and supports separate desktop (`color_scheme--md`) and mobile (`color_scheme--sm`) color scheme settings
    - The footer section has `id="freshSection--{{ section.id }}"` for block-specific CSS targeting
-   - Block-specific CSS should use `#freshSection--{{ section.id }}` selectors (same pattern as other custom sections)
-
-6. **Block Schema Details:**
-   - All blocks support desktop (`--md`) and mobile (`--sm`) settings for full customization
-   - **Footer - Accordion** block includes full icon options (44+ icons) for both start and end icons
-   - **Footer - Graphic** and **Footer - Video** blocks support optional link URLs
-   - **Footer - Button** block supports full-width option for both desktop and mobile
-   - Each block maintains all schema settings from their corresponding `0-one-column-1.liquid` block definitions
+   - Use `#freshSection--{{ section.id }}` selectors for section-specific styling
 
 **Note:** 
 - The Freshwater footer is disabled by default
-- When enabled, it completely replaces the default footer content
+- When enabled, it completely replaces the default footer content with a simple HTML placeholder
 - All footer section settings (color scheme, padding, margin) still apply to the Freshwater footer
-- Blocks support both desktop (`--md`) and mobile (`--sm`) settings for full customization
-- Width options are applied via flexbox masonry layout on desktop, with automatic stacking on mobile
 - The footer uses the same color scheme pattern as other custom sections (`color-{{ section.settings.color_scheme--md }}--md color-{{ section.settings.color_scheme--sm }}--sm`)
+- To customize the footer, edit `snippets/0-footer-freshwater.liquid` directly with your HTML
 
 ---
 
@@ -604,17 +563,37 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
-- **v3.0.0** - Based on Dawn 15.4.0
-  - Added debug utility
-  - Standardized console logging
-  - Performance optimizations
-  - Event delegation improvements
-  - Comprehensive documentation
-  - **Migrated from Slick Carousel (jQuery) to Tiny-Slider (vanilla JS)**
-    - Removed jQuery dependency
-    - All carousel functionality now uses Tiny-Slider v2.9.4 (UMD build)
-    - Using v2.9.4 specifically due to `HierarchyRequestError` bug in v2.9.5+
-    - Improved performance and reduced bundle size
+### v3.0.0 - Based on Dawn 15.4.0
+
+**Initial Release:**
+- Added debug utility
+- Standardized console logging
+- Performance optimizations
+- Event delegation improvements
+- Comprehensive documentation
+- **Migrated from Slick Carousel (jQuery) to Tiny-Slider (vanilla JS)**
+  - Removed jQuery dependency
+  - All carousel functionality now uses Tiny-Slider v2.9.4 (UMD build)
+  - Using v2.9.4 specifically due to `HierarchyRequestError` bug in v2.9.5+
+  - Improved performance and reduced bundle size
+
+**2025-12-02 - Header and Footer Simplification:**
+- **Removed Mobile Nav custom blocks from header**
+  - All custom Mobile Nav blocks (Header, Body, Button, HTML, Liquid, Graphic, Video, Accordion, Rating, List) removed from `sections/0-header.liquid`
+  - Mobile drawer now uses default Dawn navigation (or Freshwater footer if enabled)
+  - Only `mega_menu_nav_item` block remains for desktop mega menu
+  - Updated `snippets/0-header-drawer.liquid` to conditionally render default Dawn navigation or Freshwater footer
+- **Added Mobile Drawer Footer Toggle**
+  - Added toggle (`fresh_mobile_drawer_footer_enable`) in header settings under "Mobile logo position"
+  - When enabled, replaces mobile drawer menu content with Freshwater footer placeholder
+  - Created `snippets/0-header-drawer-freshwater.liquid` for custom mobile drawer footer HTML
+  - Customize by editing `snippets/0-header-drawer-freshwater.liquid` directly with HTML
+- **Simplified Freshwater Footer**
+  - Removed all custom footer blocks from `sections/0-footer.liquid`
+  - Footer now uses simple HTML placeholder (`snippets/0-footer-freshwater.liquid`)
+  - Toggle (`fresh_footer_enable`) switches between default Dawn footer and Freshwater placeholder
+  - Customize footer by editing `snippets/0-footer-freshwater.liquid` directly with HTML
+  - All original Dawn footer settings (newsletter, social, payment, etc.) are preserved
 
 ---
 
@@ -675,7 +654,7 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-01-21  
+**Last Updated:** 2025-12-02  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.0.0
 
