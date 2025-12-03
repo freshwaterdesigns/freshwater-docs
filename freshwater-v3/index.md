@@ -393,6 +393,42 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 
 **Note:** To customize Dawn button styles, override them in `assets/0-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
 
+### Overlay Positioning Classes {#overlay-positioning-classes}
+
+The `.fresh-overlay` class is used in Multi-Column section slides to position content over media (images or videos). By default, overlays are centered (center-center).
+
+**Available Positioning Classes:**
+
+- **`.fresh-overlay--bottom-left`** - Positions overlay at the bottom-left corner of the media
+- **`.fresh-overlay--bottom-right`** - Positions overlay at the bottom-right corner of the media
+
+**Usage:**
+
+In the Multi-Column section slide's "Overlay" Liquid field, add the positioning class directly to your content:
+
+```liquid
+<div class="fresh-overlay fresh-overlay--bottom-left">
+  <p>Your overlay content here</p>
+</div>
+```
+
+Or for bottom-right:
+
+```liquid
+<div class="fresh-overlay fresh-overlay--bottom-right">
+  <p>Your overlay content here</p>
+</div>
+```
+
+**Note:** The `.fresh-overlay` wrapper div is automatically added by the theme, so you only need to add the positioning class modifier (e.g., `fresh-overlay--bottom-left`) to your content div.
+
+**Files:**
+- `assets/0-freshwater.css.liquid` - Overlay positioning CSS (lines 1911-1935)
+- `sections/0-multi-column-1.liquid` - Section-specific overlay styles
+- `snippets/0-slide-1.liquid` - Overlay rendering logic
+
+**Documentation:** See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for detailed usage examples and additional positioning options.
+
 ---
 
 ## 🧭 Customizing Navigation
@@ -631,6 +667,17 @@ This separation allows you to control Freshwater logs independently while keepin
   - Images are centered within the square container
   - Default: disabled (off)
   - Uses CSS padding-bottom technique for responsive square containers
+- **Added "Overlay" feature for slide media:**
+  - New Liquid schema field (`fresh_overlay`) in slide block settings under "OVERLAY" section
+  - Content is automatically wrapped in a `.fresh-overlay` div
+  - Overlay is positioned absolutely over the slide media (image or video)
+  - Media wrapper has `position: relative` to contain the overlay
+  - Default positioning: center-center
+  - **Positioning classes available:**
+    - `.fresh-overlay--bottom-left` - Positions overlay at bottom-left of media
+    - `.fresh-overlay--bottom-right` - Positions overlay at bottom-right of media
+  - Add these classes directly to the `.fresh-overlay` div in your Liquid code
+  - See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for detailed usage examples
 
 ### v3.0.0 - Based on Dawn 15.4.0
 
