@@ -4,7 +4,7 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.0.0
+# Freshwater v3.1.0
 
 **Based on Dawn 15.4.0**
 
@@ -47,7 +47,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Color scheme extensions (header, subheader, icons colors)
      - Typography settings
      - Custom section/block settings
-   - Updated theme version to show "15.4.0, Freshwater 3.0.0"
+   - Updated theme version to show "15.4.0, Freshwater 3.1.0"
 
 ### Custom Files (0- Prefixed)
 
@@ -100,9 +100,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.0.0
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.1.0
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.0.0:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.1.0:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -213,7 +213,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.0.0"
+   "theme_version": "15.4.0, Freshwater 3.1.0"
    ```
 
 **Option B: Replace Entire File (Easier but loses any custom settings)**
@@ -563,6 +563,18 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
+### v3.1.0 - Based on Dawn 15.4.0
+
+**2025-12-03 - Documentation and Code Improvements:**
+- **Documentation improvements:**
+  - Removed all line number references from README (replaced with descriptive text that won't drift over time)
+  - Added "Quick Debug Recipe" section for easier debugging workflow
+  - Updated all version references from v3.0.0 to v3.1.0
+- **Code improvements:**
+  - Refactored `Freshwater.checkCarousels()` to use `window.Freshwater.console()` instead of raw `console.log/warn`
+  - Now respects DEBUG_MODE flag (consistent with Freshwater logging guidelines)
+  - Added fallback logger for defensive programming
+
 ### v3.0.0 - Based on Dawn 15.4.0
 
 **Initial Release:**
@@ -654,8 +666,8 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-12-02  
+**Last Updated:** 2025-12-03  
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.0.0
+**Freshwater Version:** 3.1.0
 
 {% endraw %}
