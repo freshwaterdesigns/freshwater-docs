@@ -70,7 +70,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-theme-submenu.liquid` - Custom submenu renderer for mega menu (displays `mega_menu_nav_item` blocks)
 - `0-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
 - `0-header-drawer.liquid` - Mobile drawer navigation renderer
-- `0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer footer placeholder
+- `0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
 - `0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
@@ -366,7 +366,7 @@ The mobile drawer navigation can display either the default Dawn menu navigation
 
 **Files:**
 - `snippets/0-header-drawer.liquid` - Mobile drawer renderer
-- `snippets/0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer footer placeholder
+- `snippets/0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
 
 **How It Works:**
 
@@ -377,7 +377,7 @@ The mobile drawer navigation can display either the default Dawn menu navigation
 
 2. **Freshwater Footer (Optional):**
    - Go to **Theme Editor** → **Header** section
-   - Under **Freshwater Mobile Drawer Footer**, check **Enable Freshwater Mobile Drawer Footer**
+   - Under **Freshwater Mobile Drawer Menu**, check **Enable Freshwater Mobile Drawer Menu**
    - When enabled, the mobile drawer content is replaced with a custom Freshwater footer placeholder
    - Edit `snippets/0-header-drawer-freshwater.liquid` to customize the footer content with your HTML
 
