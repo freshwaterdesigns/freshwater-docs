@@ -371,6 +371,30 @@ All custom sections support:
 
 ---
 
+## 🎨 CSS Architecture
+
+### Dawn Button Overrides
+
+Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 1 styling. This ensures consistent button appearance throughout the theme.
+
+**Implementation Details:**
+
+- **Color Application:** Dawn buttons receive Freshwater standard scheme 1 colors via Dawn's color scheme classes (`.color-scheme-1`, `.color-scheme-2`, etc.) without breakpoint suffixes, matching Dawn's color scheme pattern.
+- **Structural Styles:** Button structural properties (border-radius, padding, font-size, etc.) are applied within breakpoint media queries (`@media (min-width: 768px)` and `@media (max-width: 767px)`) for responsive behavior.
+- **Affected Classes:** All Dawn button classes are overridden:
+  - `.button`, `.button--secondary`, `.button--tertiary`
+  - `.shopify-challenge__button`
+  - `.customer button`
+  - `button.shopify-payment-button__button--unbranded`
+  - `.product-form__submit`
+  - `.cart__checkout-button`
+
+**File:** `assets/0-freshwater.css.liquid` (lines 323-537)
+
+**Note:** To customize Dawn button styles, override them in `assets/0-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
+
+---
+
 ## 🧭 Customizing Navigation
 
 ### Mobile Drawer Navigation
