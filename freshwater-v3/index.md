@@ -215,11 +215,24 @@ render '0-header-mega-menu'
    ```json
    "theme_version": "15.4.0, Freshwater 3.1.0"
    ```
+5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
 **Option B: Replace Entire File (Easier but loses any custom settings)**
 ```bash
 cp freshwater-v3/config/settings_schema.json your-dawn-theme/config/settings_schema.json
 ```
+
+**⚠️ Important: `page_width` Migration Required**
+
+💡 **Note:** *Dawn's initial value for the `page_width` is 1200px. Since that value is not in the new slider range (which uses 640px increments: 640, 1280, 1920, 2560, 3200, 3840), the original slider must be updated in several increments first to avoid Shopify CLI errors. Use the following steps:*
+
+1. *Change the initial `step` value from `100` to `200`*
+2. *Change the initial `max` value from `1600` to `3200`*
+3. *Change the initial `default` value from `1200` to `3200`*
+4. *Set the `page_width` to `3200` in your theme settings (via Theme Editor)*
+5. *Then update to the final Freshwater values: `min: 640, max: 3840, step: 640, default: 1920`*
+
+*If you skip these migration steps, you'll get a Shopify CLI error: "New schema is incompatible with the current setting value. Setting 'page_width' must be a step in the range"*
 
 **Important Freshwater Settings Added:**
 - `0 Button` - Button styling settings (3 button styles)
@@ -574,6 +587,10 @@ This separation allows you to control Freshwater logs independently while keepin
   - Refactored `Freshwater.checkCarousels()` to use `window.Freshwater.console()` instead of raw `console.log/warn`
   - Now respects DEBUG_MODE flag (consistent with Freshwater logging guidelines)
   - Added fallback logger for defensive programming
+- **Settings schema changes:**
+  - **Updated `page_width` range:** Changed from `min: 1000, max: 1600, step: 100, default: 1200` to `min: 640, max: 3840, step: 640, default: 1920`
+  - New range uses 640px increments: 640, 1280, 1920, 2560, 3200, 3840
+  - **Migration required:** Dawn's default value (1200px) is not in the new range, so existing themes must be migrated using incremental steps (see conversion guide)
 
 ### v3.0.0 - Based on Dawn 15.4.0
 
