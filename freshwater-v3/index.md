@@ -607,14 +607,30 @@ This separation allows you to control Freshwater logs independently while keepin
   - Removed all line number references from README (replaced with descriptive text that won't drift over time)
   - Added "Quick Debug Recipe" section for easier debugging workflow
   - Updated all version references from v3.0.0 to v3.1.0
+  - Added "CSS Architecture" section documenting Dawn button override strategy
 - **Code improvements:**
   - Refactored `Freshwater.checkCarousels()` to use `window.Freshwater.console()` instead of raw `console.log/warn`
   - Now respects DEBUG_MODE flag (consistent with Freshwater logging guidelines)
   - Added fallback logger for defensive programming
+- **CSS improvements:**
+  - **Dawn Button Overrides:** All Dawn button styles now use Freshwater's standard scheme 1 styling
+    - Colors applied via Dawn's color scheme classes (`.color-scheme-1`, `.color-scheme-2`, etc.)
+    - Structural styles (border-radius, padding, font-size) applied within breakpoint media queries
+    - Ensures consistent button appearance throughout the theme
+    - Override in `assets/0-client.css.liquid` for customizations
 - **Settings schema changes:**
   - **Updated `page_width` range:** Changed from `min: 1000, max: 1600, step: 100, default: 1200` to `min: 640, max: 3840, step: 640, default: 1920`
   - New range uses 640px increments: 640, 1280, 1920, 2560, 3200, 3840
   - **Migration required:** Dawn's default value (1200px) is not in the new range, so existing themes must be migrated using incremental steps (see conversion guide)
+
+**2025-12-03 - Multi-Column Section Enhancements:**
+- **Added "Make images square" feature:**
+  - New toggle (`fresh_images_square--md` and `fresh_images_square--sm`) in Multi Column section settings
+  - Located below "Make slides same height" for both desktop and mobile
+  - When enabled, crops all images to a square (1:1) aspect ratio using `object-fit: cover`
+  - Images are centered within the square container
+  - Default: disabled (off)
+  - Uses CSS padding-bottom technique for responsive square containers
 
 ### v3.0.0 - Based on Dawn 15.4.0
 
