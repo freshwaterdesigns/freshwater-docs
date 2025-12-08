@@ -393,34 +393,41 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 
 **Note:** To customize Dawn button styles, override them in `assets/0-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
 
-### Overlay Positioning Classes {#overlay-positioning-classes}
+### Overlay Positioning {#overlay-positioning-classes}
 
 The `.fresh-overlay` class is used in Multi-Column section slides to position content over media (images or videos). By default, overlays are centered (center-center).
 
-**Available Positioning Classes:**
+**Positioning with Inline CSS:**
 
-- **`.fresh-overlay--bottom-left`** - Positions overlay at the bottom-left corner of the media
-- **`.fresh-overlay--bottom-right`** - Positions overlay at the bottom-right corner of the media
+The `.fresh-overlay` wrapper div is automatically added by the theme. To position your overlay content, use inline CSS styles directly in the "Overlay" Liquid field:
 
-**Usage:**
-
-In the Multi-Column section slide's "Overlay" Liquid field, add the positioning class directly to your content:
+**Bottom-Left Positioning:**
 
 ```liquid
-<div class="fresh-overlay fresh-overlay--bottom-left">
+<div style="position: absolute; bottom: 0; left: 0;">
   <p>Your overlay content here</p>
 </div>
 ```
 
-Or for bottom-right:
+**Bottom-Right Positioning:**
 
 ```liquid
-<div class="fresh-overlay fresh-overlay--bottom-right">
+<div style="position: absolute; bottom: 0; right: 0;">
   <p>Your overlay content here</p>
 </div>
 ```
 
-**Note:** The `.fresh-overlay` wrapper div is automatically added by the theme, so you only need to add the positioning class modifier (e.g., `fresh-overlay--bottom-left`) to your content div.
+**Center Positioning (default):**
+
+If no positioning styles are added, the overlay will be centered by default. You can also explicitly center it:
+
+```liquid
+<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+  <p>Your overlay content here</p>
+</div>
+```
+
+**Note:** The `.fresh-overlay` wrapper div is automatically added by the theme with `position: absolute` and default center-center positioning. Your content inside will be wrapped in this div, so you can use inline CSS to position your content as needed.
 
 **Files:**
 - `assets/0-freshwater.css.liquid` - Overlay positioning CSS (lines 1911-1935)
