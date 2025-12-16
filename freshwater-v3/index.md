@@ -36,7 +36,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
    - Replaced Dawn theme snippets with `0-theme-dawn-*` versions
    - Added `0-theme-freshwater-1` and `0-theme-freshwater-2` snippets
    - Added custom body classes (`fresh`, template-specific classes)
-   - Changed `{% sections 'footer-group' %}` to `{% section '0-footer' %}`
+   - Changed `{% section '0-footer' %}` to `{% sections 'footer-group' %}` (enables footer section group support)
 
 2. **`sections/header.liquid`**
    - Changed `render 'header-mega-menu'` to `render '0-header-mega-menu'`
@@ -186,10 +186,10 @@ cp freshwater-v3/layout/theme.liquid your-dawn-theme/layout/theme.liquid
 **Key changes:**
 - Head section uses `0-theme-dawn-1`, `0-theme-dawn-2`, and `0-theme-freshwater-1`
 - Body section uses `0-theme-dawn-3`, `0-theme-dawn-4`, and `0-theme-freshwater-2`
-- Footer section uses `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
+- Footer section uses `{% sections 'footer-group' %}` (enables footer section group support)
 - Added custom body classes
 
-**Important:** After copying the file, verify that `{% section '0-footer' %}` is used instead of `{% sections 'footer-group' %}`.
+**Important:** After copying the file, verify that `{% sections 'footer-group' %}` is used (not `{% section '0-footer' %}`).
 
 ### Step 7: Modify `sections/header.liquid`
 
@@ -246,7 +246,7 @@ Check that all references point to `0-` prefixed files:
 
 1. **In `layout/theme.liquid`:**
    - Should reference `0-theme-dawn-*` and `0-theme-freshwater-*` snippets
-   - Should use `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
+   - Should use `{% sections 'footer-group' %}` (not `{% section '0-footer' %}`)
 
 2. **In `sections/header.liquid`:**
    - Should conditionally reference `0-header-mega-menu` or `0-header-freshwater-menu` based on menu type setting
@@ -575,7 +575,7 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 **Files:**
 - `sections/0-footer.liquid` - Custom footer section that conditionally renders Freshwater footer placeholder or default footer
 - `snippets/0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (HTML placeholder by default)
-- `layout/theme.liquid` - Updated to render `{% section '0-footer' %}` instead of `{% sections 'footer-group' %}`
+- `layout/theme.liquid` - Updated to render `{% sections 'footer-group' %}` (enables footer section group support)
 
 **How to Update:**
 
@@ -649,80 +649,7 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
-### v3.1.0 - Based on Dawn 15.4.0
-
-**2025-12-03 - Documentation and Code Improvements:**
-- **Documentation improvements:**
-  - Removed all line number references from README (replaced with descriptive text that won't drift over time)
-  - Added "Quick Debug Recipe" section for easier debugging workflow
-  - Updated all version references from v3.0.0 to v3.1.0
-  - Added "CSS Architecture" section documenting Dawn button override strategy
-- **Code improvements:**
-  - Refactored `Freshwater.checkCarousels()` to use `window.Freshwater.console()` instead of raw `console.log/warn`
-  - Now respects DEBUG_MODE flag (consistent with Freshwater logging guidelines)
-  - Added fallback logger for defensive programming
-- **CSS improvements:**
-  - **Dawn Button Overrides:** All Dawn button styles now use Freshwater's standard scheme 1 styling
-    - Colors applied via Dawn's color scheme classes (`.color-scheme-1`, `.color-scheme-2`, etc.)
-    - Structural styles (border-radius, padding, font-size) applied within breakpoint media queries
-    - Ensures consistent button appearance throughout the theme
-    - Override in `assets/0-client.css.liquid` for customizations
-- **Settings schema changes:**
-  - **Updated `page_width` range:** Changed from `min: 1000, max: 1600, step: 100, default: 1200` to `min: 640, max: 3840, step: 640, default: 1920`
-  - New range uses 640px increments: 640, 1280, 1920, 2560, 3200, 3840
-  - **Migration required:** Dawn's default value (1200px) is not in the new range, so existing themes must be migrated using incremental steps (see conversion guide)
-
-**2025-12-03 - Multi-Column Section Enhancements:**
-- **Added "Make images square" feature:**
-  - New toggle (`fresh_images_square--md` and `fresh_images_square--sm`) in Multi Column section settings
-  - Located below "Make slides same height" for both desktop and mobile
-  - When enabled, crops all images to a square (1:1) aspect ratio using `object-fit: cover`
-  - Images are centered within the square container
-  - Default: disabled (off)
-  - Uses CSS padding-bottom technique for responsive square containers
-- **Added "Overlay" feature for slide media:**
-  - New Liquid schema field (`fresh_overlay`) in slide block settings under "OVERLAY" section
-  - Content is automatically wrapped in a `.fresh-overlay` div
-  - Overlay is positioned absolutely over the slide media (image or video)
-  - Media wrapper has `position: relative` to contain the overlay
-  - Default positioning: center-center
-  - **Positioning classes available:**
-    - `.fresh-overlay--bottom-left` - Positions overlay at bottom-left of media
-    - `.fresh-overlay--bottom-right` - Positions overlay at bottom-right of media
-  - Add these classes directly to the `.fresh-overlay` div in your Liquid code
-  - See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for detailed usage examples
-
-### v3.0.0 - Based on Dawn 15.4.0
-
-**Initial Release:**
-- Added debug utility
-- Standardized console logging
-- Performance optimizations
-- Event delegation improvements
-- Comprehensive documentation
-- **Migrated from Slick Carousel (jQuery) to Tiny-Slider (vanilla JS)**
-  - Removed jQuery dependency
-  - All carousel functionality now uses Tiny-Slider v2.9.4 (UMD build)
-  - Using v2.9.4 specifically due to `HierarchyRequestError` bug in v2.9.5+
-  - Improved performance and reduced bundle size
-
-**2025-12-02 - Header and Footer Simplification:**
-- **Removed Mobile Nav custom blocks from header**
-  - All custom Mobile Nav blocks (Header, Body, Button, HTML, Liquid, Graphic, Video, Accordion, Rating, List) removed from `sections/0-header.liquid`
-  - Mobile drawer now uses default Dawn navigation (or Freshwater footer if enabled)
-  - Only `mega_menu_nav_item` block remains for desktop mega menu
-  - Updated `snippets/0-header-drawer.liquid` to conditionally render default Dawn navigation or Freshwater footer
-- **Added Mobile Drawer Footer Toggle**
-  - Added toggle (`fresh_mobile_drawer_footer_enable`) in header settings under "Mobile logo position"
-  - When enabled, replaces mobile drawer menu content with Freshwater footer placeholder
-  - Created `snippets/0-header-drawer-freshwater.liquid` for custom mobile drawer footer HTML
-  - Customize by editing `snippets/0-header-drawer-freshwater.liquid` directly with HTML
-- **Simplified Freshwater Footer**
-  - Removed all custom footer blocks from `sections/0-footer.liquid`
-  - Footer now uses simple HTML placeholder (`snippets/0-footer-freshwater.liquid`)
-  - Toggle (`fresh_footer_enable`) switches between default Dawn footer and Freshwater placeholder
-  - Customize footer by editing `snippets/0-footer-freshwater.liquid` directly with HTML
-  - All original Dawn footer settings (newsletter, social, payment, etc.) are preserved
+For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/changelog).
 
 ---
 
@@ -763,7 +690,7 @@ When adding new features:
 2. **Never** modify Dawn files directly
 3. **Always** use `fresh` prefix for custom JavaScript functions/variables
 4. **Always** use `window.Freshwater.console()` for logging in custom files
-5. **Always** document changes in this README
+5. **Always** document changes in [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
@@ -783,7 +710,7 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-12-03  
+**Last Updated:** 2025-12-12  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.1.0
 
