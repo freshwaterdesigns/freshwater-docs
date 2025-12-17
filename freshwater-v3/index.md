@@ -4,7 +4,7 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.1.0
+# Freshwater v3.2.0
 
 **Based on Dawn 15.4.0**
 
@@ -47,7 +47,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Color scheme extensions (header, subheader, icons colors)
      - Typography settings
      - Custom section/block settings
-   - Updated theme version to show "15.4.0, Freshwater 3.1.0"
+   - Updated theme version to show "15.4.0, Freshwater 3.2.0"
 
 ### Custom Files (0- Prefixed)
 
@@ -100,9 +100,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.1.0
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.2.0
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.1.0:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.2.0:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -213,7 +213,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.1.0"
+   "theme_version": "15.4.0, Freshwater 3.2.0"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -712,6 +712,6 @@ For issues or questions:
 
 **Last Updated:** 2025-12-12  
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.1.0
+**Freshwater Version:** 3.2.0
 
 {% endraw %}
