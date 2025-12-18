@@ -710,7 +710,6 @@ For issues or questions:
 
 ---
 
-**Last Updated:** 2025-12-12  
 **Dawn Base Version:** 15.4.0  
 **Freshwater Version:** 3.2.0
 
