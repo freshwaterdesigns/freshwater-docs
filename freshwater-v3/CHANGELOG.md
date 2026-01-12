@@ -13,20 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.2.0] - TBD
-
-### Added
-- TBD
+## [3.2.0] - 2025-01-27
 
 ### Changed
-- TBD
-
-### Fixed
-- TBD
+- **Documentation updates:**
+  - Updated version references across all documentation files to v3.2.0
+  - Updated `.ai-development-guidelines.md` header to reflect v3.2.0
+  - Updated `assets/0-freshwater.css.liquid` header comment to v3.2.0
 
 ---
 
-## [3.1.0] - 2025-12-12
+## [3.1.0] - 2024-12-12
 
 ### Added
 - **Footer section group support:**
@@ -50,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.1.0] - 2025-12-08
+## [3.1.0] - 2024-12-08
 
 ### Changed
 - **Dawn 2nd and 3rd button styling:**
@@ -64,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.1.0] - 2025-12-04
+## [3.1.0] - 2024-12-04
 
 ### Changed
 - **Dawn PDP buttons alternative color schemes:**
@@ -73,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.1.0] - 2025-12-03
+## [3.1.0] - 2024-12-03
 
 ### Added
 - **Multi-Column Section Enhancements:**
@@ -128,7 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.0.0] - 2025-12-02
+## [3.0.0] - 2024-12-02
 
 ### Added
 - **Initial Release:**
@@ -164,6 +161,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.0] - TBD
+
+### Added
+- TBD
+
+### Changed
+- TBD
+
+### Fixed
+- TBD
+
+---
+
+[3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
 [3.2.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.2.0
 [3.1.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.1.0
 [3.0.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.0.0

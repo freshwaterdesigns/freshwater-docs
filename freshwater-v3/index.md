@@ -102,7 +102,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.2.0
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.2.0:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.3.0:
 
 ### Step 1: Backup Your Dawn Installation
 
