@@ -610,6 +610,289 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 - The footer uses the same color scheme pattern as other custom sections (`color-{{ section.settings.color_scheme--md }}--md color-{{ section.settings.color_scheme--sm }}--sm`)
 - To customize the footer, edit `snippets/0-footer-freshwater.liquid` directly with your HTML
 
+### Freshwater Modal System
+
+The Freshwater Modal System allows you to create modals that can be triggered by buttons. The modal content is defined using Liquid blocks with a specific structure, and buttons can be configured to open these modals instead of navigating to a URL.
+
+**Features:**
+- **Simple Setup**: Just add a class to your button and create a modal block
+- **Automatic Close**: Built-in close button (X), overlay click, and ESC key support
+- **Accessible**: Focus management and keyboard navigation
+- **Responsive**: Mobile-optimized styling
+- **Customizable**: Full control over modal content using Liquid/HTML
+
+**How It Works:**
+
+1. Create a modal content block with a unique ID and the `fresh-modal` class
+2. Configure a button with the `fresh-modal-button` class and set its URL to match the modal ID (e.g., `#my-section`)
+3. When the button is clicked, the modal opens automatically
+
+**Step-by-Step Setup:**
+
+1. **Create the Modal Content**
+
+Create a Liquid block (HTML or Liquid block type) with the following structure:
+
+```liquid
+<div id="my-section" class="fresh-modal">
+    <div class="fresh-modal__overlay"></div>
+    <div class="fresh-modal__content">
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        
+        <!-- Your custom content here -->
+        <h2>Modal Title</h2>
+        <p>Your modal content goes here...</p>
+        <!-- You can use any HTML or Liquid code -->
+    </div>
+</div>
+```
+
+**Important Notes:**
+- The `id` attribute must be unique (e.g., `my-section`)
+- The outer `div` must have the `fresh-modal` class
+- The `fresh-modal__overlay` div creates the backdrop
+- The `fresh-modal__content` div contains your actual content
+- The `fresh-modal__close` button is automatically styled as an X button
+
+2. **Create the Trigger Button**
+
+In your button block settings:
+
+1. **Button URL**: Set to `#my-section` (matching the modal's ID, without the `#` in the ID but with `#` in the URL)
+2. **Custom Class Names**: Add `fresh-modal-button`
+
+**Example Button Configuration:**
+- Button Text: "Open Modal"
+- Button URL: `#my-section`
+- Custom Class Names: `fresh-modal-button`
+
+3. **Place the Modal Block**
+
+The modal block can be placed anywhere in your template:
+- In the same section as the button
+- In a different section
+- In a snippet that's included in the template
+- At the bottom of your layout file
+
+The JavaScript will find it by ID regardless of its location in the DOM.
+
+**Modal Structure Breakdown:**
+
+```html
+<div id="my-section" class="fresh-modal">
+    <!-- Modal wrapper - required -->
+    
+    <div class="fresh-modal__overlay"></div>
+    <!-- Backdrop/overlay - clicking this closes the modal -->
+    
+    <div class="fresh-modal__content">
+        <!-- Content container - your content goes here -->
+        
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        <!-- Close button - automatically styled as X -->
+        
+        <!-- Your custom content -->
+    </div>
+</div>
+```
+
+**Closing the Modal:**
+
+The modal can be closed in three ways:
+
+1. **Close Button**: Click the X button in the top-right corner
+2. **Overlay Click**: Click outside the modal content (on the dark overlay)
+3. **ESC Key**: Press the Escape key on your keyboard
+
+**Customization:**
+
+**Styling the Modal Content:**
+
+You can customize the modal content using standard CSS. The modal content container uses:
+- `background-color: rgb(var(--color-background))` - Uses theme background color
+- `color: rgba(var(--color-foreground), 1)` - Uses theme foreground color
+- `max-width: 90%` - Responsive width
+- `max-height: 90vh` - Responsive height with scrolling
+
+**Custom CSS Overrides:**
+
+You can override modal styles in `0-client.css.liquid`:
+
+```css
+/* Customize modal content */
+.fresh-modal__content {
+    max-width: 600px; /* Override default 90% */
+    padding: 3rem; /* Override default padding */
+}
+
+/* Customize close button */
+.fresh-modal__close {
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Customize overlay */
+.fresh-modal__overlay {
+    background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+}
+```
+
+**Advanced Usage:**
+
+**Multiple Modals:**
+
+You can create multiple modals on the same page. Each modal needs:
+- A unique ID
+- A button with `fresh-modal-button` class pointing to that ID
+
+**Example:**
+```liquid
+<!-- Modal 1 -->
+<div id="contact-modal" class="fresh-modal">
+    <!-- ... -->
+</div>
+
+<!-- Modal 2 -->
+<div id="info-modal" class="fresh-modal">
+    <!-- ... -->
+</div>
+```
+
+**Using Liquid in Modal Content:**
+
+Since the modal content is a Liquid block, you can use any Liquid code:
+
+```liquid
+<div id="product-info" class="fresh-modal">
+    <div class="fresh-modal__overlay"></div>
+    <div class="fresh-modal__content">
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Price: {{ product.price | money }}</p>
+    </div>
+</div>
+```
+
+**Dynamic Modal IDs:**
+
+You can use Liquid to generate dynamic IDs:
+
+```liquid
+<div id="modal-{{ section.id }}" class="fresh-modal">
+    <!-- ... -->
+</div>
+```
+
+Then reference it in your button URL: `#modal-{{ section.id }}`
+
+**Technical Details:**
+
+**CSS Classes:**
+- `.fresh-modal` - Modal wrapper (hidden by default)
+- `.fresh-modal--active` - Active state (added when modal is open)
+- `.fresh-modal__overlay` - Backdrop/overlay
+- `.fresh-modal__content` - Content container
+- `.fresh-modal__close` - Close button
+- `.fresh-modal-button` - Button trigger class
+- `body.fresh-modal-open` - Added to body when modal is open (prevents scrolling)
+
+**JavaScript Functions:**
+- `freshHandleModal(button)` - Handles modal opening from button click
+- `freshOpenModal(modalElement)` - Opens a modal
+- `freshCloseModal(modalElement)` - Closes a modal
+- `freshInitModalHandlers()` - Initializes event handlers for closing
+
+**Event Handlers:**
+
+The system automatically handles:
+- Click events on `.fresh-modal-button` buttons
+- Click events on `.fresh-modal__close` buttons
+- Click events on `.fresh-modal__overlay`
+- ESC key press events
+
+**Troubleshooting:**
+
+**Modal Doesn't Open:**
+1. Check the ID: Ensure the button URL (e.g., `#my-section`) matches the modal's ID exactly
+2. Check the Class: Ensure the button has the `fresh-modal-button` class
+3. Check the Modal Class: Ensure the modal wrapper has the `fresh-modal` class
+4. Check Console: Open browser console to see any error messages
+
+**Modal Doesn't Close:**
+1. Check Structure: Ensure the modal has the correct structure with `fresh-modal__overlay` and `fresh-modal__close`
+2. Check JavaScript: Ensure `0-freshwater.js.liquid` is loaded
+3. Check Console: Open browser console for errors
+
+**Modal Content Not Visible:**
+1. Check Z-Index: Ensure no other elements have a higher z-index than the modal (9999)
+2. Check CSS: Ensure the modal has `display: flex` when active
+3. Check Content: Ensure content is inside `fresh-modal__content`
+
+**Browser Support:**
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+- Requires JavaScript enabled
+
+**Accessibility:**
+- Close button has `aria-label="Close modal"`
+- Focus is managed (focus moves to close button when modal opens)
+- ESC key support for keyboard navigation
+- Overlay click support for mouse users
+
+**Examples:**
+
+**Simple Text Modal:**
+```liquid
+<div id="welcome-modal" class="fresh-modal">
+    <div class="fresh-modal__overlay"></div>
+    <div class="fresh-modal__content">
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        <h2>Welcome!</h2>
+        <p>Thank you for visiting our site.</p>
+    </div>
+</div>
+```
+
+**Form Modal:**
+```liquid
+<div id="contact-form-modal" class="fresh-modal">
+    <div class="fresh-modal__overlay"></div>
+    <div class="fresh-modal__content">
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <textarea placeholder="Message"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+```
+
+**Image Gallery Modal:**
+```liquid
+<div id="gallery-modal" class="fresh-modal">
+    <div class="fresh-modal__overlay"></div>
+    <div class="fresh-modal__content">
+        <button class="fresh-modal__close" aria-label="Close modal"></button>
+        <img src="{{ 'image.jpg' | asset_url }}" alt="Gallery Image">
+        <p>Image description</p>
+    </div>
+</div>
+```
+
+**Files Modified:**
+- `assets/0-freshwater.css.liquid` - Added modal CSS styles
+- `assets/0-freshwater.js.liquid` - Added modal JavaScript functionality
+
+**Version:**
+This documentation applies to Freshwater Modal System v1.0.0
+
 ---
 
 ## ⚠️ Important Notes
