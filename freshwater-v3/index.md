@@ -10,6 +10,28 @@ layout: default
 
 Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme maintains compatibility with Dawn's core functionality while adding custom features, sections, and styling.
 
+## 📑 Table of Contents
+
+- [Philosophy](#-philosophy)
+- [Key Differences from Dawn](#-key-differences-from-dawn-1540)
+- [Conversion Guide](#-conversion-guide-dawn-1540--freshwater-v320)
+- [File Structure](#-file-structure-overview)
+- [Key Features](#-key-features)
+- [CSS Architecture](#-css-architecture)
+- [Customizing Navigation](#-customizing-navigation)
+  - [Mobile Drawer Navigation](#mobile-drawer-navigation)
+  - [Desktop Mega Menu Navigation](#desktop-mega-menu-navigation)
+  - [Desktop Freshwater Menu Navigation](#desktop-freshwater-menu-navigation)
+  - [Freshwater Footer](#freshwater-footer)
+  - [Freshwater Modal System](#freshwater-modal-system)
+- [Important Notes](#️-important-notes)
+- [Version History](#-version-history)
+- [GitHub Repository Management](#-github-repository-management)
+- [Contributing](#-contributing)
+- [Support](#-support)
+
+---
+
 ## 🎯 Philosophy
 
 **Important:** This theme is designed to be easily upgradable to new versions of Dawn. To achieve this:
