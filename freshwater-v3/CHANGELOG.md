@@ -13,6 +13,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.3.0] - 2025-01-28
+
+### Added
+- **Modal System Auto-Wrap Feature:**
+  - Added `freshInitModalAutoWrap()` function to automatically wrap content blocks with `.fresh-modal-content` class in modal structure
+  - Users can now create modals by simply adding `fresh-modal-content` class to HTML/Liquid blocks
+  - JavaScript automatically adds modal wrapper, overlay, content container, and close button
+  - Eliminates need to manually write modal HTML structure
+  - Supports both custom IDs and auto-generated IDs from block settings
+
+### Changed
+- **Modal System Improvements:**
+  - Improved modal initialization to run auto-wrap on page load
+  - Enhanced ID handling to support custom IDs, auto-generated IDs, and class-based IDs
+  - Updated modal documentation to include auto-wrap method as recommended approach
+
+### Fixed
+- **HTML and Liquid Block ID Handling:**
+  - Fixed `snippets/0-block-html-1.liquid` to properly set `id` attribute on wrapper div
+  - Fixed `snippets/0-block-liquid-1.liquid` to properly set `id` attribute on wrapper div
+  - IDs now correctly use custom `fresh_html_block_unique_id` or `fresh_liquid_block_unique_id` settings
+  - Auto-generated IDs now properly formatted (e.g., `freshHTML--123456789`, `freshliquid--123456789`)
+  - Enables proper modal targeting and other ID-based functionality
+
+---
+
 ## [3.2.0] - 2025-01-27
 
 ### Changed

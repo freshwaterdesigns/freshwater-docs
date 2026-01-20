@@ -634,10 +634,11 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 
 ### Freshwater Modal System
 
-The Freshwater Modal System allows you to create modals that can be triggered by buttons. The modal content is defined using Liquid blocks with a specific structure, and buttons can be configured to open these modals instead of navigating to a URL.
+The Freshwater Modal System allows you to create modals that can be triggered by buttons. The modal content can be created using HTML or Liquid blocks, and JavaScript automatically wraps the content in the proper modal structure.
 
 **Features:**
-- **Simple Setup**: Just add a class to your button and create a modal block
+- **Simple Setup**: Just add a class to your button and a class to your content block
+- **Auto-Wrap**: JavaScript automatically wraps content in modal structure (no manual HTML needed)
 - **Automatic Close**: Built-in close button (X), overlay click, and ESC key support
 - **Accessible**: Focus management and keyboard navigation
 - **Responsive**: Mobile-optimized styling
@@ -645,15 +646,77 @@ The Freshwater Modal System allows you to create modals that can be triggered by
 
 **How It Works:**
 
-1. Create a modal content block with a unique ID and the `fresh-modal` class
-2. Configure a button with the `fresh-modal-button` class and set its URL to match the modal ID (e.g., `#my-section`)
-3. When the button is clicked, the modal opens automatically
+1. Create a modal content block (HTML or Liquid block) and add the `fresh-modal-content` class
+2. Set a unique ID for the block (either custom or auto-generated)
+3. Configure a button with the `fresh-modal-button` class and set its URL to match the modal ID (e.g., `#my-section`)
+4. JavaScript automatically wraps the content in the modal structure when the page loads
 
 **Step-by-Step Setup:**
 
+### Method 1: Auto-Wrap (Recommended - Simplest)
+
+This is the easiest way to create modals. Just add the `fresh-modal-content` class to your HTML or Liquid block.
+
+1. **Create the Modal Content Block**
+
+Add an **HTML** or **Liquid** block to your section:
+
+**For HTML Block:**
+- Go to your section → Add block → **HTML**
+- In the HTML field, add your content:
+  ```html
+  <h2>Modal Title</h2>
+  <p>Your modal content goes here...</p>
+  ```
+- In **Custom Class Names**, add: `fresh-modal-content`
+- In **Unique ID** (optional), set a custom ID like: `my-section`
+  - If you don't set a custom ID, one will be auto-generated (e.g., `freshHTML--123456789`)
+
+**For Liquid Block:**
+- Go to your section → Add block → **Liquid**
+- In the Liquid field, add your content:
+  ```liquid
+  <h2>{{ product.title }}</h2>
+  <p>{{ product.description }}</p>
+  ```
+- In **Custom Class Names**, add: `fresh-modal-content`
+- In **Unique ID** (optional), set a custom ID like: `product-info`
+  - If you don't set a custom ID, one will be auto-generated (e.g., `freshliquid--123456789`)
+
+**Important Notes:**
+- The `fresh-modal-content` class tells JavaScript to automatically wrap your content in the modal structure
+- JavaScript will automatically add:
+  - Modal wrapper (`<div class="fresh-modal">`)
+  - Overlay backdrop (`<div class="fresh-modal__overlay">`)
+  - Content container (`<div class="fresh-modal__content">`)
+  - Close button (`<button class="fresh-modal__close">`)
+- The block's ID (custom or auto-generated) becomes the modal ID
+- You only need to write your actual content - no modal HTML structure required!
+
+2. **Create the Trigger Button**
+
+Add a **Button** block to your section:
+
+- **Button Text**: "Open Modal" (or whatever you want)
+- **Button URL**: Set to `#my-section` (matching your modal's ID)
+  - If using auto-generated ID: `#freshHTML--123456789` (check the block's ID in the rendered HTML)
+  - If using custom ID: `#my-section` (your custom ID)
+- **Custom Class Names**: Add `fresh-modal-button`
+
+3. **That's It!**
+
+JavaScript automatically handles the rest:
+- Wraps your content in the modal structure on page load
+- Opens the modal when the button is clicked
+- Handles closing (X button, overlay click, ESC key)
+
+### Method 2: Manual Structure (Advanced)
+
+If you need full control over the modal structure, you can manually create it:
+
 1. **Create the Modal Content**
 
-Create a Liquid block (HTML or Liquid block type) with the following structure:
+Add an **HTML** or **Liquid** block with the full modal structure:
 
 ```liquid
 <div id="my-section" class="fresh-modal">
@@ -664,59 +727,44 @@ Create a Liquid block (HTML or Liquid block type) with the following structure:
         <!-- Your custom content here -->
         <h2>Modal Title</h2>
         <p>Your modal content goes here...</p>
-        <!-- You can use any HTML or Liquid code -->
     </div>
 </div>
 ```
 
 **Important Notes:**
 - The `id` attribute must be unique (e.g., `my-section`)
-- The outer `div` must have the `fresh-modal` class
+- The outer `div` must have the `fresh-modal` class (not `fresh-modal-content`)
 - The `fresh-modal__overlay` div creates the backdrop
 - The `fresh-modal__content` div contains your actual content
 - The `fresh-modal__close` button is automatically styled as an X button
 
 2. **Create the Trigger Button**
 
-In your button block settings:
+Same as Method 1:
+- **Button URL**: `#my-section`
+- **Custom Class Names**: `fresh-modal-button`
 
-1. **Button URL**: Set to `#my-section` (matching the modal's ID, without the `#` in the ID but with `#` in the URL)
-2. **Custom Class Names**: Add `fresh-modal-button`
+**When to Use Method 2:**
+- You need custom modal structure
+- You want to add additional elements outside the content wrapper
+- You're migrating from an older implementation
 
-**Example Button Configuration:**
-- Button Text: "Open Modal"
-- Button URL: `#my-section`
-- Custom Class Names: `fresh-modal-button`
+**ID Handling:**
 
-3. **Place the Modal Block**
+The modal system intelligently handles IDs from HTML/Liquid blocks:
 
-The modal block can be placed anywhere in your template:
-- In the same section as the button
-- In a different section
-- In a snippet that's included in the template
-- At the bottom of your layout file
+1. **Custom ID** (Recommended): Set in block settings → **Unique ID**
+   - Example: `my-section`
+   - Use in button URL: `#my-section`
 
-The JavaScript will find it by ID regardless of its location in the DOM.
+2. **Auto-Generated ID**: If no custom ID is set, blocks generate one automatically
+   - HTML blocks: `freshHTML--123456789` (where numbers are the block ID)
+   - Liquid blocks: `freshliquid--123456789`
+   - Use in button URL: `#freshHTML--123456789`
 
-**Modal Structure Breakdown:**
-
-```html
-<div id="my-section" class="fresh-modal">
-    <!-- Modal wrapper - required -->
-    
-    <div class="fresh-modal__overlay"></div>
-    <!-- Backdrop/overlay - clicking this closes the modal -->
-    
-    <div class="fresh-modal__content">
-        <!-- Content container - your content goes here -->
-        
-        <button class="fresh-modal__close" aria-label="Close modal"></button>
-        <!-- Close button - automatically styled as X -->
-        
-        <!-- Your custom content -->
-    </div>
-</div>
-```
+3. **ID from First Class**: If no ID attribute exists, JavaScript checks the first class name
+   - If it's a custom name (not auto-generated pattern), it uses that as the ID
+   - This allows using class names as IDs for convenience
 
 **Closing the Modal:**
 
@@ -728,7 +776,7 @@ The modal can be closed in three ways:
 
 **Customization:**
 
-**Styling the Modal Content:**
+### Styling the Modal Content
 
 You can customize the modal content using standard CSS. The modal content container uses:
 - `background-color: rgb(var(--color-background))` - Uses theme background color
@@ -736,7 +784,7 @@ You can customize the modal content using standard CSS. The modal content contai
 - `max-width: 90%` - Responsive width
 - `max-height: 90vh` - Responsive height with scrolling
 
-**Custom CSS Overrides:**
+### Custom CSS Overrides
 
 You can override modal styles in `0-client.css.liquid`:
 
@@ -763,7 +811,7 @@ You can override modal styles in `0-client.css.liquid`:
 
 **Advanced Usage:**
 
-**Multiple Modals:**
+### Multiple Modals
 
 You can create multiple modals on the same page. Each modal needs:
 - A unique ID
@@ -771,21 +819,32 @@ You can create multiple modals on the same page. Each modal needs:
 
 **Example:**
 ```liquid
-<!-- Modal 1 -->
-<div id="contact-modal" class="fresh-modal">
-    <!-- ... -->
+<!-- Modal 1 - Auto-wrap method -->
+<div class="fresh-modal-content" id="contact-modal">
+    <h2>Contact Us</h2>
+    <p>Contact form here...</p>
 </div>
 
-<!-- Modal 2 -->
-<div id="info-modal" class="fresh-modal">
-    <!-- ... -->
+<!-- Modal 2 - Auto-wrap method -->
+<div class="fresh-modal-content" id="info-modal">
+    <h2>More Info</h2>
+    <p>Info content here...</p>
 </div>
 ```
 
-**Using Liquid in Modal Content:**
+### Using Liquid in Modal Content
 
 Since the modal content is a Liquid block, you can use any Liquid code:
 
+**Auto-wrap method:**
+```liquid
+<!-- In Liquid block with fresh-modal-content class -->
+<h2>{{ product.title }}</h2>
+<p>{{ product.description }}</p>
+<p>Price: {{ product.price | money }}</p>
+```
+
+**Manual method:**
 ```liquid
 <div id="product-info" class="fresh-modal">
     <div class="fresh-modal__overlay"></div>
@@ -799,38 +858,46 @@ Since the modal content is a Liquid block, you can use any Liquid code:
 </div>
 ```
 
-**Dynamic Modal IDs:**
+### Dynamic Modal IDs
 
 You can use Liquid to generate dynamic IDs:
 
+**Auto-wrap method:**
+- Set **Unique ID** in block settings to: `modal-{{ section.id }}`
+- Reference in button URL: `#modal-{{ section.id }}`
+
+**Manual method:**
 ```liquid
 <div id="modal-{{ section.id }}" class="fresh-modal">
     <!-- ... -->
 </div>
 ```
 
-Then reference it in your button URL: `#modal-{{ section.id }}`
-
 **Technical Details:**
 
-**CSS Classes:**
-- `.fresh-modal` - Modal wrapper (hidden by default)
+### CSS Classes
+
+- `.fresh-modal` - Modal wrapper (hidden by default, added by auto-wrap)
+- `.fresh-modal-content` - Content class that triggers auto-wrap (add this to your block)
 - `.fresh-modal--active` - Active state (added when modal is open)
-- `.fresh-modal__overlay` - Backdrop/overlay
-- `.fresh-modal__content` - Content container
-- `.fresh-modal__close` - Close button
+- `.fresh-modal__overlay` - Backdrop/overlay (added by auto-wrap)
+- `.fresh-modal__content` - Content container (added by auto-wrap)
+- `.fresh-modal__close` - Close button (added by auto-wrap)
 - `.fresh-modal-button` - Button trigger class
 - `body.fresh-modal-open` - Added to body when modal is open (prevents scrolling)
 
-**JavaScript Functions:**
+### JavaScript Functions
+
 - `freshHandleModal(button)` - Handles modal opening from button click
 - `freshOpenModal(modalElement)` - Opens a modal
 - `freshCloseModal(modalElement)` - Closes a modal
 - `freshInitModalHandlers()` - Initializes event handlers for closing
+- `freshInitModalAutoWrap()` - Automatically wraps `.fresh-modal-content` elements in modal structure
 
-**Event Handlers:**
+### Event Handlers
 
 The system automatically handles:
+- Auto-wrapping elements with `.fresh-modal-content` class on page load
 - Click events on `.fresh-modal-button` buttons
 - Click events on `.fresh-modal__close` buttons
 - Click events on `.fresh-modal__overlay`
@@ -838,28 +905,46 @@ The system automatically handles:
 
 **Troubleshooting:**
 
-**Modal Doesn't Open:**
-1. Check the ID: Ensure the button URL (e.g., `#my-section`) matches the modal's ID exactly
-2. Check the Class: Ensure the button has the `fresh-modal-button` class
-3. Check the Modal Class: Ensure the modal wrapper has the `fresh-modal` class
-4. Check Console: Open browser console to see any error messages
+### Modal Doesn't Open
 
-**Modal Doesn't Close:**
-1. Check Structure: Ensure the modal has the correct structure with `fresh-modal__overlay` and `fresh-modal__close`
-2. Check JavaScript: Ensure `0-freshwater.js.liquid` is loaded
-3. Check Console: Open browser console for errors
+1. **Check the ID**: Ensure the button URL (e.g., `#my-section`) matches the modal's ID exactly
+   - For auto-generated IDs, check the rendered HTML to see the actual ID
+   - IDs are case-sensitive
+2. **Check the Class**: Ensure the button has the `fresh-modal-button` class
+3. **Check the Modal Class**: 
+   - For auto-wrap: Ensure the block has `fresh-modal-content` class
+   - For manual: Ensure the modal wrapper has the `fresh-modal` class
+4. **Check Console**: Open browser console to see any error messages (add `?debug_mode=true` to URL)
 
-**Modal Content Not Visible:**
-1. Check Z-Index: Ensure no other elements have a higher z-index than the modal (9999)
-2. Check CSS: Ensure the modal has `display: flex` when active
-3. Check Content: Ensure content is inside `fresh-modal__content`
+### Modal Doesn't Close
+
+1. **Check Structure**: 
+   - For auto-wrap: Ensure JavaScript ran (check console for "Auto-wrapped" message)
+   - For manual: Ensure the modal has the correct structure with `fresh-modal__overlay` and `fresh-modal__close`
+2. **Check JavaScript**: Ensure `0-freshwater.js.liquid` is loaded
+3. **Check Console**: Open browser console for errors
+
+### Modal Content Not Visible
+
+1. **Check Z-Index**: Ensure no other elements have a higher z-index than the modal (9999)
+2. **Check CSS**: Ensure the modal has `display: flex` when active
+3. **Check Content**: Ensure content is inside `fresh-modal__content` (auto-wrap handles this)
+
+### Auto-Wrap Not Working
+
+1. **Check Class**: Ensure you added `fresh-modal-content` (not `fresh-modal`)
+2. **Check Timing**: Auto-wrap runs on page load - ensure your block is in the DOM
+3. **Check Console**: Look for "Auto-wrapped" log message (requires `?debug_mode=true`)
+4. **Check ID**: Ensure the block has an ID (custom or auto-generated)
 
 **Browser Support:**
+
 - Modern browsers (Chrome, Firefox, Safari, Edge)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 - Requires JavaScript enabled
 
 **Accessibility:**
+
 - Close button has `aria-label="Close modal"`
 - Focus is managed (focus moves to close button when modal opens)
 - ESC key support for keyboard navigation
@@ -867,53 +952,70 @@ The system automatically handles:
 
 **Examples:**
 
-**Simple Text Modal:**
-```liquid
-<div id="welcome-modal" class="fresh-modal">
-    <div class="fresh-modal__overlay"></div>
-    <div class="fresh-modal__content">
-        <button class="fresh-modal__close" aria-label="Close modal"></button>
-        <h2>Welcome!</h2>
-        <p>Thank you for visiting our site.</p>
-    </div>
-</div>
-```
+### Simple Text Modal (Auto-Wrap Method)
 
-**Form Modal:**
-```liquid
-<div id="contact-form-modal" class="fresh-modal">
-    <div class="fresh-modal__overlay"></div>
-    <div class="fresh-modal__content">
-        <button class="fresh-modal__close" aria-label="Close modal"></button>
-        <h2>Contact Us</h2>
-        <form>
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="Email">
-            <textarea placeholder="Message"></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </div>
-</div>
-```
+**HTML Block:**
+- **HTML Content**: 
+  ```html
+  <h2>Welcome!</h2>
+  <p>Thank you for visiting our site.</p>
+  ```
+- **Custom Class Names**: `fresh-modal-content`
+- **Unique ID**: `welcome-modal`
 
-**Image Gallery Modal:**
-```liquid
-<div id="gallery-modal" class="fresh-modal">
-    <div class="fresh-modal__overlay"></div>
-    <div class="fresh-modal__content">
-        <button class="fresh-modal__close" aria-label="Close modal"></button>
-        <img src="{{ 'image.jpg' | asset_url }}" alt="Gallery Image">
-        <p>Image description</p>
-    </div>
-</div>
-```
+**Button Block:**
+- **Button Text**: "Open Welcome Modal"
+- **Button URL**: `#welcome-modal`
+- **Custom Class Names**: `fresh-modal-button`
+
+### Form Modal (Auto-Wrap Method)
+
+**Liquid Block:**
+- **Liquid Content**: 
+  ```liquid
+  <h2>Contact Us</h2>
+  <form>
+      <input type="text" placeholder="Name">
+      <input type="email" placeholder="Email">
+      <textarea placeholder="Message"></textarea>
+      <button type="submit">Send</button>
+  </form>
+  ```
+- **Custom Class Names**: `fresh-modal-content`
+- **Unique ID**: `contact-form-modal`
+
+**Button Block:**
+- **Button Text**: "Contact Us"
+- **Button URL**: `#contact-form-modal`
+- **Custom Class Names**: `fresh-modal-button`
+
+### Product Info Modal (Auto-Wrap with Liquid)
+
+**Liquid Block:**
+- **Liquid Content**: 
+  ```liquid
+  <h2>{{ product.title }}</h2>
+  <p>{{ product.description }}</p>
+  <p>Price: {{ product.price | money }}</p>
+  ```
+- **Custom Class Names**: `fresh-modal-content`
+- **Unique ID**: `product-info`
+
+**Button Block:**
+- **Button Text**: "View Product Details"
+- **Button URL**: `#product-info`
+- **Custom Class Names**: `fresh-modal-button`
 
 **Files Modified:**
+
 - `assets/0-freshwater.css.liquid` - Added modal CSS styles
-- `assets/0-freshwater.js.liquid` - Added modal JavaScript functionality
+- `assets/0-freshwater.js.liquid` - Added modal JavaScript functionality and auto-wrap feature
+- `snippets/0-block-html-1.liquid` - Fixed ID attribute handling
+- `snippets/0-block-liquid-1.liquid` - Fixed ID attribute handling
 
 **Version:**
-This documentation applies to Freshwater Modal System v1.0.0
+
+This documentation applies to Freshwater Modal System v1.1.0
 
 ---
 
