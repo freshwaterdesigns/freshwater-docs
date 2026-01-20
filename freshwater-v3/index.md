@@ -24,6 +24,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
   - [Desktop Freshwater Menu Navigation](#desktop-freshwater-menu-navigation)
   - [Freshwater Footer](#freshwater-footer)
   - [Freshwater Modal System](#freshwater-modal-system)
+  - [Inline Anchor Links (Smooth Scrolling)](#inline-anchor-links-smooth-scrolling)
 - [Important Notes](#️-important-notes)
 - [Version History](#-version-history)
 - [GitHub Repository Management](#-github-repository-management)
@@ -1016,6 +1017,142 @@ The system automatically handles:
 **Version:**
 
 This documentation applies to Freshwater Modal System v1.1.0
+
+### Inline Anchor Links (Smooth Scrolling)
+
+The Freshwater theme includes automatic smooth scrolling for inline anchor links. This allows you to create buttons that smoothly scroll to specific sections on the same page.
+
+**Features:**
+- **Automatic Smooth Scrolling**: Works with any anchor link (URL starting with `#`)
+- **Accessible**: Respects user's reduced motion preferences
+- **Simple Setup**: Just set a Custom ID on your section and link to it from a button
+
+**How It Works:**
+
+1. Set a Custom ID on the target section (in Global Settings)
+2. Set the button URL to `#your-section-id`
+3. When clicked, the button smoothly scrolls to that section
+
+**Step-by-Step Setup:**
+
+1. **Set the Target Section ID**
+
+   Go to the section you want to scroll to:
+   - Scroll to the bottom of the section settings
+   - Find **GLOBAL SETTINGS**
+   - In **Custom ID**, enter a unique ID (e.g., `my-section`, `contact-form`, `product-details`)
+     - Use lowercase letters, numbers, and hyphens
+     - No spaces or special characters
+     - Must be unique on the page
+
+2. **Configure the Button**
+
+   Go to your button block settings:
+   - **Button URL**: Set to `#my-section` (matching the section's Custom ID, with `#` prefix)
+   - The button can be in any section on the same page
+
+3. **That's It!**
+
+   When the button is clicked:
+   - The page smoothly scrolls to the target section
+   - Respects accessibility preferences (instant scroll for reduced motion)
+   - Works automatically - no additional configuration needed
+
+**Important Notes:**
+
+- The Custom ID must match exactly (case-sensitive)
+- The button URL must start with `#` (e.g., `#my-section`)
+- Both the button and target section must be on the same page
+- The target section must have a Custom ID set in Global Settings
+- Smooth scrolling works with any link that has `href="#something"`, not just buttons
+
+**Examples:**
+
+**Example 1: Scroll to Contact Section**
+
+**Target Section (Contact Form):**
+- Go to **Contact Form** section → **GLOBAL SETTINGS**
+- **Custom ID**: `contact-form`
+
+**Button Block:**
+- **Button Text**: "Contact Us"
+- **Button URL**: `#contact-form`
+
+**Example 2: Scroll to Product Details**
+
+**Target Section (Product Details):**
+- Go to **Product Details** section → **GLOBAL SETTINGS**
+- **Custom ID**: `product-info`
+
+**Button Block:**
+- **Button Text**: "Learn More"
+- **Button URL**: `#product-info`
+
+**Example 3: Scroll to Hero Section**
+
+**Target Section (Hero):**
+- Go to **Hero** section → **GLOBAL SETTINGS**
+- **Custom ID**: `hero-section`
+
+**Button Block:**
+- **Button Text**: "Back to Top"
+- **Button URL**: `#hero-section`
+
+**Technical Details:**
+
+### How Smooth Scrolling Works
+
+The theme automatically detects anchor links (`href="#id"`) and:
+1. Finds the target element by ID using `document.getElementById()`
+2. Prevents the default browser jump behavior
+3. Smoothly animates the scroll to the target
+4. Respects `prefers-reduced-motion` for accessibility (instant scroll if enabled)
+
+### JavaScript Function
+
+- `freshSmoothScrollToInlineAnchors()` - Automatically initializes smooth scrolling for all anchor links on page load
+
+### CSS Classes
+
+No special CSS classes needed - smooth scrolling works automatically with any anchor link.
+
+**Troubleshooting:**
+
+### Button Doesn't Scroll
+
+1. **Check the ID**: Ensure the button URL (e.g., `#my-section`) matches the section's Custom ID exactly
+   - IDs are case-sensitive
+   - Must include the `#` in the URL
+2. **Check the Section ID**: Ensure the target section has a Custom ID set in Global Settings
+3. **Check the Page**: Ensure both button and target section are on the same page
+4. **Check Console**: Open browser console to see any error messages (add `?debug_mode=true` to URL)
+
+### Scroll is Jumpy (Not Smooth)
+
+1. **Check Reduced Motion**: User may have reduced motion enabled (this is intentional for accessibility)
+2. **Check JavaScript**: Ensure `0-freshwater.js.liquid` is loaded
+3. **Check Console**: Open browser console for errors
+
+**Browser Support:**
+
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+- Requires JavaScript enabled
+
+**Accessibility:**
+
+- Automatically respects `prefers-reduced-motion` media query
+- Instant scroll (no animation) for users who prefer reduced motion
+- Smooth scroll (500ms animation) for users without motion preferences
+- WCAG 2.2 compliant
+
+**Files Modified:**
+
+- `assets/0-freshwater.js.liquid` - Added smooth scrolling functionality
+
+**Documentation:**
+
+For more information on inline anchors and smooth scrolling, see the [Freshwater Inline Anchors documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/#inline-anchor-links-smooth-scrolling).
 
 ---
 
