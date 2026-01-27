@@ -13,6 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Featured collection block snippet:**
+  - Added `snippets/0-block-featured-collection-1.liquid` to encapsulate Dawn’s featured collection rendering with Freshwater block styling.
+- **0- sections integration:**
+  - Enabled `featured_collection` blocks in `sections/0-one-column-1.liquid`, `sections/0-two-column-1.liquid`, `sections/0-hero-1.liquid`, and `sections/0-hero-2.liquid`.
+  - Enabled `featured_collection_fw` block in `sections/0-main-product.liquid`.
+
+### Changed
+- **Featured collection block settings:**
+  - Removed header/description settings from featured collection blocks to align with Freshwater block styling.
+  - Added desktop/mobile controls for product title, price, and copy styling (color, font size/weight/family, line height, margin-bottom).
+
+### Removed
+- **Featured collection block options:**
+  - Removed `featured_collection` blocks from `sections/0-marquee-1.liquid`, `sections/0-multi-column-1.liquid`, `sections/0-header.liquid`, and `sections/0-footer.liquid`.
+
 ## [3.3.0] - 2025-01-28
 
 ### Added
@@ -184,19 +202,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Toggle (`fresh_footer_enable`) switches between default Dawn footer and Freshwater placeholder
     - Customize footer by editing `snippets/0-footer-freshwater.liquid` directly with HTML
     - All original Dawn footer settings (newsletter, social, payment, etc.) are preserved
-
----
-
-## [3.3.0] - TBD
-
-### Added
-- TBD
-
-### Changed
-- TBD
-
-### Fixed
-- TBD
 
 ---
 

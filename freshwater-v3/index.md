@@ -102,6 +102,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
   - `0-block-accordion-1.liquid`
   - `0-block-body-1.liquid`
   - `0-block-button-1.liquid`
+- `0-block-featured-collection-1.liquid`
   - `0-block-graphic-1.liquid`
   - `0-block-header-1.liquid`
   - `0-block-html-1.liquid`
