@@ -79,6 +79,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-freshwater.css.liquid` - Core Freshwater CSS
 - `0-client.js.liquid` - Client-specific JavaScript (editable)
 - `0-client.css.liquid` - Client-specific CSS (editable)
+- `0-component-cart-drawer.css` - Cart drawer styling (customized copy of Dawn)
 - `0-tiny-slider.min.js` / `0-tiny-slider.css` - Tiny-Slider carousel library (vanilla JS)
 - `0-lazyload.min.js` - Vanilla Lazyload library
 - `0-bootstrap.min-1.css` - Bootstrap CSS
@@ -98,6 +99,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
 - `0-icon-1.liquid` - Custom icon renderer
+- `0-cart-drawer.liquid` - Cart drawer markup (customized copy of Dawn)
 - `0-block-*` snippets - Custom block types for sections:
   - `0-block-accordion-1.liquid`
   - `0-block-body-1.liquid`

@@ -13,6 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.0] - 2026-01-30
+
+### Added
+- **Cart drawer subscription upsell:**
+  - New theme setting toggle for “Subscription Upgrade in Slideout Cart”
+  - Cart drawer now shows a subscription upgrade button for one-time items with selling plans
+  - Button label pulls percentage discounts from the first selling plan when available
+
+### Changed
+- **Cart drawer customization files:**
+  - Added `snippets/0-cart-drawer.liquid` for cart drawer markup
+  - Added `assets/0-component-cart-drawer.css` for cart drawer styling
+  - Cart drawer references updated to use the new `0-` prefixed files
+
 ## [3.3.0] - 2026-01-27
 
 ### Added
@@ -201,6 +215,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
 [3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
 [3.2.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.2.0
 [3.1.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.1.0
