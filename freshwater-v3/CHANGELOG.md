@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.4.0] - 2026-02-03
+## [3.5.0] - 2026-02-03
 
 ### Added
 - **Cart drawer subscription upsell:**
@@ -222,7 +222,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
+[3.5.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.0
 [3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
 [3.2.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.2.0
 [3.1.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.1.0
