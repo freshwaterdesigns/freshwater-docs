@@ -292,6 +292,9 @@ Check that all references point to `0-` prefixed files:
 7. **In `snippets/0-theme-freshwater-2.liquid`:**
    - Should reference `0-lazyload.min.js`, `0-freshwater.js`, `0-client.js`
 
+**Wiring-only Dawn edits (allowed exception):**
+- If you must minimally edit a Dawn file **only** to wire in a new `0-` Freshwater file (e.g., swap a render/include to a `0-` version), add that file to **Modified Dawn Files** above and keep the change documented in this upgrade step list.
+
 ### Step 10: Test the Installation
 
 1. Upload the theme to your Shopify store
