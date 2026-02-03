@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.5.0] - 2026-02-03
+## [3.4.0] - 2026-02-03
 
 ### Added
 - **Cart drawer subscription upsell:**
@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cart drawer references updated to use the new `0-` prefixed files
   - Updated cart drawer upsell styling and select control presentation
   - Added guard to ignore subscription select changes in cart quantity validation
+- **Header whitespace trimming:**
+  - Trimmed header whitespace to fix multiline support
 
 ## [3.3.0] - 2026-01-27
 
