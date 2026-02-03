@@ -13,19 +13,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.4.0] - 2026-01-30
+## [3.4.0] - 2026-02-03
 
 ### Added
 - **Cart drawer subscription upsell:**
   - New theme setting toggle for “Subscription Upgrade in Slideout Cart”
   - Cart drawer now shows a subscription upgrade button for one-time items with selling plans
-  - Button label pulls percentage discounts from the first selling plan when available
+  - Button label pulls percentage discounts for single-plan items
+  - Added subscription frequency dropdown when multiple plans exist
+- **Cart drawer free shipping bar:**
+  - New theme setting `fresh_free_shipping_threshold` to control the threshold
+  - Progress bar shows remaining amount and completion state
+  - Styles use Freshwater color variables in cart drawer
 
 ### Changed
 - **Cart drawer customization files:**
   - Added `snippets/0-cart-drawer.liquid` for cart drawer markup
   - Added `assets/0-component-cart-drawer.css` for cart drawer styling
   - Cart drawer references updated to use the new `0-` prefixed files
+  - Updated cart drawer upsell styling and select control presentation
+  - Added guard to ignore subscription select changes in cart quantity validation
 
 ## [3.3.0] - 2026-01-27
 

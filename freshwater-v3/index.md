@@ -4,7 +4,7 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.2.0
+# Freshwater v3.4.0
 
 **Based on Dawn 15.4.0**
 
@@ -70,7 +70,8 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Color scheme extensions (header, subheader, icons colors)
      - Typography settings
      - Custom section/block settings
-   - Updated theme version to show "15.4.0, Freshwater 3.2.0"
+     - Cart drawer enhancements (subscription upsell + free shipping threshold)
+   - Updated theme version to show "15.4.0, Freshwater 3.4.0"
 
 ### Custom Files (0- Prefixed)
 
@@ -126,7 +127,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.2.0
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.4.0
 
 Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.4.0:
 
@@ -239,7 +240,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.2.0"
+   "theme_version": "15.4.0, Freshwater 3.4.0"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -262,6 +263,7 @@ cp freshwater-v3/config/settings_schema.json your-dawn-theme/config/settings_sch
 
 **Important Freshwater Settings Added:**
 - `0 Button` - Button styling settings (3 button styles)
+- `0 Cart` - Cart drawer settings (subscription upsell toggle, free shipping threshold)
 - Color scheme extensions (header, subheader, icons)
 - Typography settings
 - Custom section/block settings
@@ -1261,6 +1263,6 @@ For issues or questions:
 ---
 
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.2.0
+**Freshwater Version:** 3.4.0
 
 {% endraw %}
