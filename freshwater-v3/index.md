@@ -322,6 +322,60 @@ After installation, configure:
 
 ---
 
+## 🔄 Upgrading Older Freshwater Themes to the Latest
+
+If you're upgrading an **existing Freshwater install** (not a fresh Dawn conversion), the goal is to overwrite core `0-` Freshwater files while preserving client overrides.
+
+### Assets
+- **Overwrite all `0-` assets** from the latest Freshwater release.
+- **Do NOT overwrite:** `0-client.css.liquid` and `0-client.js.liquid` (client customizations live here).
+- If a project has custom edits in `0-freshwater.css.liquid` or `0-freshwater.js.liquid`, move those edits into `0-client.*` before overwriting.
+
+### Config
+- **Do NOT overwrite** `config/settings_data.json` (client settings, colors, theme editor data).
+- **Overwrite or merge** `config/settings_schema.json` with the latest version.
+  - New schema fields (especially color scheme extensions) require manual values to be set in the Theme Editor after upgrade.
+
+### Layout
+- `layout/password.liquid` can be overwritten.
+- `layout/theme.liquid` can be overwritten, but check for:
+  - Custom `{% render '1-*' %}` includes
+  - Manually added tags (analytics, apps, etc.)
+
+### Locales
+- Safe to leave alone unless new schema labels were added.
+- If new settings/blocks were introduced, merge the locale keys so labels appear in the editor.
+
+### Sections
+- Overwrite all `0-` sections from the latest release.
+- Verify no one customized a `0-` section directly. Client changes should live in `1-` copies.
+
+### Snippets
+- Same rule as sections: overwrite `0-` snippets from latest.
+- Ensure customizations were made in `1-` snippet copies, not `0-`.
+
+### Templates
+- Usually safe to leave unchanged.
+- Manually review if new templates were added or if JSON templates now reference new sections/blocks.
+
+### Final sanity checks
+- Confirm all references point to:
+  - **`0-`** core Freshwater files
+  - **`1-`** client override files
+- Verify all `1-` references are still wired in after overwriting `0-` files.
+
+### Common files to double-check for overrides
+If you find custom edits in these, migrate them to `1-` (or `0-client.*`) before overwriting:
+- `0-freshwater.css.liquid` → move custom CSS to `0-client.css.liquid`
+- `0-freshwater.js.liquid` → move custom JS to `0-client.js.liquid`
+- `0-header.liquid` → create `1-header.liquid`
+- `0-theme-freshwater-1.liquid` → create `1-theme-freshwater-1.liquid`
+- `0-theme-submenu-freshwater.liquid` → create `1-theme-submenu-freshwater.liquid`
+- `0-footer-freshwater.liquid` → create `1-footer-freshwater.liquid`
+- `0-cart-drawer.liquid` / `0-component-cart-drawer.css` → create `1-` copies if customized
+
+---
+
 ## 📁 File Structure Overview
 
 ```
