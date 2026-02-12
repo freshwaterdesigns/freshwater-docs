@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.1] - 2026-02-12
+
+### Fixed
+- **List block icon scaling:** List block icons (SVGs) now scale correctly with the "Icon Width" setting. Added `viewBox` to all list-compatible icons in `snippets/0-icon-1.liquid` (checkmark, arrow, caret, plus variants). Updated CSS in `snippets/0-block-list-1.liquid` so SVG icons fill the icon container when icon width is set (uses `body.fresh` specificity, no `!important`).
+
+### Changed
+- **Cart drawer CSS:** Replaced `!important` in `assets/0-component-cart-drawer.css` dynamic checkout layout rules with `body.fresh cart-drawer` selector specificity (AI guideline compliance).
+
+---
+
 ## [3.4.0] - 2026-02-03
 
 ### Added
@@ -224,6 +234,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.4.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.1
 [3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
 [3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
 [3.2.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.2.0
