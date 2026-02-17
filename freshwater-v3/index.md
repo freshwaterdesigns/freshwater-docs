@@ -18,6 +18,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
 - [File Structure](#-file-structure-overview)
 - [Key Features](#-key-features)
 - [CSS Architecture](#-css-architecture)
+  - [Responsive Video Embed](#responsive-video-embed)
 - [Customizing Navigation](#-customizing-navigation)
   - [Mobile Drawer Navigation](#mobile-drawer-navigation)
   - [Desktop Mega Menu Navigation](#desktop-mega-menu-navigation)
@@ -526,6 +527,36 @@ Use inline CSS styles directly in the "Overlay" Liquid field to position your co
 - `snippets/0-slide-1.liquid` - Overlay rendering logic
 
 **Documentation:** See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for detailed usage examples and additional positioning options.
+
+### Responsive Video Embed {#responsive-video-embed}
+
+The `.fresh-video-embed` utility makes embedded iframes (YouTube, Vimeo, etc.) responsive—filling the parent container on desktop and scaling appropriately on mobile. Wrap the iframe in a container with this class.
+
+**Usage:**
+
+```liquid
+<div class="fresh-video-embed">
+    {{ article.metafields.custom.youtube_embed.value }}
+</div>
+```
+
+**Aspect ratio classes:**
+
+| Class | Aspect Ratio |
+|-------|--------------|
+| `.fresh-video-embed` | 16:9 (default) |
+| `.fresh-video-embed--4-3` | 4:3 |
+| `.fresh-video-embed--1-1` | 1:1 (square) |
+
+**Example with 4:3 aspect ratio:**
+
+```liquid
+<div class="fresh-video-embed fresh-video-embed--4-3">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" ...></iframe>
+</div>
+```
+
+**File:** `assets/0-freshwater.css.liquid`
 
 ---
 
