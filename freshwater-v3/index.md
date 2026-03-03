@@ -24,6 +24,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
   - [Desktop Mega Menu Navigation](#desktop-mega-menu-navigation)
   - [Desktop Freshwater Menu Navigation](#desktop-freshwater-menu-navigation)
   - [Freshwater Footer](#freshwater-footer)
+  - [Account icon (shopify-account)](#account-icon-shopify-account)
   - [Freshwater Modal System](#freshwater-modal-system)
   - [Inline Anchor Links (Smooth Scrolling)](#inline-anchor-links-smooth-scrolling)
 - [Important Notes](#️-important-notes)
@@ -61,6 +62,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
    - Added `0-theme-freshwater-1` and `0-theme-freshwater-2` snippets
    - Added custom body classes (`fresh`, template-specific classes)
    - Changed `{% section '0-footer' %}` to `{% sections 'footer-group' %}` (enables footer section group support)
+   - Added Storefront Web Components script and `<shopify-store>` wrapper for `<shopify-account>`; optional customer access token applied from window/sessionStorage/meta
 
 2. **`sections/header.liquid`**
    - Changed `render 'header-mega-menu'` to `render '0-header-mega-menu'`
@@ -72,6 +74,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Typography settings
      - Custom section/block settings
      - Cart drawer enhancements (subscription upsell + free shipping threshold)
+   - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
    - Updated theme version to show "15.4.0, Freshwater 3.5.0"
 
 ### Custom Files (0- Prefixed)
@@ -95,7 +98,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-header-freshwater-menu.liquid` - Custom Freshwater menu with empty dropdowns (adds `{% render '0-theme-submenu-freshwater', link: link %}`)
 - `0-theme-submenu.liquid` - Custom submenu renderer for mega menu (displays `mega_menu_nav_item` blocks)
 - `0-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
-- `0-header-drawer.liquid` - Mobile drawer navigation renderer
+- `0-header-drawer.liquid` - Mobile drawer navigation renderer (includes `<shopify-account>` in utility links)
 - `0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
 - `0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
 - `0-json-ld-org.liquid` - Organization structured data
@@ -117,7 +120,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-slide-1.liquid` / `0-slide-2.liquid` - Custom slide templates
 
 #### Sections
-- `0-header.liquid` - Custom header section with Freshwater menu options and mobile drawer footer toggle
+- `0-header.liquid` - Custom header section with Freshwater menu options, `<shopify-account>` Storefront Web Component for account icon, and mobile drawer footer toggle
 - `0-hero-1.liquid` / `0-hero-2.liquid` - Custom hero sections
 - `0-main-product.liquid` - Custom product page section
 - `0-marquee-1.liquid` - Custom marquee section
@@ -725,6 +728,26 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 - All footer section settings (color scheme, padding, margin) still apply to the Freshwater footer
 - The footer uses the same color scheme pattern as other custom sections (`color-{{ section.settings.color_scheme--md }}--md color-{{ section.settings.color_scheme--sm }}--sm`)
 - To customize the footer, edit `snippets/0-footer-freshwater.liquid` directly with your HTML
+
+### Account icon (shopify-account)
+
+The header account icon uses Shopify’s **Storefront Web Component** `<shopify-account>`. Clicking the icon opens an account sheet with sign-in options and a menu (e.g. Orders, Profile) when signed in.
+
+**Requirements:**
+- Customer accounts enabled in the store
+- A menu for the account sheet: create a menu (e.g. **Customer account main menu**) under **Content → Menus** and add links (Orders, Profile, etc.). The theme uses the handle `customer-account-main-menu`; ensure your menu’s handle matches (Shopify generates it from the menu name).
+
+**Optional: Storefront API public token**
+
+To show signed-in state and full account data in the component (e.g. avatar, name), you can add a Storefront API public access token:
+
+1. In Shopify admin: **Settings → Apps and sales channels → Develop apps** (or **Manage API access**).
+2. Create an app (or use an existing one) and add a **Storefront API** integration / create a **Headless** sales channel if needed.
+3. Copy the **Storefront API public access token** (sometimes labeled “Public access token” for the Headless channel).
+4. In the theme: **Theme Editor → Theme settings** (gear icon). Find the **Storefront account component** section and paste the token into **Storefront API public access token (optional)**.
+5. Save. The account component can then display signed-in state when the store uses new customer accounts and the token is present.
+
+Leave the setting blank if you do not need signed-in state or full account data in the header. Custom login flows that set a customer access token (e.g. `window.__SHOPIFY_CUSTOMER_ACCESS_TOKEN__` or `sessionStorage`) should clear it on logout.
 
 ### Freshwater Modal System
 
