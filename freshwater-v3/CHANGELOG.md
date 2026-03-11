@@ -189,7 +189,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Colors applied via Dawn's color scheme classes (`.color-scheme-1`, `.color-scheme-2`, etc.)
     - Structural styles (border-radius, padding, font-size) applied within breakpoint media queries
     - Ensures consistent button appearance throughout the theme
-    - Override in `assets/0-client.css.liquid` for customizations
+    - Override in `assets/1-client.css.liquid` for customizations
 - **Settings schema changes:**
   - **Updated `page_width` range:** Changed from `min: 1000, max: 1600, step: 100, default: 1200` to `min: 640, max: 3840, step: 640, default: 1920`
   - New range uses 640px increments: 640, 1280, 1920, 2560, 3200, 3840
@@ -223,13 +223,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Added Mobile Drawer Footer Toggle**
     - Added toggle (`fresh_mobile_drawer_footer_enable`) in header settings under "Mobile logo position"
     - When enabled, replaces mobile drawer menu content with Freshwater footer placeholder
-    - Created `snippets/0-header-drawer-freshwater.liquid` for custom mobile drawer footer HTML
-    - Customize by editing `snippets/0-header-drawer-freshwater.liquid` directly with HTML
+    - Created `snippets/1-header-drawer-freshwater.liquid` for custom mobile drawer footer HTML
+    - Customize by editing `snippets/1-header-drawer-freshwater.liquid` directly with HTML
   - **Simplified Freshwater Footer**
     - Removed all custom footer blocks from `sections/0-footer.liquid`
-    - Footer now uses simple HTML placeholder (`snippets/0-footer-freshwater.liquid`)
+    - Footer now uses simple HTML placeholder (`snippets/1-footer-freshwater.liquid`)
     - Toggle (`fresh_footer_enable`) switches between default Dawn footer and Freshwater placeholder
-    - Customize footer by editing `snippets/0-footer-freshwater.liquid` directly with HTML
+    - Customize footer by editing `snippets/1-footer-freshwater.liquid` directly with HTML
     - All original Dawn footer settings (newsletter, social, payment, etc.) are preserved
 
 ---

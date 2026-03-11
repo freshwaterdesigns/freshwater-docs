@@ -82,8 +82,8 @@ These native Dawn files have been modified and should be tracked for upgrades:
 #### Assets
 - `0-freshwater.js.liquid` - Core Freshwater JavaScript with debug utility (vanilla JS, no jQuery dependency)
 - `0-freshwater.css.liquid` - Core Freshwater CSS
-- `0-client.js.liquid` - Client-specific JavaScript (editable)
-- `0-client.css.liquid` - Client-specific CSS (editable)
+- `1-client.js.liquid` - Client-specific JavaScript (editable)
+- `1-client.css.liquid` - Client-specific CSS (editable)
 - `0-component-cart-drawer.css` - Cart drawer styling (customized copy of Dawn)
 - `0-tiny-slider.min.js` / `0-tiny-slider.css` - Tiny-Slider carousel library (vanilla JS)
 - `0-lazyload.min.js` - Vanilla Lazyload library
@@ -95,12 +95,12 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-theme-freshwater-1.liquid` - Freshwater head includes (fonts, Bootstrap, Tiny-Slider, custom CSS)
 - `0-theme-freshwater-2.liquid` - Freshwater body includes (Lazyload, custom JS)
 - `0-header-mega-menu.liquid` - Custom mega menu with submenu support (adds `{% render '0-theme-submenu', link: link %}`)
-- `0-header-freshwater-menu.liquid` - Custom Freshwater menu with empty dropdowns (adds `{% render '0-theme-submenu-freshwater', link: link %}`)
+- `0-header-freshwater-menu.liquid` - Custom Freshwater menu with empty dropdowns (adds `{% render '1-theme-submenu-freshwater', link: link %}`)
 - `0-theme-submenu.liquid` - Custom submenu renderer for mega menu (displays `mega_menu_nav_item` blocks)
-- `0-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
+- `1-theme-submenu-freshwater.liquid` - Custom submenu renderer for Freshwater menu (hardcoded conditionals per menu handle)
 - `0-header-drawer.liquid` - Mobile drawer navigation renderer (includes `<shopify-account>` in utility links)
-- `0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
-- `0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
+- `1-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
+- `1-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
 - `0-icon-1.liquid` - Custom icon renderer
@@ -154,8 +154,8 @@ cp freshwater-v3/assets/0-* your-dawn-theme/assets/
 **Key assets to add:**
 - `0-freshwater.js.liquid`
 - `0-freshwater.css.liquid`
-- `0-client.js.liquid`
-- `0-client.css.liquid`
+- `1-client.js.liquid`
+- `1-client.css.liquid`
 - `0-tiny-slider.min.js`
 - `0-tiny-slider.css`
 - `0-lazyload.min.js`
@@ -178,9 +178,9 @@ cp freshwater-v3/snippets/0-* your-dawn-theme/snippets/
 - `0-header-mega-menu.liquid`
 - `0-header-freshwater-menu.liquid`
 - `0-theme-submenu.liquid`
-- `0-theme-submenu-freshwater.liquid`
+- `1-theme-submenu-freshwater.liquid`
 - `0-header-drawer.liquid`
-- `0-footer-freshwater.liquid`
+- `1-footer-freshwater.liquid`
 - `0-json-ld-org.liquid`
 - `0-json-ld-prod.liquid`
 - All `0-block-*` snippets
@@ -284,19 +284,19 @@ Check that all references point to `0-` prefixed files:
    - Should conditionally reference `0-header-mega-menu` or `0-header-freshwater-menu` based on menu type setting
 
 3. **In `sections/0-footer.liquid`:**
-   - Should reference `0-footer-freshwater` snippet when `fresh_footer_enable` setting is `true`
+   - Should reference `1-footer-freshwater` snippet when `fresh_footer_enable` setting is `true`
 
 4. **In `snippets/0-header-mega-menu.liquid`:**
    - Should reference `0-theme-submenu`
 
 5. **In `snippets/0-header-freshwater-menu.liquid`:**
-   - Should reference `0-theme-submenu-freshwater`
+   - Should reference `1-theme-submenu-freshwater`
 
 6. **In `snippets/0-theme-freshwater-1.liquid`:**
-   - Should reference `0-tiny-slider.*`, `0-bootstrap.*`, `0-freshwater.css`, `0-client.css`
+   - Should reference `0-tiny-slider.*`, `0-bootstrap.*`, `0-freshwater.css`, `1-client.css`
 
 7. **In `snippets/0-theme-freshwater-2.liquid`:**
-   - Should reference `0-lazyload.min.js`, `0-freshwater.js`, `0-client.js`
+   - Should reference `0-lazyload.min.js`, `0-freshwater.js`, `1-client.js`
 
 **Wiring-only Dawn edits (allowed exception):**
 - If you must minimally edit a Dawn file **only** to wire in a new `0-` Freshwater file (e.g., swap a render/include to a `0-` version), add that file to **Modified Dawn Files** above and keep the change documented in this upgrade step list.
@@ -322,7 +322,7 @@ After installation, configure:
 4. **Menu:** 
    - Select desktop menu type (Dropdown, Mega menu, Drawer, or Freshwater)
    - Add mega menu nav item blocks if using mega menu
-   - Customize Freshwater menu dropdowns in `0-theme-submenu-freshwater.liquid` if using Freshwater menu
+   - Customize Freshwater menu dropdowns in `1-theme-submenu-freshwater.liquid` if using Freshwater menu
 
 ---
 
@@ -332,8 +332,8 @@ If you're upgrading an **existing Freshwater install** (not a fresh Dawn convers
 
 ### Assets
 - **Overwrite all `0-` assets** from the latest Freshwater release.
-- **Do NOT overwrite:** `0-client.css.liquid` and `0-client.js.liquid` (client customizations live here).
-- If a project has custom edits in `0-freshwater.css.liquid` or `0-freshwater.js.liquid`, move those edits into `0-client.*` before overwriting.
+- **Do NOT overwrite:** `1-client.css.liquid` and `1-client.js.liquid` (client customizations live here).
+- If a project has custom edits in `0-freshwater.css.liquid` or `0-freshwater.js.liquid`, move those edits into `1-client.*` before overwriting.
 
 ### Config
 - **Do NOT overwrite** `config/settings_data.json` (client settings, colors, theme editor data).
@@ -369,13 +369,12 @@ If you're upgrading an **existing Freshwater install** (not a fresh Dawn convers
 - Verify all `1-` references are still wired in after overwriting `0-` files.
 
 ### Common files to double-check for overrides
-If you find custom edits in these, migrate them to `1-` (or `0-client.*`) before overwriting:
-- `0-freshwater.css.liquid` → move custom CSS to `0-client.css.liquid`
-- `0-freshwater.js.liquid` → move custom JS to `0-client.js.liquid`
+If you find custom edits in these, migrate them to `1-` (or `1-client.*`) before overwriting:
+- `0-freshwater.css.liquid` → move custom CSS to `1-client.css.liquid`
+- `0-freshwater.js.liquid` → move custom JS to `1-client.js.liquid`
 - `0-header.liquid` → create `1-header.liquid`
 - `0-theme-freshwater-1.liquid` → create `1-theme-freshwater-1.liquid`
-- `0-theme-submenu-freshwater.liquid` → create `1-theme-submenu-freshwater.liquid`
-- `0-footer-freshwater.liquid` → create `1-footer-freshwater.liquid`
+- `1-theme-submenu-freshwater.liquid`, `1-footer-freshwater.liquid` → customize in place (already `1-` files)
 - `0-cart-drawer.liquid` / `0-component-cart-drawer.css` → create `1-` copies if customized
 
 ---
@@ -480,7 +479,7 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 
 **File:** `assets/0-freshwater.css.liquid` (lines 323-537)
 
-**Note:** To customize Dawn button styles, override them in `assets/0-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
+**Note:** To customize Dawn button styles, override them in `assets/1-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
 
 ### Overlay Positioning {#overlay-positioning-classes}
 
@@ -571,7 +570,7 @@ The mobile drawer navigation can display either the default Dawn menu navigation
 
 **Files:**
 - `snippets/0-header-drawer.liquid` - Mobile drawer renderer
-- `snippets/0-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
+- `snippets/1-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
 
 **How It Works:**
 
@@ -584,7 +583,7 @@ The mobile drawer navigation can display either the default Dawn menu navigation
    - Go to **Theme Editor** → **Header** section
    - Under **Freshwater Mobile Drawer Menu**, check **Enable Freshwater Mobile Drawer Menu**
    - When enabled, the mobile drawer content is replaced with a custom Freshwater footer placeholder
-   - Edit `snippets/0-header-drawer-freshwater.liquid` to customize the footer content with your HTML
+   - Edit `snippets/1-header-drawer-freshwater.liquid` to customize the footer content with your HTML
 
 **Note:** The drawer is rendered by `sections/0-header.liquid` which calls `render '0-header-drawer'`.
 
@@ -631,7 +630,7 @@ The desktop mega menu uses a block-based system that can be configured through t
 
 4. **Styling:**
    - Base styles for `.mega-menu-submenu` and `.mega-menu-submenu__item` are defined in `assets/0-freshwater.css.liquid` (lines 682-699)
-   - To customize the appearance, override these styles in `assets/0-client.css.liquid`
+   - To customize the appearance, override these styles in `assets/1-client.css.liquid`
    - Available classes:
      - `.mega-menu-submenu` - Container for all navigation cards
      - `.mega-menu-submenu__item` - Individual navigation card wrapper
@@ -649,7 +648,7 @@ The Freshwater desktop menu provides a customizable dropdown system where each m
 **Files:**
 - `sections/0-header.liquid` - Header section that conditionally renders the Freshwater menu (calls `render '0-header-freshwater-menu'`)
 - `snippets/0-header-freshwater-menu.liquid` - Main Freshwater menu structure that renders menu links with empty dropdowns
-- `snippets/0-theme-submenu-freshwater.liquid` - Custom submenu content renderer with hardcoded conditionals for each menu handle
+- `snippets/1-theme-submenu-freshwater.liquid` - Custom submenu content renderer with hardcoded conditionals for each menu handle
 
 **How to Update:**
 
@@ -658,7 +657,7 @@ The Freshwater desktop menu provides a customizable dropdown system where each m
    - Set **Desktop menu type** to **Freshwater**
 
 2. **Customize Dropdown Content:**
-   - Edit `snippets/0-theme-submenu-freshwater.liquid`
+   - Edit `snippets/1-theme-submenu-freshwater.liquid`
    - Add conditionals for each menu item handle:
      ```liquid
      {%- if link_handle == 'your-menu-handle' -%}
@@ -672,20 +671,20 @@ The Freshwater desktop menu provides a customizable dropdown system where each m
 
 3. **How It Works:**
    - When a menu item has child links, `0-header-freshwater-menu.liquid` renders an empty dropdown container
-   - It calls `{% render '0-theme-submenu-freshwater', link: link %}` to inject custom content
-   - `0-theme-submenu-freshwater.liquid` receives the `link` object and checks `link.handle` against hardcoded conditionals
+   - It calls `{% render '1-theme-submenu-freshwater', link: link %}` to inject custom content
+   - `1-theme-submenu-freshwater.liquid` receives the `link` object and checks `link.handle` against hardcoded conditionals
    - Matching conditionals render their custom content
    - Unlike the mega menu, the Freshwater menu does NOT render standard menu child links - only custom content
 
 4. **Styling:**
    - The Freshwater menu uses the same CSS as the mega menu (`component-mega-menu.css`)
-   - Customize dropdown content styling in `assets/0-client.css.liquid`
+   - Customize dropdown content styling in `assets/1-client.css.liquid`
    - The dropdown container uses the `.mega-menu__content` class
 
 **Note:** 
 - The Freshwater menu is only displayed when **Header** → **Desktop menu type** is set to **Freshwater** in the theme settings
 - The menu item must have child links for the dropdown to appear (even though child links aren't displayed)
-- Each dropdown starts completely empty - all content must be added via `0-theme-submenu-freshwater.liquid`
+- Each dropdown starts completely empty - all content must be added via `1-theme-submenu-freshwater.liquid`
 
 ### Freshwater Footer
 
@@ -693,7 +692,7 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 
 **Files:**
 - `sections/0-footer.liquid` - Custom footer section that conditionally renders Freshwater footer placeholder or default footer
-- `snippets/0-footer-freshwater.liquid` - Custom Freshwater footer content renderer (HTML placeholder by default)
+- `snippets/1-footer-freshwater.liquid` - Custom Freshwater footer content renderer (HTML placeholder by default)
 - `layout/theme.liquid` - Updated to render `{% sections 'footer-group' %}` (enables footer section group support)
 
 **How to Update:**
@@ -704,20 +703,20 @@ The Freshwater footer provides a simple placeholder system that can replace the 
    - The default footer will be replaced with the Freshwater footer placeholder
 
 2. **Customize Footer Content:**
-   - Edit `snippets/0-footer-freshwater.liquid` to add your custom HTML footer content
+   - Edit `snippets/1-footer-freshwater.liquid` to add your custom HTML footer content
    - The placeholder file contains a simple structure that you can replace with your own HTML
    - The footer container uses the `.footer` class and supports separate desktop (`color_scheme--md`) and mobile (`color_scheme--sm`) color scheme settings
    - The footer section has `id="freshSection--{{ section.id }}"` for CSS targeting
 
 3. **How It Works:**
    - `0-footer.liquid` checks if `section.settings.fresh_footer_enable` is `true`
-   - If enabled, it renders the footer container and calls `{% render '0-footer-freshwater', section: section %}`
-   - `0-footer-freshwater.liquid` renders your custom HTML content
+   - If enabled, it renders the footer container and calls `{% render '1-footer-freshwater', section: section %}`
+   - `1-footer-freshwater.liquid` renders your custom HTML content
    - If disabled (default), it renders the standard Dawn footer with all blocks and settings
    - The footer section maintains all original Dawn footer settings (newsletter, social, payment, etc.) even when Freshwater footer is enabled
 
 4. **Styling:**
-   - Customize footer styling in `assets/0-client.css.liquid`
+   - Customize footer styling in `assets/1-client.css.liquid`
    - The footer container uses the `.footer` class and supports separate desktop (`color_scheme--md`) and mobile (`color_scheme--sm`) color scheme settings
    - The footer section has `id="freshSection--{{ section.id }}"` for block-specific CSS targeting
    - Use `#freshSection--{{ section.id }}` selectors for section-specific styling
@@ -727,7 +726,7 @@ The Freshwater footer provides a simple placeholder system that can replace the 
 - When enabled, it completely replaces the default footer content with a simple HTML placeholder
 - All footer section settings (color scheme, padding, margin) still apply to the Freshwater footer
 - The footer uses the same color scheme pattern as other custom sections (`color-{{ section.settings.color_scheme--md }}--md color-{{ section.settings.color_scheme--sm }}--sm`)
-- To customize the footer, edit `snippets/0-footer-freshwater.liquid` directly with your HTML
+- To customize the footer, edit `snippets/1-footer-freshwater.liquid` directly with your HTML
 
 ### Account icon (shopify-account)
 
@@ -903,7 +902,7 @@ You can customize the modal content using standard CSS. The modal content contai
 
 ### Custom CSS Overrides
 
-You can override modal styles in `0-client.css.liquid`:
+You can override modal styles in `1-client.css.liquid`:
 
 ```css
 /* Customize modal content */
