@@ -101,7 +101,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-header-drawer.liquid` - Mobile drawer navigation renderer (includes `<shopify-account>` in utility links)
 - `1-header-drawer-freshwater.liquid` - Custom Freshwater mobile drawer menu placeholder
 - `1-footer-freshwater.liquid` - Custom Freshwater footer content renderer (placeholder by default)
-- `1-card-product.liquid` - Client product card snippet (e.g. short description metafield `product.metafields.descriptors.short_description`); used by all product grids when sections render `1-card-product`
+- `1-card-product.liquid` - Client product card snippet (customize for client-specific grid content); used by all product grids when sections render `1-card-product`
 - `0-json-ld-org.liquid` - Organization structured data
 - `0-json-ld-prod.liquid` - Product structured data
 - `0-icon-1.liquid` - Custom icon renderer
@@ -370,7 +370,7 @@ If you're upgrading an **existing Freshwater install** (not a fresh Dawn convers
 - Verify all `1-` references are still wired in after overwriting `0-` files.
 
 ### Product grid card (1-card-product)
-After overwriting theme files from a new Dawn or Freshwater release, product grids must again use the client card snippet so that short description (and other client customizations) appear. In each of the following files, change `{% render 'card-product'` to `{% render '1-card-product'` (same parameters; only the snippet name changes):
+After overwriting theme files from a new Dawn or Freshwater release, product grids must again use the client card snippet so that client customizations appear. In each of the following files, change `{% render 'card-product'` to `{% render '1-card-product'` (same parameters; only the snippet name changes):
 
 - `sections/main-collection-product-grid.liquid`
 - `sections/main-search.liquid`
@@ -381,7 +381,7 @@ After overwriting theme files from a new Dawn or Freshwater release, product gri
 - `sections/collage.liquid`
 - `snippets/0-block-featured-collection-1.liquid`
 
-Do **not** overwrite `snippets/1-card-product.liquid` (client product card with short description metafield and other customizations).
+Do **not** overwrite `snippets/1-card-product.liquid` (client product card and customizations).
 
 ### Common files to double-check for overrides
 If you find custom edits in these, migrate them to `1-` (or `1-client.*`) before overwriting:
