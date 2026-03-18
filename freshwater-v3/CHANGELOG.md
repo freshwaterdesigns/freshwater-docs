@@ -13,6 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.2] - 2026-03-18
+
+### Added
+- **Hero (FW) and Hero Carousel (FW) width controls:** Replaced the "Hero image full width" checkbox with desktop and mobile **Width** dropdowns (X Small, Small, Standard, Large, X Large, Full Width, Full Bleed), matching the pattern used in Two Column and other sections. Full Bleed spans edge-to-edge beyond page width; Full Width uses container-fluid within page width (distinct from X Large).
+
+### Changed
+- **Hero section layout:** When width is not full-bleed, the hero figure is centered on the page. Hero content box is capped at page-width only when the hero is Full Bleed at that breakpoint; when the hero image is narrower, the text box is constrained to the hero column and positioned using the existing overlay settings within that area. Full Width now uses container-fluid for the figure constraint (consistent with Two Column) so it is visually wider than X Large.
+
+### Fixed
+- **Hero image on narrow mobile width (e.g. X Small):** Hero image no longer disappeared or appeared clipped when mobile width was set to X Small or other narrow options. Fixes include: constraining image and picture to the column (min-width: 0, width chain), flex-shrink: 0 and align-self: flex-start so the figure sizes to the image, and on mobile when the content box is set to "above" or "below" (not "overlay"), the box wrapper now stacks in the flex layout instead of overlaying the image so the image remains visible.
+
+---
+
 ## [3.4.1] - 2026-02-12
 
 ### Fixed
