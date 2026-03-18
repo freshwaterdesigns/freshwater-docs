@@ -113,6 +113,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-block-featured-collection-1.liquid`
   - `0-block-graphic-1.liquid`
   - `0-block-header-1.liquid`
+  - `0-block-metafield-title-1.liquid` – Single-line title block with Connect to dynamic source (e.g. page/product title, metafields)
   - `0-block-html-1.liquid`
   - `0-block-liquid-1.liquid`
   - `0-block-list-1.liquid`
@@ -362,6 +363,7 @@ If you're upgrading an **existing Freshwater install** (not a fresh Dawn convers
 ### Templates
 - Usually safe to leave unchanged.
 - Manually review if new templates were added or if JSON templates now reference new sections/blocks.
+- Freshwater customizes `templates/page.json` (default page uses One Column FW with Metafield Title + Body blocks); use the theme’s version when upgrading.
 
 ### Final sanity checks
 - Confirm all references point to:
@@ -414,12 +416,16 @@ freshwater-v3/
 │   ├── 0-*                   # Freshwater custom snippets
 │   └── [Dawn snippets]       # Unmodified Dawn snippets (except header-mega-menu reference)
 └── templates/
-    └── [Dawn templates]      # Unmodified Dawn templates
+    ├── page.json             # Custom (uses One Column FW with Metafield Title + Body blocks)
+    └── [Dawn templates]      # Other templates unmodified or custom per theme
 ```
 
 ---
 
 ## 🔧 Key Features
+
+### Default page template (One Column FW)
+The default page template uses the **One Column (FW)** section with a **Metafield Title** block and a **Body** block pre-filled from the page’s title and content. Merchants can edit the page in the theme editor by adding or reordering blocks (Header, Metafield Title, Body, Button, Graphic, Video, etc.) and changing section settings. Other page templates (e.g. `page.contact.json`) are unchanged and can be switched to One Column or other FW sections later if desired.
 
 ### Debug Utility
 

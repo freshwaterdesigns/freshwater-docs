@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.4.3] - 2026-03-19
+
+### Added
+- **Metafield Title block:** New block type for single-line titles that support **Connect to dynamic source** (e.g. page title, product title, metafields). Available in One Column (FW), Two Column (FW), Hero (FW), and Main Product (FW) sections. Uses the same styling options as the Header block (style, tag type h1–h6/div/span, colors, alignment, typography). Snippet: `0-block-metafield-title-1.liquid`. On Hero Carousel (FW) and Multi-Column (FW), the Slide block has an optional **Title (dynamic source)** text setting that, when set, shows instead of the multiline Header.
+- **Default page template (One Column FW):** The default page template (`templates/page.json`) now uses the **One Column (FW)** section instead of the native Page section. Two blocks are pre-configured: a **Metafield Title** block and a **Body** block whose content is resolved from the current page’s title and content when the template stores the Liquid placeholders `{{ page.title }}` and `{{ page.content }}`. Merchants can add, remove, or reorder blocks (Header, Body, Button, Graphic, Video, etc.) and adjust section settings as with any One Column section.
+
+### Changed
+- **Default page template:** Replaced `main-page` section with `0-one-column-1` in `templates/page.json`. Section settings use schema defaults (no overrides in the template).
+
+---
+
 ## [3.4.2] - 2026-03-18
 
 ### Added
