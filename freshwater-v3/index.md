@@ -127,7 +127,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-header.liquid` - Custom header section with Freshwater menu options, `<shopify-account>` Storefront Web Component for account icon, and mobile drawer footer toggle
 - `0-hero-1.liquid` / `0-hero-2.liquid` - Custom hero sections
 - `0-main-product.liquid` - Custom product page section
-- `0-marquee-1.liquid` - Custom marquee section
+- `0-marquee-2.liquid` - Scrolling marquee (**Marquee (FW)** in the theme editor). The legacy `0-marquee-1` marquee section was removed; re-add the section in the customizer on themes that still referenced the old file.
 - `0-multi-column-1.liquid` - Custom multi-column section
 - `0-one-column-1.liquid` - Custom one-column section
 - `0-two-column-1.liquid` - Custom two-column section
@@ -204,7 +204,7 @@ cp freshwater-v3/sections/0-* your-dawn-theme/sections/
 - `0-hero-1.liquid`
 - `0-hero-2.liquid`
 - `0-main-product.liquid`
-- `0-marquee-1.liquid`
+- `0-marquee-2.liquid` (and `0-section-marquee.css` / `0-section-marquee.js` in assets; `0-marquee-2-slide.liquid` in snippets)
 - `0-multi-column-1.liquid`
 - `0-one-column-1.liquid`
 - `0-two-column-1.liquid`

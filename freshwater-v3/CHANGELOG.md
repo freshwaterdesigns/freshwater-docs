@@ -22,7 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Hero (FW) — video mode:** Same pattern as Two Column — **`fresh_hero_use_video`** replaces the old “Video Settings” toggle label; storefront output respects the toggle with legacy-friendly handling when the setting is unset.
 - **Carousel navigation (Multi Column FW & Hero Carousel FW):** Single **“Carousel Navigation”** checkbox per breakpoint replaces separate **Carousel Arrows** and **Carousel Dots** toggles. All arrow- and dot-related controls sit behind that group; `visible_if` uses `!= false` so older JSON without the new keys still shows the controls.
 
+### Removed
+- **Legacy marquee section** (`sections/0-marquee-1.liquid`): The old `fresh-marquee` implementation is removed. The scrolling marquee is **`0-marquee-2.liquid` only**, still the section type in JSON. **Marquee (FW)** in the theme editor is this implementation (the “2” was dropped from the display name only). Themes whose JSON still references `0-marquee-1` must be fixed manually: remove the broken section or replace it with **Marquee (FW)** and reconfigure.
+
 ### Changed
+- **Marquee (FW):** Theme editor label is **Marquee (FW)** (was **Marquee 2 (FW)**); filenames and internal classes (e.g. `fresh-section__marquee-2`) are unchanged.
 - **Multi Column (FW) — section schema:** Settings grouped under **Section Settings**, **Carousel Settings**, and **Block Settings**, each with **Desktop** / **Mobile** toggles; **Global Settings** remains its own top-level group. Square dividers (**■**) sit **after** both device rows in each group (not between Desktop and Mobile).
 - **Theme editor separators:** Shortened decorative separator strings so they fit the narrower Shopify section sidebar: black square rows (one **■** removed), colon rows (`:`), and degree-symbol rows (`°`) in affected sections and in **Typography** groups in `config/settings_schema.json`.
 - **Hero Carousel (FW) — carousel UI:** **CAROUSEL ARROWS** / **CAROUSEL DOTS** labels removed in favor of the unified **Carousel Navigation** toggle; redundant separators between those blocks removed.
