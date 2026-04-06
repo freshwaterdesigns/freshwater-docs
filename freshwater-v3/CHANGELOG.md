@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.6.0] - Unreleased
+
+**Development branch:** active work toward this release (not yet tagged).
+
+### Added
+- **Two Column (FW) — video mode:** New **“Use video instead of image?”** toggle (`fresh_two_col_use_video`). When off, the media column always uses images; when on, uploaded videos are used when set. Existing sections without the new key keep prior behavior (video when sources exist). Video picker and autoplay sit behind the toggle in the theme editor.
+- **Hero (FW) — video mode:** Same pattern as Two Column — **`fresh_hero_use_video`** replaces the old “Video Settings” toggle label; storefront output respects the toggle with legacy-friendly handling when the setting is unset.
+- **Carousel navigation (Multi Column FW & Hero Carousel FW):** Single **“Carousel Navigation”** checkbox per breakpoint replaces separate **Carousel Arrows** and **Carousel Dots** toggles. All arrow- and dot-related controls sit behind that group; `visible_if` uses `!= false` so older JSON without the new keys still shows the controls.
+
+### Changed
+- **Multi Column (FW) — section schema:** Settings grouped under **Section Settings**, **Carousel Settings**, and **Block Settings**, each with **Desktop** / **Mobile** toggles; **Global Settings** remains its own top-level group. Square dividers (**■**) sit **after** both device rows in each group (not between Desktop and Mobile).
+- **Theme editor separators:** Shortened decorative separator strings so they fit the narrower Shopify section sidebar: black square rows (one **■** removed), colon rows (`:`), and degree-symbol rows (`°`) in affected sections and in **Typography** groups in `config/settings_schema.json`.
+- **Hero Carousel (FW) — carousel UI:** **CAROUSEL ARROWS** / **CAROUSEL DOTS** labels removed in favor of the unified **Carousel Navigation** toggle; redundant separators between those blocks removed.
+- **Two Column (FW):** Removed duplicate colon separator row directly under **“Use video instead of image?”** (one divider before Link URL remains).
+
+---
+
 ## [3.4.3] - 2026-03-19
 
 ### Added
@@ -258,6 +275,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.6.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.6.0
 [3.4.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.1
 [3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
 [3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
