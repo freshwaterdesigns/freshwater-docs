@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Development branch:** active work toward this release (not yet tagged).
 
 ### Added
+- **Hero (FW) & Hero Carousel (FW) — desktop text box max width:** Under **Hero Box → Desktop settings**, **Text Box Max Width** lets merchants cap the content box with **None**, **Pixels (px)** (0–800, step 5), or **Percent (%)** (0–100). **Text Box Width** still sets `width` as a percentage; when a max is set and the value is greater than zero, CSS adds `max-width` at `min-width: 768px` only. Missing or legacy JSON defaults to no max. Hero (FW): `sections/0-hero-1.liquid`. Hero Carousel (FW): slide block schema in `sections/0-hero-2.liquid` and styles in `snippets/0-slide-2.liquid`.
 - **Two Column (FW) — video mode:** New **“Use video instead of image?”** toggle (`fresh_two_col_use_video`). When off, the media column always uses images; when on, uploaded videos are used when set. Existing sections without the new key keep prior behavior (video when sources exist). Video picker and autoplay sit behind the toggle in the theme editor.
 - **Hero (FW) — video mode:** Same pattern as Two Column — **`fresh_hero_use_video`** replaces the old “Video Settings” toggle label; storefront output respects the toggle with legacy-friendly handling when the setting is unset.
 - **Carousel navigation (Multi Column FW & Hero Carousel FW):** Single **“Carousel Navigation”** checkbox per breakpoint replaces separate **Carousel Arrows** and **Carousel Dots** toggles. All arrow- and dot-related controls sit behind that group; `visible_if` uses `!= false` so older JSON without the new keys still shows the controls.
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Legacy marquee section** (`sections/0-marquee-1.liquid`): The old `fresh-marquee` implementation is removed. The scrolling marquee is **`0-marquee-2.liquid` only**, still the section type in JSON. **Marquee (FW)** in the theme editor is this implementation (the “2” was dropped from the display name only). Themes whose JSON still references `0-marquee-1` must be fixed manually: remove the broken section or replace it with **Marquee (FW)** and reconfigure.
 
 ### Changed
+- **Accordion & List blocks — SVG icon stroke:** In `snippets/0-block-accordion-1.liquid` and `snippets/0-block-list-1.liquid`, icon `svg path` elements again use **both** `fill` and `stroke` (theme icon color or CSS variable) so icons such as **plus** and **caret** match prior visual weight. **Arrow** and **arrow-circle** are exceptions: paths under `svg.fresh-icon--arrow` and `svg.fresh-icon--arrow-circle` set `stroke: none` and `stroke-width: 0` so filled chevrons are not outlined twice (classes are set on those SVGs in `snippets/0-icon-1.liquid`).
 - **Theme typography defaults:** Sub-header and body **letter spacing** (desktop and mobile) now default to **0** in `config/settings_schema.json` (header and standard button letter spacing were already **0**).
 - **Accordion block (One Column / Two Column / Hero / Main Product FW):** Question (header) and answer (body) each have separate **desktop** and **mobile** controls for text color, alignment, font size, font weight, and line height. Icon color, text/icon spacing, and margin bottom are unchanged. When a new field is left at default (transparent color, **Inherit** alignment, or `0` for size/weight/line height), the snippet falls back to the previous shared typography settings. Those legacy settings remain in the schema as hidden fields (`visible_if: false`) so existing block JSON is preserved on save.
 - **Marquee (FW):** Theme editor label is **Marquee (FW)** (was **Marquee 2 (FW)**); filenames and internal classes (e.g. `fresh-section__marquee-2`) are unchanged.
@@ -33,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Theme editor separators:** Shortened decorative separator strings so they fit the narrower Shopify section sidebar: black square rows (one **■** removed), colon rows (`:`), and degree-symbol rows (`°`) in affected sections and in **Typography** groups in `config/settings_schema.json`.
 - **Hero Carousel (FW) — carousel UI:** **CAROUSEL ARROWS** / **CAROUSEL DOTS** labels removed in favor of the unified **Carousel Navigation** toggle; redundant separators between those blocks removed.
 - **Two Column (FW):** Removed duplicate colon separator row directly under **“Use video instead of image?”** (one divider before Link URL remains).
+
+### Fixed
+- **Accordion block — icon disappears when the question is opened:** `0-icon-1.liquid` hides the alternate state SVG (`.icon2`) with inline `style="display: none"`, which beat the accordion’s `display: inline` rule. Rules for `.accordion__toggle:checked ~ .accordion__question .icon1` / `.icon2` now use `display: none !important` and `display: inline !important` so the icon swap works when the panel is expanded.
 
 ---
 

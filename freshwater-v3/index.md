@@ -19,6 +19,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
 - [Conversion Guide](#-conversion-guide-dawn-1540--freshwater-v320)
 - [File Structure](#-file-structure-overview)
 - [Key Features](#-key-features)
+  - [Hero text box max width (desktop)](#hero-text-box-max-width-desktop)
 - [CSS Architecture](#-css-architecture)
   - [Responsive Video Embed](#responsive-video-embed)
 - [Customizing Navigation](#-customizing-navigation)
@@ -30,6 +31,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
   - [Freshwater Modal System](#freshwater-modal-system)
   - [Inline Anchor Links (Smooth Scrolling)](#inline-anchor-links-smooth-scrolling)
 - [Important Notes](#️-important-notes)
+  - [Accordion and List block icons (SVG)](#accordion-and-list-block-icons-svg)
 - [Version History](#-version-history)
 - [GitHub Repository Management](#-github-repository-management)
 - [Contributing](#-contributing)
@@ -428,6 +430,9 @@ freshwater-v3/
 
 ### Default page template (One Column FW)
 The default page template uses the **One Column (FW)** section with a **Metafield Title** block and a **Body** block pre-filled from the page’s title and content. Merchants can edit the page in the theme editor by adding or reordering blocks (Header, Metafield Title, Body, Button, Graphic, Video, etc.) and changing section settings. Other page templates (e.g. `page.contact.json`) are unchanged and can be switched to One Column or other FW sections later if desired.
+
+### Hero text box max width (desktop)
+**Hero (FW)** and **Hero Carousel (FW)** support an optional **Text Box Max Width** on desktop (with **Hero Box** enabled): choose **None**, cap by **pixels** (e.g. 800px), or by **percent**. This adds `max-width` alongside the existing **Text Box Width** percentage so wide viewports do not stretch the box beyond the chosen cap. Mobile is unchanged.
 
 ### Debug Utility
 
@@ -1326,6 +1331,11 @@ When upgrading to a new Dawn version:
 - **Dawn files:** Use standard `console.log/error/warn`
 
 This separation allows you to control Freshwater logs independently while keeping Dawn's native logging intact.
+
+### Accordion and List block icons (SVG)
+
+- **Accordion** and **list** blocks apply icon color via `fill` and `stroke` on `svg path`. **Arrow** and **arrow-circle** omit stroke in CSS (selectors use `svg.fresh-icon--arrow` / `svg.fresh-icon--arrow-circle` from `0-icon-1.liquid`) so filled chevrons are not doubled.
+- **Accordion** toggles between two SVGs per icon (`.icon1` / `.icon2`). The open-state `display` rules use `!important` so they override inline `display: none` on `.icon2` in `0-icon-1.liquid`.
 
 ---
 
