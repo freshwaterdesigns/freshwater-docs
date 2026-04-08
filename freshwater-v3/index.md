@@ -511,13 +511,31 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 
 ### Overlay Positioning {#overlay-positioning-classes}
 
-The `.fresh-overlay` class is used in Multi-Column section slides to position content over media (images or videos). The `.fresh-overlay` wrapper div is automatically added by the theme and spans the full media area, providing a positioning context for your content.
+In **Multi Column (FW)**, each slide’s **Overlay** Liquid field is **blank by default**. Enter only the markup that should sit **inside** the overlay layer (do not paste the outer `<div class="fresh-overlay">` wrapper). The theme wraps your content in `.fresh-overlay` in `snippets/0-slide-1.liquid`, spanning the slide’s image or video.
 
-**Positioning with Inline CSS:**
+**Section-wide overlay layout**
 
-Use inline CSS styles directly in the "Overlay" Liquid field to position your content:
+When every slide in the row should share the same overlay behavior, add a class on the section and scope custom rules in `assets/1-client.css.liquid`:
 
-**Bottom-Left Positioning:**
+1. Open **Multi Column (FW)** in the theme editor.
+2. Turn on **Global Settings** → under **GLOBAL SECTION SETTINGS**, set **Custom Class Names** (example: `acme-promo-row`).
+3. In `1-client.css.liquid`, target overlays only in that section, for example:
+
+```css
+.acme-promo-row .fresh-overlay {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+```
+
+Adjust flex, padding, or child selectors as needed so inner content lines up consistently across slides.
+
+**Positioning with inline CSS (per slide)**
+
+Use inline styles on elements **inside** the Overlay field when you want different placement per slide:
+
+**Bottom-left:**
 
 ```liquid
 <div style="position: absolute; bottom: 0; left: 0;">
@@ -525,7 +543,7 @@ Use inline CSS styles directly in the "Overlay" Liquid field to position your co
 </div>
 ```
 
-**Bottom-Right Positioning:**
+**Bottom-right:**
 
 ```liquid
 <div style="position: absolute; bottom: 0; right: 0;">
@@ -533,7 +551,7 @@ Use inline CSS styles directly in the "Overlay" Liquid field to position your co
 </div>
 ```
 
-**Center Positioning:**
+**Center:**
 
 ```liquid
 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -541,7 +559,7 @@ Use inline CSS styles directly in the "Overlay" Liquid field to position your co
 </div>
 ```
 
-**Top-Left Positioning:**
+**Top-left:**
 
 ```liquid
 <div style="position: absolute; top: 0; left: 0;">
@@ -549,14 +567,19 @@ Use inline CSS styles directly in the "Overlay" Liquid field to position your co
 </div>
 ```
 
-**Note:** The `.fresh-overlay` wrapper div is automatically added by the theme and spans the full media area. Your content inside must use `position: absolute` with appropriate `top`, `bottom`, `left`, `right`, and/or `transform` values to position it within the overlay area.
+**Note:** The `.fresh-overlay` wrapper is output by the theme and covers the full media area. For patterns like the examples above, inner elements typically use `position: absolute` with `top`, `bottom`, `left`, `right`, and/or `transform` as needed.
+
+**Theme reference (utility-style names)**
+
+`assets/0-freshwater.css.liquid` includes a comment block under **OVERLAY POSITIONING CLASSES** with example class names such as `fresh-overlay--bottom-left` and `fresh-overlay--bottom-right`. Those illustrate common layouts; you can reproduce the same ideas with section-scoped CSS (as above) or keep using absolutely positioned inner markup in the Overlay field.
 
 **Files:**
-- `assets/0-freshwater.css.liquid` - Overlay positioning CSS (lines 1911-1935)
-- `sections/0-multi-column-1.liquid` - Section-specific overlay styles
-- `snippets/0-slide-1.liquid` - Overlay rendering logic
+- `assets/0-freshwater.css.liquid` — base `.fresh-overlay` and `.fresh-media-wrapper` rules (search for `OVERLAY POSITIONING`)
+- `assets/1-client.css.liquid` — recommended place for section-scoped overlay overrides
+- `sections/0-multi-column-1.liquid` — outer section wrapper includes **Custom Class Names**
+- `snippets/0-slide-1.liquid` — wraps slide overlay setting output in `.fresh-overlay`
 
-**Documentation:** See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for detailed usage examples and additional positioning options.
+**Documentation:** See [Freshwater v3 documentation](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/) for the full theme guide.
 
 ### Responsive Video Embed {#responsive-video-embed}
 
