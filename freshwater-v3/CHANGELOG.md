@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Theme editor separators:** Shortened decorative separator strings so they fit the narrower Shopify section sidebar: black square rows (one **■** removed), colon rows (`:`), and degree-symbol rows (`°`) in affected sections and in **Typography** groups in `config/settings_schema.json`.
 - **Hero Carousel (FW) — carousel UI:** **CAROUSEL ARROWS** / **CAROUSEL DOTS** labels removed in favor of the unified **Carousel Navigation** toggle; redundant separators between those blocks removed.
 - **Two Column (FW):** Removed duplicate colon separator row directly under **“Use video instead of image?”** (one divider before Link URL remains).
+- **Footer architecture:** Footer group now defaults to Dawn’s native `sections/footer.liquid`. Added separate `sections/0-fw-footer.liquid` for hardcoded Freshwater footer use, with a new **Menu Handle** setting (`fw_menu_handle`) that drives the SHOP link column in `snippets/1-footer-freshwater.liquid`.
 
 ### Fixed
 - **Accordion block — icon disappears when the question is opened:** `0-icon-1.liquid` hides the alternate state SVG (`.icon2`) with inline `style="display: none"`, which beat the accordion’s `display: inline` rule. Rules for `.accordion__toggle:checked ~ .accordion__question .icon1` / `.icon2` now use `display: none !important` and `display: inline !important` so the icon swap works when the panel is expanded.
