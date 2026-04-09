@@ -36,6 +36,76 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
 - [GitHub Repository Management](#-github-repository-management)
 - [Contributing](#-contributing)
 - [Support](#-support)
+- [Pre-launch review (shareable checklist)](#pre-launch-review-shareable-checklist)
+
+---
+
+## Pre-launch review (shareable checklist)
+
+**Audience:** This section is written for **leadership and project stakeholders** as well as developers. You can share this README section or the standalone document below when reviewing a site **before launch** (typically while the store is still **password-protected**).
+
+**Canonical checklist (print / PDF):** [docs/LAUNCH-CHECKLIST.md](docs/LAUNCH-CHECKLIST.md) — same priorities and steps, formatted for printing.
+
+**Out of scope (manual QA elsewhere):** Third-party **apps** (reviews, subscriptions, search, bundles, etc.) are **not** covered here. The theme cannot validate app-injected UI; treat apps as a separate checklist in the Shopify admin and on preview.
+
+**Priority order:** (1) **Broken CTAs** and theme-owned links → (2) **SEO** (titles, indexing intent, URLs) → (3) **Accessibility** (pragmatic: keyboard, meaningful alt text, semantics that also support SEO).
+
+**Automated step (developers):** From a local clone of this repository, run:
+
+```bash
+./scripts/prelaunch.sh
+```
+
+This runs **Shopify Theme Check** (or the `theme-check` gem) and optional **grep hints** for suspicious empty `href` patterns in theme Liquid. It does **not** replace clicking through the storefront.
+
+---
+
+### Launch readiness — comprehensive checklist
+
+Use the checkboxes below together with [docs/LAUNCH-CHECKLIST.md](docs/LAUNCH-CHECKLIST.md) for detail and rationale.
+
+#### Environment
+
+- [ ] Preview or theme customizer loads; you are reviewing the correct **theme** and **store**.
+- [ ] `./scripts/prelaunch.sh` completed successfully (no theme check **errors**).
+
+#### 1. Broken CTAs & theme-owned links (highest priority)
+
+- [ ] **Header:** Logo → home; all menu items work; mobile drawer links work; cart opens; account entry works as expected.
+- [ ] **Footer:** All footer links (policies, menus, social if theme-rendered) resolve — no 404s.
+- [ ] **Homepage:** Hero and section buttons/links go to the right collections, products, or pages.
+- [ ] **Collection:** Product cards link to correct PDPs; pagination if present.
+- [ ] **Product page:** Variants behave correctly; **Add to cart** works; secondary CTAs work.
+- [ ] **Cart:** Line items link to products; checkout path works for the store’s configuration.
+- [ ] **Content pages** (About, Contact, etc.): Links and CTAs work.
+- [ ] **Forms:** Contact and newsletter (where used) submit or show validation appropriately.
+- [ ] **No placeholder content:** Remove Lorem ipsum, fake addresses/phones, test emails, unless intentionally staging.
+
+#### 2. SEO
+
+- [ ] **Page titles** are sensible on home, one key collection, one key product, and one content page.
+- [ ] **Meta descriptions** are set where the theme or Shopify exposes them.
+- [ ] Understand **password storefront** = typically not indexed; plan **Search Console / sitemap** checks **after** password removal (operational).
+- [ ] **URLs / duplicates:** Spot-check canonical behavior on products if relevant to the project.
+
+#### 3. Accessibility (pragmatic)
+
+- [ ] **Keyboard:** Tab through header, mobile menu, cart drawer, and primary PDP actions without traps.
+- [ ] **Images:** Meaningful theme images have appropriate **alt** text (decorative images may use empty alt intentionally).
+- [ ] **Headings:** Logical structure on key pages (one clear main heading per page where appropriate).
+
+*Optional:* Chrome Lighthouse on Home + PDP for accessibility signals.
+
+#### 4. Devices & browsers
+
+- [ ] **Mobile** width: layout usable; no accidental horizontal scroll on main templates.
+- [ ] **Desktop:** Matches design intent; FW desktop/mobile settings respected where used.
+- [ ] **Safari** spot-check if the audience is iOS-heavy.
+
+#### 5. After go-live / password removed
+
+- [ ] Re-check **section 1** (CTAs) on the **public** URL.
+- [ ] Confirm **analytics** and **social previews** if part of the project (often app or admin configuration).
 
 ---
 
@@ -410,6 +480,8 @@ freshwater-v3/
 ├── config/
 │   ├── settings_schema.json   # Modified (added Freshwater settings)
 │   └── settings_data.json     # May contain Freshwater defaults
+├── docs/
+│   └── LAUNCH-CHECKLIST.md    # Pre-launch review (printable; see README)
 ├── layout/
 │   └── theme.liquid          # Modified (uses 0- prefixed snippets)
 ├── sections/
@@ -419,6 +491,8 @@ freshwater-v3/
 ├── snippets/
 │   ├── 0-*                   # Freshwater custom snippets
 │   └── [Dawn snippets]       # Unmodified Dawn snippets (except header-mega-menu reference)
+├── scripts/
+│   └── prelaunch.sh          # Local Theme Check + optional href grep hints (see Pre-launch review)
 └── templates/
     ├── page.json             # Custom (uses One Column FW with Metafield Title + Body blocks)
     └── [Dawn templates]      # Other templates unmodified or custom per theme
