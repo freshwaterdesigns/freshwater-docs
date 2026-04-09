@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Footer architecture:** Footer group now defaults to Dawn’s native `sections/footer.liquid`. Added separate `sections/0-fw-footer.liquid` for hardcoded Freshwater footer use, with a new **Menu Handle** setting (`fw_menu_handle`) that drives the SHOP link column in `snippets/1-footer-freshwater.liquid`. Legacy hybrid footer section `sections/0-footer.liquid` (and its `fresh_footer_enable` toggle path) was removed to avoid split behavior.
 
 ### Fixed
+- **FW Footer — section padding ignored:** `snippets/1-footer-freshwater.liquid` had `body.fresh .section-…-padding { padding-top: 0; padding-bottom: 0; }`, which beat the FW Footer section’s `{%- style -%}` padding (higher specificity). Removed that override so **Top margin** / **Padding** in **FW Footer** apply as expected.
 - **Accordion block — icon disappears when the question is opened:** `0-icon-1.liquid` hides the alternate state SVG (`.icon2`) with inline `style="display: none"`, which beat the accordion’s `display: inline` rule. Rules for `.accordion__toggle:checked ~ .accordion__question .icon1` / `.icon2` now use `display: none !important` and `display: inline !important` so the icon swap works when the panel is expanded.
 
 ---
