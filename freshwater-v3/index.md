@@ -511,7 +511,7 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 
 ### Overlay Positioning {#overlay-positioning-classes}
 
-In **Multi Column (FW)**, each slide’s **Overlay** Liquid field is **blank by default**. Enter only the markup that should sit **inside** the overlay layer (do not paste the outer `<div class="fresh-overlay">` wrapper). The theme wraps your content in `.fresh-overlay` in `snippets/0-slide-1.liquid`, spanning the slide’s image or video.
+In **Multi Column (FW)**, each slide’s **Overlay** Liquid field has **no** pre-filled content (the schema does not set a default). Enter only the markup that should sit **inside** the overlay layer (do not paste the outer `<div class="fresh-overlay">` wrapper). The theme wraps your content in `.fresh-overlay` in `snippets/0-slide-1.liquid`, spanning the slide’s image or video.
 
 **Section-wide overlay layout**
 
