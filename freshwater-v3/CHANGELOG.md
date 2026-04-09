@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **FW Footer — section padding ignored:** `snippets/1-footer-freshwater.liquid` had `body.fresh .section-…-padding { padding-top: 0; padding-bottom: 0; }`, which beat the FW Footer section’s `{%- style -%}` padding (higher specificity). Removed that override so **Top margin** / **Padding** in **FW Footer** apply as expected.
+- **FW Footer — top margin appeared ineffective:** `{%- style -%}` used a global `.footer { margin-top }`, which can lose to another footer section’s `.footer` rule and is sensitive to margin collapse. Spacing is now applied on the section wrapper `#shopify-section-…` and padding is scoped under that wrapper so **FW Footer** controls only affect this section.
 - **Accordion block — icon disappears when the question is opened:** `0-icon-1.liquid` hides the alternate state SVG (`.icon2`) with inline `style="display: none"`, which beat the accordion’s `display: inline` rule. Rules for `.accordion__toggle:checked ~ .accordion__question .icon1` / `.icon2` now use `display: none !important` and `display: inline !important` so the icon swap works when the panel is expanded.
 
 ---
