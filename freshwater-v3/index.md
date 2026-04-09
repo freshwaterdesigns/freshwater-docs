@@ -58,7 +58,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
 
 This runs **Shopify Theme Check** (or the `theme-check` gem) and optional **grep hints** for suspicious empty `href` patterns in theme Liquid. It does **not** replace clicking through the storefront.
 
-**Theme Check configuration:** `.theme-check.yml` extends Shopify’s **recommended** rules but relaxes checks that are noisy for Freshwater (for example **`VariableName`** for `fresh_*--md` assigns, **locale parity** rules downgraded to warnings, and **`LiquidHTMLSyntaxError`** ignored for `assets/0-freshwater.js.liquid` where the linter mis-parses JavaScript). A successful run means **zero errors**; **warnings** are expected and can be triaged over time. Tighten rules in `.theme-check.yml` if you want stricter CI later.
+**Theme Check configuration:** `.theme-check.yml` extends Shopify’s **recommended** rules but relaxes checks that are noisy for Freshwater (for example **`VariableName`** for `fresh_*--md` assigns, **`MatchingTranslations`** disabled until locale parity is prioritized, other **locale/schema** checks downgraded to warnings, and **`LiquidHTMLSyntaxError`** ignored for `assets/0-freshwater.js.liquid` where the linter mis-parses JavaScript). A successful run means **zero errors**; **warnings** are expected and can be triaged over time. Tighten rules in `.theme-check.yml` if you want stricter CI later.
 
 ---
 
