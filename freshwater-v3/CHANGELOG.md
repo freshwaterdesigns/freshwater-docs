@@ -13,9 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.6.0] - Unreleased
-
-**Development branch:** active work toward this release (not yet tagged).
+## [3.5.1] - 2026-04-09
 
 ### Added
 - **Utility class `fresh-button--force-standard-1`:** Add this class alone (no `fresh-button` needed) to any storefront control to force Freshwater **standard scheme 1** look—typography, padding, border, and colors from `--standard-button-*-1` on the nearest color scheme—with `!important` so it wins over Dawn, secondary/tertiary variants, and typical app CSS. Responsive rules follow the same `768px` / `767px` split as other Freshwater buttons. **Accelerated checkout** (`shopify-accelerated-checkout`, `shopify-accelerated-checkout-cart`): put the class on the custom element or a wrapper; only [Shopify-supported custom properties](https://shopify.dev/docs/storefronts/themes/pricing-payments/accelerated-checkout) apply inside the closed shadow DOM (radius, shadow, block-size aligned to theme standard 1). See [README — Force standard scheme 1 button](README.md#force-standard-scheme-1-button-fresh-button--force-standard-1). `assets/0-freshwater.css.liquid`.
@@ -297,7 +295,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[3.6.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.6.0
+[3.5.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.1
 [3.4.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.1
 [3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
 [3.3.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.3.0
