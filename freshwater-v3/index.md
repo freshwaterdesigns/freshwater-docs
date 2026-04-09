@@ -582,9 +582,45 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
   - `.product-form__submit`
   - `.cart__checkout-button`
 
-**File:** `assets/0-freshwater.css.liquid` (lines 323-537)
+**File:** `assets/0-freshwater.css.liquid` (search for `buttons` and `Dawn color scheme button styling`).
 
 **Note:** To customize Dawn button styles, override them in `assets/1-client.css.liquid` rather than editing `0-freshwater.css.liquid`.
+
+### Force standard scheme 1 button (`fresh-button--force-standard-1`) {#force-standard-scheme-1-button-fresh-button--force-standard-1}
+
+Use this when a control must **always** match Freshwater **standard button style 1** (the same tokens as `.fresh-button__standard-1--md` / `.fresh-button__standard-1--sm` plus `.fresh-button__standard--md` / `.fresh-button__standard--sm` sizing), even if Dawn classes, `.button--secondary`, app markup, or other CSS would normally change it.
+
+- **Class:** `fresh-button--force-standard-1` — add **only** this class; you do **not** need `fresh-button`.
+- **How it works:** Rules use `!important` on the properties that need to win. Fill, border, and text color use `var(--standard-button-*-1)` / hover variants from the **nearest Freshwater color scheme** ancestor (same as other standard-1 buttons). Keep the element inside a normal section or wrapper that defines those CSS variables.
+- **Responsive:** Layout and typography follow the theme’s **768px** (desktop) and **767px** (mobile) breakpoints like other Freshwater buttons.
+
+**Examples**
+
+Dawn-style link or button in custom Liquid (e.g. app block, metafield HTML):
+
+```html
+<a href="/collections/all" class="button button--secondary fresh-button--force-standard-1">Shop all</a>
+```
+
+Native `<button>`:
+
+```html
+<button type="submit" class="fresh-button--force-standard-1">Subscribe</button>
+```
+
+**Accelerated checkout** (`<shopify-accelerated-checkout>` / `<shopify-accelerated-checkout-cart>`): buttons are rendered in a **closed shadow DOM**, so you cannot restyle wallet artwork like a normal `.button`. Put the class on the **custom element** or on a **parent** that wraps it. The theme sets Shopify-supported variables (border radius, box shadow, button block size) to align with standard 1. See Shopify’s [Accelerated checkout](https://shopify.dev/docs/storefronts/themes/pricing-payments/accelerated-checkout) documentation for what can be customized.
+
+```html
+<shopify-accelerated-checkout class="fresh-button--force-standard-1"></shopify-accelerated-checkout>
+```
+
+```html
+<div class="fresh-button--force-standard-1">
+  <shopify-accelerated-checkout></shopify-accelerated-checkout>
+</div>
+```
+
+**File:** `assets/0-freshwater.css.liquid` (search for `Force standard scheme 1 button`).
 
 ### Overlay Positioning {#overlay-positioning-classes}
 
