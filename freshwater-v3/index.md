@@ -157,6 +157,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 #### Assets
 - `0-freshwater.js.liquid` - Core Freshwater JavaScript with debug utility (vanilla JS, no jQuery dependency)
+- `0-cart.js` - Dawn `cart.js` fork for main cart page: Section Rendering uses `0-main-cart-items` (see `sections/0-main-cart-items.liquid`). Merge Dawn `cart.js` changes here when upgrading.
 - `0-freshwater.css.liquid` - Core Freshwater CSS
 - `1-client.js.liquid` - Client-specific JavaScript (editable)
 - `1-client.css.liquid` - Client-specific CSS (editable)
@@ -201,6 +202,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-header.liquid` - Custom header section with Freshwater menu options, `<shopify-account>` Storefront Web Component for account icon, and mobile drawer footer toggle
 - `0-hero-1.liquid` / `0-hero-2.liquid` - Custom hero sections
 - `0-main-product.liquid` - Custom product page section
+- `0-main-cart-items.liquid` - Main cart line items (Freshwater clone of Dawn `main-cart-items`); `templates/cart.json` should use section type `0-main-cart-items`. Do not customize `sections/main-cart-items.liquid`.
 - `0-marquee-2.liquid` - Scrolling marquee (**Marquee (FW)** in the theme editor). The legacy `0-marquee-1` marquee section was removed; re-add the section in the customizer on themes that still referenced the old file.
 - `0-multi-column-1.liquid` - Custom multi-column section
 - `0-one-column-1.liquid` - Custom one-column section
@@ -469,6 +471,7 @@ If you find custom edits in these, migrate them to `1-` (or `1-client.*`) before
 - `0-theme-freshwater-1.liquid` → create `1-theme-freshwater-1.liquid`
 - `1-theme-submenu-freshwater.liquid`, `1-footer-freshwater.liquid` → customize in place (already `1-` files)
 - `0-cart-drawer.liquid` / `0-component-cart-drawer.css` → create `1-` copies if customized
+- `0-main-cart-items.liquid` → create `1-main-cart-items.liquid` if customized; keep Dawn `main-cart-items.liquid` pristine
 
 ---
 
