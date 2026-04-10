@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.5.2] - Unreleased
 
 ### Changed
+- **Theme settings — None button hover underline offset:** Under **None Button Additional Styling**, **Font Hover Underline Offset** (`fresh_none_button_hover_text_underline_offset_1`) range is now **0–10px** in **0.5px** steps (was 0–4px, 0.1px). `config/settings_schema.json`.
 - **Footer:** The “Powered by Shopify” line is removed from the storefront copyright row. Implemented in new `sections/0-footer.liquid` (Freshwater clone of Dawn `footer.liquid`); `sections/footer-group.json` and default `config/settings_data.json` use section type `0-footer`. Dawn `sections/footer.liquid` is unchanged.
 
 ### Added
