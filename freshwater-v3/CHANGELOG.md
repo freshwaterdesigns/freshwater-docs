@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.5.2] - Unreleased
+
+### Fixed
+- **Multi Column (FW):** Slide cards (`.fresh-slide`) use `overflow: hidden` so wide buttons or other blocks cannot paint outside the slide bounds in multi-column carousels. `sections/0-multi-column-1.liquid`.
+
 ## [3.5.1] - 2026-04-09
 
 ### Added
