@@ -20,7 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Hero (FW) — Link URL:** **Link URL** (`fresh_video_url`) now drives a stretched overlay link so the hero is clickable on the storefront. The text box stacks above with `pointer-events` tuned so nested controls stay interactive (same pattern as linked Multi Column slides). `sections/0-hero-1.liquid`.
+- **Hero Carousel (FW) — slide Link URL:** Each **Slide** block’s **Link URL** (`fresh_video_url`, or `fresh_slide_url` when that key exists on imported JSON) now renders the same stretched overlay pattern as Multi Column slides. Section styles in `sections/0-hero-2.liquid`; markup in `snippets/0-slide-2.liquid`. URL resolution avoids Liquid `| default:` so an empty `fresh_slide_url` string cannot hide `fresh_video_url` (Hero Carousel slide blocks only define the latter in schema).
 - **Multi Column (FW):** Slide cards (`.fresh-slide`) use `overflow: hidden` so wide buttons or other blocks cannot paint outside the slide bounds in multi-column carousels. `sections/0-multi-column-1.liquid`.
+- **Multi Column (FW) — slide links:** `snippets/0-slide-1.liquid` resolves **Link URL** with the same non-`default` fallback so an empty `fresh_slide_url` does not suppress `fresh_video_url`; `href` is escaped; slide aria fallback uses `sections.slideshow.slide`.
 
 ## [3.5.1] - 2026-04-09
 
