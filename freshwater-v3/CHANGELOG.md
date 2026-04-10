@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.5.2] - Unreleased
 
+### Changed
+- **Footer:** The “Powered by Shopify” line is removed from the storefront copyright row. Implemented in new `sections/0-footer.liquid` (Freshwater clone of Dawn `footer.liquid`); `sections/footer-group.json` and default `config/settings_data.json` use section type `0-footer`. Dawn `sections/footer.liquid` is unchanged.
+
 ### Added
 - **Multi Column (FW) — slide button min-width:** Under **Button Settings**, after **Block Alignment**, **Slide button min-width** (desktop and mobile, 0–500px, step 5) defaults to **0** (theme Standard Button min-width applies). A **positive** value overrides `min-width` on `.fresh-button` links in slides for this section. Setting IDs: `fresh_slide_button_min_width--md`, `fresh_slide_button_min_width--sm`. `sections/0-multi-column-1.liquid`.
 

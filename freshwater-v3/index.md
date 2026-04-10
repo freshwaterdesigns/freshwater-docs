@@ -208,6 +208,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-one-column-1.liquid` - Custom one-column section
 - `0-two-column-1.liquid` - Custom two-column section
 - `0-fw-footer.liquid` - Hardcoded Freshwater footer section (separate from Dawn footer)
+- `0-footer.liquid` - Dawn **Footer** section clone without the “Powered by Shopify” link; the footer group (`sections/footer-group.json`) should reference type `0-footer`, not `footer`.
 
 ---
 
@@ -472,6 +473,7 @@ If you find custom edits in these, migrate them to `1-` (or `1-client.*`) before
 - `1-theme-submenu-freshwater.liquid`, `1-footer-freshwater.liquid` → customize in place (already `1-` files)
 - `0-cart-drawer.liquid` / `0-component-cart-drawer.css` → create `1-` copies if customized
 - `0-main-cart-items.liquid` → create `1-main-cart-items.liquid` if customized; keep Dawn `main-cart-items.liquid` pristine
+- `0-footer.liquid` → create `1-footer.liquid` if customized; keep Dawn `footer.liquid` pristine
 
 ---
 
