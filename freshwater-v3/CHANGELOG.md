@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Multi Column (FW) — slide button min-width:** Under **Button Settings**, after **Block Alignment**, **Slide button min-width** (desktop and mobile, 0–500px, step 5) defaults to **0** (theme Standard Button min-width applies). A **positive** value overrides `min-width` on `.fresh-button` links in slides for this section. Setting IDs: `fresh_slide_button_min_width--md`, `fresh_slide_button_min_width--sm`. `sections/0-multi-column-1.liquid`.
 
 ### Fixed
+- **Hero (FW) — Link URL:** **Link URL** (`fresh_video_url`) now drives a stretched overlay link so the hero is clickable on the storefront. The text box stacks above with `pointer-events` tuned so nested controls stay interactive (same pattern as linked Multi Column slides). `sections/0-hero-1.liquid`.
 - **Multi Column (FW):** Slide cards (`.fresh-slide`) use `overflow: hidden` so wide buttons or other blocks cannot paint outside the slide bounds in multi-column carousels. `sections/0-multi-column-1.liquid`.
 
 ## [3.5.1] - 2026-04-09
