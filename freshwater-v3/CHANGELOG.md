@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.5.2] - Unreleased
+## [3.5.3] - Unreleased
+
+## [3.5.2] - 2026-04-13
 
 ### Changed
 - **Header — move search into mobile menu:** Drawer search row (`.menu-drawer__search-from-drawer`) uses **9px** left padding so the search icon lines up with the account row (replacing the prior 3rem / zero-left tweaks); the **Move search into mobile menu** checkbox has no theme-editor info text. `sections/0-header.liquid`.
@@ -324,6 +326,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.5.2]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.2
 [3.5.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.1
 [3.4.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.1
 [3.4.0]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.0
