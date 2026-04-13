@@ -203,6 +203,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `0-hero-1.liquid` / `0-hero-2.liquid` - Custom hero sections
 - `0-main-product.liquid` - Custom product page section
 - `0-main-cart-items.liquid` - Main cart line items (Freshwater clone of Dawn `main-cart-items`); `templates/cart.json` should use section type `0-main-cart-items`. Do not customize `sections/main-cart-items.liquid`.
+- `0-featured-product.liquid` / `0-section-featured-product.css` - Featured product section clone (Icon with text block uses valid `pairing_1` schema keys). Use section type **`0-featured-product`** in theme JSON when adding this section; Dawn `sections/featured-product.liquid` and `assets/section-featured-product.css` stay vanilla.
 - `0-marquee-2.liquid` - Scrolling marquee (**Marquee (FW)** in the theme editor). The legacy `0-marquee-1` marquee section was removed; re-add the section in the customizer on themes that still referenced the old file.
 - `0-multi-column-1.liquid` - Custom multi-column section
 - `0-one-column-1.liquid` - Custom one-column section
@@ -473,6 +474,7 @@ If you find custom edits in these, migrate them to `1-` (or `1-client.*`) before
 - `1-theme-submenu-freshwater.liquid`, `1-footer-freshwater.liquid` → customize in place (already `1-` files)
 - `0-cart-drawer.liquid` / `0-component-cart-drawer.css` → create `1-` copies if customized
 - `0-main-cart-items.liquid` → create `1-main-cart-items.liquid` if customized; keep Dawn `main-cart-items.liquid` pristine
+- `0-featured-product.liquid` / `0-section-featured-product.css` → create `1-` copies if customized; keep Dawn `featured-product.liquid` / `section-featured-product.css` pristine
 - `0-footer.liquid` → create `1-footer.liquid` if customized; keep Dawn `footer.liquid` pristine
 
 ---
