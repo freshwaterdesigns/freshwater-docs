@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.5.2] - Unreleased
 
 ### Changed
+- **Header — move search into mobile menu:** Drawer search row (`.menu-drawer__search-from-drawer`) no longer uses 3rem left padding so the icon lines up with the account row; the **Move search into mobile menu** checkbox has no theme-editor info text. `sections/0-header.liquid`.
 - **Cart — free shipping bar:** New theme setting **Show free shipping bar** (`fresh_free_shipping_bar_enabled`, default on). When off, the drawer free shipping block is hidden. When on, **Free Shipping Threshold** can be `0` to show full progress and the unlocked message for any non-empty cart (no longer “0 hides the bar”). **Free Shipping Threshold** uses `visible_if` so it is hidden when the bar toggle is off. `config/settings_schema.json`, `snippets/0-cart-drawer.liquid`.
 - **Theme settings — None button underline offsets:** Under **None Button Additional Styling**, **Font Underline Offset** (`fresh_none_button_text_underline_offset_1`) is now **0–10px** in **0.5px** steps (was 0–4px, 0.1px), matching **Font Hover Underline Offset** (`fresh_none_button_hover_text_underline_offset_1`). `config/settings_schema.json`.
 - **Footer:** The “Powered by Shopify” line is removed from the storefront copyright row. Implemented in new `sections/0-footer.liquid` (Freshwater clone of Dawn `footer.liquid`); `sections/footer-group.json` and default `config/settings_data.json` use section type `0-footer`. Dawn `sections/footer.liquid` is unchanged.
