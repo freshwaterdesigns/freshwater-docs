@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Mobile drawer — Search & Account icon layout:** Dawn’s **`.menu-drawer__menu-item > .svg-wrapper`** rule (absolute caret for submenu links) no longer applies in **`.menu-drawer__utility-links`**, so labeled Search/Account rows keep **icon + text** inline. `assets/0-freshwater.css.liquid`.
+- **Mobile drawer — Account icon spacing:** **`margin-right: 1rem`** on **`.menu-drawer__account-icon`** matches the Search row spacing (**`gap: 1rem`**) because flex **gap** on **`::part(signed-out-avatar)`** does not reliably separate slotted nodes. `sections/0-header.liquid`.
 - **Header — mobile grid columns:** On viewports **≤989px**, **`body.fresh .header`** sets **`grid-template-columns: 1fr 1fr 1fr`** (Dawn **`base.css`** uses **`1fr 2fr 1fr`**) so the logo stays visually centered when left/right content changes. `assets/0-freshwater.css.liquid`.
 
 ## [3.5.2] - 2026-04-13
