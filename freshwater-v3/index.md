@@ -4,13 +4,13 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.5.2
+# Freshwater v3.6.0
 
 **Based on Dawn 15.4.0**
 
 Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme maintains compatibility with Dawn's core functionality while adding custom features, sections, and styling.
 
-**Release:** **Freshwater 3.5.2**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged line on `main` was **3.5.1**.
+**Release:** **Freshwater 3.6.0**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged line on `main` was **3.5.2**.
 
 ## 📑 Table of Contents
 

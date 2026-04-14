@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.6.0] - 2026-04-14
+
+### Changed
+- **BREAKING — Button colors are now global theme settings.** Button scheme colors (1, 2, 3) moved from per-color-scheme settings to the global **0 Button** theme settings section. Button colors are now consistent regardless of which color scheme a section uses. Existing client button colors will reset to schema defaults on upgrade; re-enter in Theme Settings > 0 Button or migrate via `fw-upgrade.sh`. `config/settings_schema.json`, `snippets/0-theme-freshwater-1.liquid`, `assets/0-freshwater.css.liquid`.
+- **Dawn button mapping simplified.** Dawn `.button` (primary) maps to Freshwater scheme 1, `.button--secondary` to scheme 2, `.button--tertiary` to scheme 3. Previously cycled through schemes per color scheme index.
+
+### Fixed
+- **Inverted button mobile background:** `.fresh-button__inverted--sm` referenced non-existent theme setting `fresh_standard_button_background_color_1`; now uses `var(--standard-button-background-color-1)`. `assets/0-freshwater.css.liquid`.
+
+---
+
 ## [3.5.3] - Unreleased
 
 ### Changed
