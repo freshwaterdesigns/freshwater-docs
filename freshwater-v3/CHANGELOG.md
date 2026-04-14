@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Mobile drawer — Search & Account labels:** When search is shown in the drawer (**Move search into mobile menu**), the labels **Search** and **Account** appear next to the icons with the same look as primary drawer links; both rows stay fully clickable (account still opens the customer account UI via `shopify-account`). `snippets/0-menu-drawer-search-trigger.liquid`, `snippets/0-header-drawer.liquid`, `sections/0-header.liquid`.
 
 ### Fixed
+- **Mobile drawer — Search & Account icon layout:** Dawn’s **`.menu-drawer__menu-item > .svg-wrapper`** rule (absolute caret for submenu links) no longer applies in **`.menu-drawer__utility-links`**, so labeled Search/Account rows keep **icon + text** inline. `assets/0-freshwater.css.liquid`.
 - **Header — mobile grid columns:** On viewports **≤989px**, **`body.fresh .header`** sets **`grid-template-columns: 1fr 1fr 1fr`** (Dawn **`base.css`** uses **`1fr 2fr 1fr`**) so the logo stays visually centered when left/right content changes. `assets/0-freshwater.css.liquid`.
 
 ## [3.5.2] - 2026-04-13
