@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.6.1] - 2026-04-27
+
+### Fixed
+- **Stretch link z-index:** Link URL overlay on Multi Column slides, Hero, Hero Carousel, Two Column media, and Graphic blocks was not clickable because the stretch link (`z-index: 1`) sat behind the slide content (`z-index: 2`). Bumped stretch link to `z-index: 3` and interactive elements inside to `z-index: 4`. `sections/0-multi-column-1.liquid`, `sections/0-hero-1.liquid`, `sections/0-hero-2.liquid`, `sections/0-two-column-1.liquid`, `snippets/0-block-graphic-1.liquid`.
+
+---
+
 ## [3.6.0] - 2026-04-14
 
 ### Changed
