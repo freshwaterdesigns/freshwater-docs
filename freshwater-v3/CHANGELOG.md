@@ -13,35 +13,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [3.6.1] - 2026-04-27
-
-### Fixed
-- **Stretch link z-index:** Link URL overlay on Multi Column slides, Hero, Hero Carousel, Two Column media, and Graphic blocks was not clickable because the stretch link (`z-index: 1`) sat behind the slide content (`z-index: 2`). Bumped stretch link to `z-index: 3` and interactive elements inside to `z-index: 4`. `sections/0-multi-column-1.liquid`, `sections/0-hero-1.liquid`, `sections/0-hero-2.liquid`, `sections/0-two-column-1.liquid`, `snippets/0-block-graphic-1.liquid`.
-
----
-
-## [3.6.0] - 2026-04-14
+## [3.5.3] - 2026-05-26
 
 ### Changed
 - **BREAKING — Button colors are now global theme settings.** Button scheme colors (1, 2, 3) moved from per-color-scheme settings to the global **0 Button** theme settings section. Button colors are now consistent regardless of which color scheme a section uses. Existing client button colors will reset to schema defaults on upgrade; re-enter in Theme Settings > 0 Button or migrate via `fw-upgrade.sh`. `config/settings_schema.json`, `snippets/0-theme-freshwater-1.liquid`, `assets/0-freshwater.css.liquid`.
 - **Dawn button mapping simplified.** Dawn `.button` (primary) maps to Freshwater scheme 1, `.button--secondary` to scheme 2, `.button--tertiary` to scheme 3. Previously cycled through schemes per color scheme index.
-
-### Fixed
-- **Inverted button mobile background:** `.fresh-button__inverted--sm` referenced non-existent theme setting `fresh_standard_button_background_color_1`; now uses `var(--standard-button-background-color-1)`. `assets/0-freshwater.css.liquid`.
-
----
-
-## [3.5.3] - Unreleased
-
-### Changed
 - **Mobile drawer — Search & Account labels:** When search is shown in the drawer (**Move search into mobile menu**), the labels **Search** and **Account** appear next to the icons with the same look as primary drawer links; both rows stay fully clickable (account still opens the customer account UI via `shopify-account`). `snippets/0-menu-drawer-search-trigger.liquid`, `snippets/0-header-drawer.liquid`, `sections/0-header.liquid`.
 - **Button blocks — transparent background override:** Added per-block **Transparent Background** toggles for desktop and mobile (`fresh_button_bg_transparent--md`, `fresh_button_bg_transparent--sm`) so merchants can quickly force transparent button backgrounds without changing global theme button settings. Implemented across Freshwater button block schemas and `snippets/0-block-button-1.liquid`.
+- **Theme editor schema refactoring:** Section settings, block settings, and toggle groups across all FW sections now use consistent ALL CAPS headers (SECTION SETTINGS, CAROUSEL, BLOCK, GLOBAL SETTINGS, GRAPHIC SETTINGS, LAYOUT, TEXT BOX), concise Desktop / Mobile toggle labels, `°°°°°` dividers between Desktop/Mobile, and `■■■■` separators between major groups. Affected sections: Hero (FW), Hero Carousel (FW), Two Column (FW), Multi Column (FW), and others.
+- **Button Block Alignment — Auto option:** Added **Auto** to the Block Alignment dropdown so buttons can inherit the section’s text alignment instead of requiring an explicit override.
+- **Freshwater header typography:** `h1`–`h6` and `.h0`–`.h6` classes now use Freshwater header font styling globally. `assets/0-freshwater.css.liquid`.
+- **Cart styling overrides:** Cart item name, price, and old price font sizes and weights are now explicitly styled. `assets/0-freshwater.css.liquid`.
 
 ### Fixed
+- **Stretch link z-index:** Link URL overlay on Multi Column slides, Hero, Hero Carousel, Two Column media, and Graphic blocks was not clickable because the stretch link (`z-index: 1`) sat behind the slide content (`z-index: 2`). Bumped stretch link to `z-index: 3` and interactive elements inside to `z-index: 4`. `sections/0-multi-column-1.liquid`, `sections/0-hero-1.liquid`, `sections/0-hero-2.liquid`, `sections/0-two-column-1.liquid`, `snippets/0-block-graphic-1.liquid`.
+- **Inverted button mobile background:** `.fresh-button__inverted--sm` referenced non-existent theme setting `fresh_standard_button_background_color_1`; now uses `var(--standard-button-background-color-1)`. `assets/0-freshwater.css.liquid`.
 - **Mobile drawer — Search & Account icon layout:** Dawn’s **`.menu-drawer__menu-item > .svg-wrapper`** rule (absolute caret for submenu links) no longer applies in **`.menu-drawer__utility-links`**, so labeled Search/Account rows keep **icon + text** inline. `assets/0-freshwater.css.liquid`.
 - **Mobile drawer — Account icon spacing:** **`margin-right: 1rem`** on **`.menu-drawer__account-icon`** matches the Search row spacing (**`gap: 1rem`**) because flex **gap** on **`::part(signed-out-avatar)`** does not reliably separate slotted nodes. `sections/0-header.liquid`.
 - **Header — mobile grid columns:** On viewports **≤989px**, **`body.fresh .header`** sets **`grid-template-columns: 1fr 1fr 1fr`** (Dawn **`base.css`** uses **`1fr 2fr 1fr`**) so the logo stays visually centered when left/right content changes. `assets/0-freshwater.css.liquid`.
 - **Button scheme font colors (2 and 3):** Link color inheritance from color schemes no longer overrides Freshwater button text colors after button styles were moved out of Dawn color-scheme scopes. `assets/0-freshwater.css.liquid`.
+- **Hero text box pop-in:** Hero text box now fades in after JS positions it instead of showing a visible pop/jump. `sections/0-hero-1.liquid`.
+- **Product JSON-LD priceValidUntil:** `priceValidUntil` is now dynamic (always 1 year from current date) instead of a hardcoded value. `snippets/0-json-ld-prod.liquid`.
 
 ## [3.5.2] - 2026-04-13
 
@@ -354,6 +346,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.5.3]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.3
 [3.5.2]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.2
 [3.5.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.1
 [3.4.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.4.1

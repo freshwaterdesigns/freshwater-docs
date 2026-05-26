@@ -151,7 +151,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Custom section/block settings
      - Cart drawer enhancements (subscription upsell + free shipping threshold)
    - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
-   - Updated theme version to show "15.4.0, Freshwater 3.5.2" (see `theme_info` in this file)
+   - Updated theme version to show "15.4.0, Freshwater 3.5.3" (see `theme_info` in this file)
 
 ### Custom Files (0- Prefixed)
 
@@ -213,9 +213,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.5.2
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.5.3
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.5.2:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.5.3:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -326,7 +326,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.5.2"
+   "theme_version": "15.4.0, Freshwater 3.5.3"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -1476,7 +1476,7 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
-**Current release:** **3.5.2** (see [CHANGELOG.md](CHANGELOG.md)).
+**Current release:** **3.5.3** (see [CHANGELOG.md](CHANGELOG.md)).
 
 For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/changelog).
 
@@ -1540,6 +1540,6 @@ For issues or questions:
 ---
 
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.5.2
+**Freshwater Version:** 3.5.3
 
 {% endraw %}
