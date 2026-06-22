@@ -153,6 +153,30 @@ These native Dawn files have been modified and should be tracked for upgrades:
    - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
    - Updated theme version to show "15.4.0, Freshwater 3.5.3" (see `theme_info` in this file)
 
+4. **Dawn CSS files — `color: rgba(var(--color-foreground), 0.75)` → `1`**
+   Dawn ships `0.75` foreground-color opacity on `body` / `.color-scheme-*` (in `snippets/0-theme-dawn-2.liquid`) and on ~25 component selectors across these asset CSS files. Freshwater changes every instance to `1` so all text renders at full opacity. **On every Dawn upgrade, re-apply this change:**
+   - `snippets/0-theme-dawn-2.liquid` — the `{{ scheme_classes | prepend: 'body' }}` rule
+   - `assets/base.css`
+   - `assets/section-main-product.css`
+   - `assets/section-footer.css`
+   - `assets/section-blog-post.css`
+   - `assets/component-card.css`
+   - `assets/component-cart.css`
+   - `assets/component-mega-menu.css`
+   - `assets/component-price.css`
+   - `assets/component-slider.css`
+   - `assets/component-localization-form.css`
+   - `assets/component-pickup-availability.css`
+   - `assets/component-facets.css`
+   - `assets/component-predictive-search.css`
+   - `assets/component-model-viewer-ui.css`
+   - `assets/component-volume-pricing.css`
+   - `assets/quick-add.css`
+   - `assets/customer.css`
+   - `layout/password.liquid`
+
+   **Quick check after upgrade:** `grep -r 'color: rgba(var(--color-foreground), 0.75)' snippets/ assets/ layout/` — should return zero results.
+
 ### Custom Files (0- Prefixed)
 
 #### Assets
@@ -1451,7 +1475,12 @@ When upgrading to a new Dawn version:
    - Compare your custom locale entries with the new Dawn locale files
    - Merge any new Dawn translations while preserving your custom entries
    - Example: If you added `options__4` with "Freshwater" to `en.default.schema.json`, ensure it's added to all other locale files as well
-6. **DO** test thoroughly after upgrading
+6. **DO** kill `color: rgba(var(--color-foreground), 0.75)` in all Dawn CSS files. Dawn uses 0.75 alpha on foreground text throughout; Freshwater requires full opacity. After merging new Dawn files, run:
+   ```bash
+   grep -rn 'color: rgba(var(--color-foreground), 0.75)' snippets/ assets/ layout/
+   ```
+   Replace every match with `color: rgba(var(--color-foreground), 1)`. See **Modified Dawn Files → item 4** for the full file list.
+7. **DO** test thoroughly after upgrading
 
 ### Naming Convention
 
