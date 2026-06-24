@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.5.3] - 2026-05-26
 
+### Fixed
+- **0-tiny-slider.min.js — Swipe fix (2026-06-24):** Two patches applied to tiny-slider v2.9.4 minified source:
+  1. **Viewport width (`it`) NaN fallback:** Added `if(isNaN(it)){it=j.clientWidth||(E.clientWidth-(et?2*et-nt:0))}` before the swipe calculation `var t=-a*rt/(it+nt)`. The `un()` function returns NaN when the `appendChild` monkey-patch in `0-freshwater.js.liquid` interferes with DOM measurement. This caused all swipe/drag to break while arrows/dots continued working.
+  2. **Nav dot null guards:** Wrapped `ji(t,...)` and `ji(e,...)` calls in `if(t){}` and `if(e){}` guards where `He!==Oe` triggers nav updates. Prevents "Cannot read properties of undefined (reading 'item')" crash when nav indices are NaN (cascading from the `it=NaN` bug above).
+  - **Upstream status:** Not reported. Project is abandoned (no maintainer response since ~2022, 200+ open issues unresolved). Root cause diagnosis may be useful as a comment on [#497](https://github.com/ganlanyuan/tiny-slider/issues/497) or [#118](https://github.com/ganlanyuan/tiny-slider/issues/118).
+
 ### Changed
 - **BREAKING — Button colors are now global theme settings.** Button scheme colors (1, 2, 3) moved from per-color-scheme settings to the global **0 Button** theme settings section. Button colors are now consistent regardless of which color scheme a section uses. Existing client button colors will reset to schema defaults on upgrade; re-enter in Theme Settings > 0 Button or migrate via `fw-upgrade.sh`. `config/settings_schema.json`, `snippets/0-theme-freshwater-1.liquid`, `assets/0-freshwater.css.liquid`.
 - **Dawn button mapping simplified.** Dawn `.button` (primary) maps to Freshwater scheme 1, `.button--secondary` to scheme 2, `.button--tertiary` to scheme 3. Previously cycled through schemes per color scheme index.
