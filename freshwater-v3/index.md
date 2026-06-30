@@ -20,6 +20,7 @@ Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme mai
 - [File Structure](#-file-structure-overview)
 - [Key Features](#-key-features)
   - [Hero text box max width (desktop)](#hero-text-box-max-width-desktop)
+  - [On-the-Fly Functionality Buttons](#on-the-fly-functionality-buttons)
 - [CSS Architecture](#-css-architecture)
   - [Responsive Video Embed](#responsive-video-embed)
 - [Customizing Navigation](#-customizing-navigation)
@@ -573,6 +574,33 @@ Freshwater.checkCarousels()  // Check carousel initialization
 ```
 
 **Note:** Only `0-` prefixed files use this utility. Native Dawn files use standard `console.log/error`.
+
+### On-the-Fly Functionality Buttons
+
+Any element with the `fresh-button` class is automatically enhanced with click functionality based on additional class names. This lets you turn any button in the theme editor into an add-to-cart button, Klaviyo form trigger, smooth scroller, or modal opener — no code editing required.
+
+**Class name convention:** `prefix-value` (e.g., `freshvariant-12345678`)
+
+| Class | Description |
+|---|---|
+| `fresh-button` | **Required.** Enables functionality parsing on the element. |
+| `freshvariant-{variantId}` | Adds the specified product variant to the cart. |
+| `freshquantity-{qty}` | Sets the quantity for the cart add (default: 1). Combine with `freshvariant`. |
+| `freshsellingplan-{planId}` | Sets the selling plan ID for subscriptions. Combine with `freshvariant`. |
+| `freshklaviyo-{formId}` | Opens a Klaviyo signup form by its form ID. |
+| `freshscroll-{elementId}` | Smooth scrolls to the element with the matching ID. |
+| `fresh-modal-button` | Opens a modal whose ID matches the button's `href` (e.g., `#my-section`). See [Freshwater Modal System](#freshwater-modal-system). |
+
+**Usage in the theme editor:**
+
+1. Add a **Button** block (or any element that renders a clickable tag).
+2. In **Custom Class Names**, add `fresh-button` plus the desired functionality classes.
+   - Example: `fresh-button freshvariant-44029702054117 freshquantity-2`
+3. The button text and styling are configured normally — the class names handle the behavior.
+
+**Priority order:** Klaviyo (highest) → Modal → Scroll → Add to cart (lowest). Only the first matching action executes.
+
+**File:** `assets/0-freshwater.js.liquid` (search for `freshAddFunctionalityButtons`).
 
 ### JavaScript Libraries
 
