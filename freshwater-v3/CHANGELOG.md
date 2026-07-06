@@ -13,6 +13,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.5.4] - 2026-07-06
+
+### Added
+- **Collection Variant Cards (FW):** New section (`sections/0-collection-variant-cards-1.liquid`) displays product variant cards in a collection grid. Cards show variant-specific images matched by alt text color prefix, with image ratio control, secondary hover image, and direct variant links.
+- **Product gallery — variant image filtering:** `sections/0-main-product.liquid` adds a **Gallery type** setting (`gallery_type`) with two options: **Default (Dawn)** and **Variant filter (FW)**. The variant filter gallery (`snippets/0-product-gallery-variant-1.liquid`) filters product images by a configurable option (e.g. "Color") using the alt text convention `Color | Description`. Images without the prefix are universal. Includes thumbnail strip, desktop/mobile thumbnail size controls, and JS-driven filtering on variant change. Gallery type defaults to **Default (Dawn)** so existing products are unaffected.
+- **On-the-fly functionality buttons — README documentation:** The `fresh-button` class system (`freshvariant`, `freshklaviyo`, `freshscroll`, `freshquantity`, `freshsellingplan`, `fresh-modal-button`) is now documented in the README under Key Features.
+
+### Changed
+- **Multi Column (FW) — standard blocks:** Header, Body, Button, and other standard Freshwater blocks (`0-block-*`) can now be added to Multi Column slides alongside the existing slide-specific content fields.
+- **Rating block alignment — Auto option:** Added **Auto** to the rating block alignment dropdown across Hero Carousel (FW) and all other sections so ratings can inherit section text alignment.
+- **List block justification — Auto option:** Added **Auto** to the list block justification dropdown across all sections.
+- **Tiny-Slider autoplay button:** Replaced the built-in Tiny-Slider autoplay button (which caused `appendChild` errors) with a custom Freshwater implementation. Styled play/pause button with proper positioning.
+- **Section naming:** All Freshwater sections now use the `(FW)` suffix at the end of the name (e.g. "Hero (FW)" not "(FW) Hero"). Names kept within 25-character limit.
+
+### Fixed
+- **Accessibility (ADA) — 6 passes:** Comprehensive accessibility overhaul across the theme:
+  - Pass 1: Fixed `.sr-only` snippet, added skip-to-content link, rebuilt accordion for full keyboard/ARIA support.
+  - Pass 2: Cart and product accessibility fixes.
+  - Pass 3: Carousel `prefers-reduced-motion` support and motion accessibility.
+  - Pass 4: Modal and drawer focus management and ARIA fixes.
+  - Pass 5: Image alt text, video accessibility, link purpose, and landmark roles.
+  - Pass 6: Minor accessibility polish.
+- **Tiny-Slider v2.9.4 patches:** Fixed swipe NaN crash (viewport width fallback) and nav dot null guards. See 3.5.3 changelog for root cause details.
+- **None button hover:** Hover state now keeps the same color as non-hover for none-style buttons (schemes 1 and 3).
+- **Dawn foreground opacity 0.75:** Changed every instance of `rgba(var(--color-foreground), 0.75)` to `1` directly in Dawn source files (previously overridden in Freshwater CSS, but some elements still inherited translucency).
+- **Variant gallery race condition:** Gallery reads selected variant from the form input rather than the URL, preventing stale state on rapid variant changes.
+- **Schema fixes:** Removed blank `default` values (not allowed by Shopify), fixed section names exceeding 25-character limit, added `presets` arrays so new sections appear in the customizer picker.
+
+### Removed
+- **Standalone Product Gallery section:** `sections/0-product-gallery-1.liquid` removed. The gallery is now integrated into `0-main-product.liquid` via the `gallery_type` setting. The JS asset (`assets/0-product-gallery-1.js`) is retained (used by the integrated snippet).
+
 ## [3.5.3] - 2026-05-26
 
 ### Fixed
@@ -351,6 +382,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.5.4]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.4
 [3.5.3]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.3
 [3.5.2]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.2
 [3.5.1]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.1
