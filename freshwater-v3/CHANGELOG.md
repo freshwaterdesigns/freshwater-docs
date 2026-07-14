@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Hero sections — ADA screen reader text:** Both `sections/0-hero-1.liquid` and `sections/0-hero-2.liquid` now include an **ADA / ACCESSIBILITY** collapsible toggle (matching the GLOBAL SETTINGS pattern). When expanded, a `ada_text` textarea accepts copy describing the image and any text baked into it. Renders as `<div class="visually-hidden">` — announced by screen readers, invisible to sighted users. Addresses WCAG 1.1.1 (Non-text Content) and 1.4.5 (Images of Text) for heroes where text is part of the image asset.
+
+### Fixed
+- **Video mute button — skip native-controls videos:** `freshCreateVideoSoundButtons()` in `assets/0-freshwater.js.liquid` now skips any `<video>` element that has the `controls` attribute. Those videos already expose mute/unmute via the browser's native UI; injecting a second custom button was redundant and visually conflicting.
+
+---
+
 ## [3.5.4] - 2026-07-06
 
 ### Added
