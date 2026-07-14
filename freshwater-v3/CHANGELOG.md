@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Video mute button — skip native-controls videos:** `freshCreateVideoSoundButtons()` in `assets/0-freshwater.js.liquid` now skips any `<video>` element that has the `controls` attribute. Those videos already expose mute/unmute via the browser's native UI; injecting a second custom button was redundant and visually conflicting.
+- **PDP variant gallery thumbnails — blurry on retina displays:** Thumbnail `<img>` tags in `snippets/0-product-gallery-variant-1.liquid` were rendering a flat `width: 200` with no `srcset` or `sizes`, causing blur on 2x/3x screens. Added `srcset` at 120w/200w/400w and `sizes="(min-width: 768px) 200px, 60px"` so the browser selects a sharp image for the actual rendered thumb size.
 
 ---
 
