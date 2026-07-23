@@ -4,13 +4,13 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.5.5
+# Freshwater v3.5.6
 
 **Based on Dawn 15.4.0**
 
 Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme maintains compatibility with Dawn's core functionality while adding custom features, sections, and styling.
 
-**Release:** **Freshwater 3.5.5**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged line on `main` was **3.5.4**.
+**Release:** **Freshwater 3.5.6**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged line on `main` was **3.5.5**.
 
 ## 📑 Table of Contents
 
@@ -152,7 +152,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Custom section/block settings
      - Cart drawer enhancements (subscription upsell + free shipping threshold)
    - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
-   - Updated theme version to show "15.4.0, Freshwater 3.5.5" (see `theme_info` in this file)
+   - Updated theme version to show "15.4.0, Freshwater 3.5.6" (see `theme_info` in this file)
 
 4. **Dawn CSS files — `color: rgba(var(--color-foreground), 0.75)` → `1`**
    Dawn ships `0.75` foreground-color opacity on `body` / `.color-scheme-*` (in `snippets/0-theme-dawn-2.liquid`) and on ~25 component selectors across these asset CSS files. Freshwater changes every instance to `1` so all text renders at full opacity. **On every Dawn upgrade, re-apply this change:**
@@ -238,9 +238,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.5.5
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.5.6
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.5.5:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.5.6:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -351,7 +351,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.5.5"
+   "theme_version": "15.4.0, Freshwater 3.5.6"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -1533,7 +1533,7 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
-**Current release:** **3.5.5** (see [CHANGELOG.md](CHANGELOG.md)).
+**Current release:** **3.5.6** (see [CHANGELOG.md](CHANGELOG.md)).
 
 For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/changelog).
 
@@ -1597,6 +1597,6 @@ For issues or questions:
 ---
 
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.5.5
+**Freshwater Version:** 3.5.6
 
 {% endraw %}

@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [3.5.5] - 2026-07-23
+
 ### Added
 - **Hero sections — ADA screen reader text:** Both `sections/0-hero-1.liquid` and `sections/0-hero-2.liquid` now include an **ADA / ACCESSIBILITY** collapsible toggle (matching the GLOBAL SETTINGS pattern). When expanded, a `ada_text` textarea accepts copy describing the image and any text baked into it. Renders as `<div class="visually-hidden">` — announced by screen readers, invisible to sighted users. Addresses WCAG 1.1.1 (Non-text Content) and 1.4.5 (Images of Text) for heroes where text is part of the image asset.
 
@@ -394,6 +398,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[3.5.5]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.5
 [3.5.4]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.4
 [3.5.3]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.3
 [3.5.2]: https://github.com/freshwaterdesigns/freshwater-v3/releases/tag/v3.5.2
