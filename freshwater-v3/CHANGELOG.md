@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Homepage logo — extra margin below header:** Dawn wraps the homepage logo `<a>` in `<h1 class="header__heading">` for SEO. Browser default `<h1>` margin was causing a gap not present on other pages. Added `h1.header__heading { margin: 0 }` to `assets/0-freshwater.css.liquid`.
+- **Multi Column (FW) — last row not centering:** Remainder items in the last row (e.g. 5 columns with 2 or 3 items remaining) were left-aligned instead of centered. Switched the disabled-carousel layout from a doubled-column CSS Grid to `display: flex; flex-wrap: wrap; justify-content: center` with Liquid-computed `flex-basis` per item in `sections/0-multi-column-1.liquid`. Also removed ~1 030 lines of now-dead nth-child `grid-column-end` centering rules from `assets/0-freshwater.css.liquid`.
+
 ---
 
 ## [3.5.5] - 2026-07-23
