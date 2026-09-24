@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Button blocks — second button option:** All button blocks (one-column, two-column, multi-column, hero) now support an optional second button. Enable via `Enable Second Button` toggle; configure text, URL, type, scheme, full-width, transparent BG, and font settings (family, size, weight, line-height) per breakpoint. Pair layout direction (Side by Side / Stacked) and gap (px) are separately controllable per breakpoint under `B1: PAIR LAYOUT`. Block alignment from Button 1 applies to both the outer container and pair positioning.
 - **Video blocks — play button overlay:** New global `Show Play Overlay` toggle (default off) and `Play Button Background` / `Play Button Arrow` color pickers on all video blocks. When enabled, a circular SVG play icon (YouTube-style) is injected via JS after the video content div (ensuring correct stacking) and hides once the video begins playing. Available in: hero, hero-2, multi-column, two-column, one-column, main-product sections.
 
 ### Fixed
