@@ -4,13 +4,13 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.5.6
+# Freshwater v3.7.0
 
 **Based on Dawn 15.4.0**
 
 Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme maintains compatibility with Dawn's core functionality while adding custom features, sections, and styling.
 
-**Release:** **Freshwater 3.5.6**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged line on `main` was **3.5.5**.
+**Release:** **Freshwater 3.7.0**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged release was **3.6.0**.
 
 ## 📑 Table of Contents
 
@@ -152,7 +152,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Custom section/block settings
      - Cart drawer enhancements (subscription upsell + free shipping threshold)
    - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
-   - Updated theme version to show "15.4.0, Freshwater 3.5.6" (see `theme_info` in this file)
+   - Updated theme version to show "15.4.0, Freshwater 3.7.0" (see `theme_info` in this file)
 
 4. **Dawn CSS files — `color: rgba(var(--color-foreground), 0.75)` → `1`**
    Dawn ships `0.75` foreground-color opacity on `body` / `.color-scheme-*` (in `snippets/0-theme-dawn-2.liquid`) and on ~25 component selectors across these asset CSS files. Freshwater changes every instance to `1` so all text renders at full opacity. **On every Dawn upgrade, re-apply this change:**
@@ -177,6 +177,19 @@ These native Dawn files have been modified and should be tracked for upgrades:
    - `layout/password.liquid`
 
    **Quick check after upgrade:** `grep -r 'color: rgba(var(--color-foreground), 0.75)' snippets/ assets/ layout/` — should return zero results.
+
+5. **`snippets/product-variant-options.liquid`**
+   - The swatch `render 'swatch-input'` call passed `value: value | escape`. Shopify's stricter Liquid parser (v5.9.0) rejects filters on render arguments, so the file failed to upload. The value is assigned to `escaped_value` first and passed instead.
+   - Upstream Dawn fixed this the same way on 2025-12-02 (Shopify/dawn#3870, first shipped in Dawn 15.4.1). **On upgrade:** if the new Dawn version includes that fix, take Dawn's file as-is and remove this entry. If upgrading to an older Dawn, re-apply this change.
+   - **Quick check after upgrade:** `grep -n 'value: value | escape' snippets/product-variant-options.liquid` should return nothing.
+
+6. **`snippets/country-localization.liquid`** + **`assets/localization-form.js`**
+   - The picker renders in the header, header drawer, announcement bar and footer. Dawn's IDs (`country-filter-input`, `sr-country-search-results`, and each country link's `id="{{ country.name }}"`) were the same in every copy, so the footer's search label pointed at the header input. They're now prefixed with `localPosition`, and country links use `{{ localPosition }}-{{ country.iso_code }}` (`-popular-` for the popular list). `aria-owns`/`aria-controls` now point at the real `{{ localPosition }}-country-results` list. The JS finds the live region by its new `.sr-country-search-results` class.
+   - **On upgrade:** re-apply unless Dawn has fixed it. **Quick check:** `grep -n 'id="{{ country.name }}"\|id="country-filter-input"' snippets/country-localization.liquid` should return nothing.
+
+7. **`snippets/article-card.liquid`** + **`sections/main-blog.liquid`**
+   - `article-card` takes an optional `heading_tag` (default `h3`). `main-blog` passes `h2`, so blog cards follow the page h1 instead of skipping a level. Featured Blog and search keep `h3`.
+   - **On upgrade:** re-apply. **Quick check:** `grep -n "heading_tag" snippets/article-card.liquid sections/main-blog.liquid`.
 
 ### Custom Files (0- Prefixed)
 
@@ -238,9 +251,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.5.6
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.7.0
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.5.6:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.7.0:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -351,7 +364,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.5.6"
+   "theme_version": "15.4.0, Freshwater 3.7.0"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -543,6 +556,22 @@ The default page template uses the **One Column (FW)** section with a **Metafiel
 ### Hero text box max width (desktop)
 **Hero (FW)** and **Hero Carousel (FW)** support an optional **Text Box Max Width** on desktop (with **Hero Box** enabled): choose **None**, cap by **pixels** (e.g. 800px), or by **percent**. This adds `max-width` alongside the existing **Text Box Width** percentage so wide viewports do not stretch the box beyond the chosen cap. Mobile is unchanged.
 
+### JavaScript API
+
+`0-freshwater.js` runs inside one IIFE and publishes what other files may call on `window.Freshwater`:
+
+| Namespace | Functions |
+|---|---|
+| `Freshwater` | `console`, `string`, `waitForElement`, `extractClassValue`, `init`, `resize`, `state.lazyLoad` |
+| `Freshwater.carousel` | `init`, `waitForLibrary`, `a11y`, `checkControls`, `syncBreakpoint` |
+| `Freshwater.cart` | `addProduct`, `changeLine`, `initDrawerSubscriptionUpsell`, `initDrawerSubscriptionSelectGuard` |
+| `Freshwater.modal` | `open`, `close`, `handle`, `initHandlers`, `initAutoWrap` |
+| `Freshwater.video` | the video block API, plus `convertPosterImages`, `createSoundButtons`, `soundListener` |
+| `Freshwater.links` | `smoothScrollToInlineAnchors`, `openExternalInNewWindow` |
+| `Freshwater.accordion` / `.buttons` / `.megaMenu` | `init` / `addFunctionality` / `init` |
+
+Every previous global (`freshWaitForElement`, `freshAddProductToCart`, `lazyLoadInstance`, …) is still set on `window` as an alias of the same function, because client section copies and `1-` files call them by name. New code should use the `Freshwater.*` names.
+
 ### Debug Utility
 
 Freshwater includes a debug utility that only logs when `debug_mode=true` is in the URL:
@@ -577,36 +606,55 @@ Freshwater.checkCarousels()  // Check carousel initialization
 
 ### On-the-Fly Functionality Buttons
 
-Any element with the `fresh-button` class is automatically enhanced with click functionality based on additional class names. This lets you turn any button in the theme editor into an add-to-cart button, Klaviyo form trigger, smooth scroller, or modal opener — no code editing required.
+Any **Button** block can add a product to the cart, open a Klaviyo form, smooth-scroll to a section or open a modal. You don't touch any code: you type a class name into the button's **Custom Class Names** field.
 
-**Class name convention:** `prefix-value` (e.g., `freshvariant-12345678`)
+Button blocks already carry the `fresh-button` class. On any other element (an HTML or Liquid block, say), add `fresh-button` yourself.
 
-| Class | Description |
+| Class | What it does |
 |---|---|
-| `fresh-button` | **Required.** Enables functionality parsing on the element. |
-| `freshvariant-{variantId}` | Adds the specified product variant to the cart. |
-| `freshquantity-{qty}` | Sets the quantity for the cart add (default: 1). Combine with `freshvariant`. |
-| `freshsellingplan-{planId}` | Sets the selling plan ID for subscriptions. Combine with `freshvariant`. |
-| `freshklaviyo-{formId}` | Opens a Klaviyo signup form by its form ID. |
-| `freshscroll-{elementId}` | Smooth scrolls to the element with the matching ID. |
-| `fresh-modal-button` | Opens a modal whose ID matches the button's `href` (e.g., `#my-section`). See [Freshwater Modal System](#freshwater-modal-system). |
+| `freshvariant-{variantId}` | Adds that variant to the cart and opens the cart drawer. |
+| `freshquantity-{qty}` | Quantity for `freshvariant` (default 1). |
+| `freshsellingplan-{planId}` | Subscription selling plan for `freshvariant`. |
+| `freshklaviyo-{formId}` | Opens that Klaviyo sign-up form. |
+| `freshscroll-{elementId}` | Smooth-scrolls to the element with that ID on the same page. Instant when the visitor prefers reduced motion. |
+| `fresh-modal-button` | Opens the modal whose ID matches the button's link (e.g. `#my-section`). See [Freshwater Modal System](#freshwater-modal-system). |
 
-**Usage in the theme editor:**
+#### Setting one up
 
-1. Add a **Button** block (or any element that renders a clickable tag).
-2. In **Custom Class Names**, add `fresh-button` plus the desired functionality classes.
-   - Example: `fresh-button freshvariant-44029702054117 freshquantity-2`
-3. The button text and styling are configured normally — the class names handle the behavior.
+1. Add a **Button** block and set its text and style as usual.
+2. Leave the button's **Link** empty. With no link and one of the classes above, the block renders a real `<button>` instead of a link. A modal button is the exception: its link is the `#id` of the modal.
+3. Open the block's **Custom Class Names** and add the classes, separated by spaces.
 
-**Priority order:** Klaviyo (highest) → Modal → Scroll → Add to cart (lowest). Only the first matching action executes.
+#### Finding the IDs
 
-**File:** `assets/0-freshwater.js.liquid` (search for `freshAddFunctionalityButtons`).
+- **Variant ID:** in the admin, open the product, then the variant. The number at the end of the URL (`…/variants/44029702054117`) is the ID. A product with no variants still has one: open its only variant.
+- **Selling plan ID:** from the subscription app, or from the product's JSON at `/products/{handle}.js`, under `selling_plan_groups[].selling_plans[].id`.
+- **Klaviyo form ID:** in Klaviyo, **Sign-up forms**, open the form. The 6-character code in the URL (e.g. `XyZ12a`) is the ID. The Klaviyo app embed has to be on under **Theme settings > App embeds**.
+- **Scroll target:** open the target section's **GLOBAL SETTINGS** and fill in **Custom ID**, e.g. `faq`. Then use `freshscroll-faq`. IDs are case-sensitive and can contain hyphens (`freshscroll-shipping-faq` works).
+
+#### Examples
+
+```
+freshvariant-44029702054117                                    add 1 to cart
+freshvariant-44029702054117 freshquantity-2                    add 2 to cart
+freshvariant-44029702054117 freshsellingplan-689232347431      add as a subscription
+freshklaviyo-XyZ12a                                            open a Klaviyo form
+freshscroll-faq                                                scroll to the section with Custom ID "faq"
+```
+
+#### Gotchas
+
+- **One action per click.** If a button has several, only the first in this order runs: Klaviyo, modal, scroll, add to cart.
+- **Typos fail silently** for shoppers. Check the browser console: a missing scroll target logs `Scroll target not found`, and a bad variant ID logs the cart error.
+- **Sold-out or deleted variants** can't be added. The button does nothing and the console logs the cart error. Update the class when the product changes.
+- Behaviour lives in `assets/0-freshwater.js.liquid` (search for `freshAddFunctionalityButtons`). The button tag logic is in `snippets/0-block-button-1.liquid`.
 
 ### JavaScript Libraries
 
 - **Tiny-Slider** (`0-tiny-slider.*`) - Vanilla JS carousel library (no jQuery dependency)
   - **Version:** 2.9.4 (UMD build)
   - **Note:** We use version 2.9.4 specifically due to a bug in newer versions (2.9.5+) that causes `HierarchyRequestError: Failed to execute 'appendChild' on 'Node': Only one element on document allowed` when initializing carousels. Version 2.9.4 is stable and works correctly with our implementation.
+  - **Patched:** NaN viewport fallback, nav dot null guards, and the width probe in `getContainerWidth` (gets `display: block` so Dawn's `div:empty { display: none }` can't hide it, and stops at element nodes). The `HierarchyRequestError` above turned out to come from that `div:empty` rule, which 2.9.4 also hit on breakpoint resizes. If you ever try a newer Tiny-Slider, re-apply the probe fix first; the 2.9.5+ error may have the same cause.
 - **Vanilla Lazyload** (`0-lazyload.min.js`) - For lazy loading images
 - **Bootstrap** (`0-bootstrap.min-1.css`) - CSS framework
 - **Magnify** (`0-magnify.js`) - Image zoom functionality
@@ -650,7 +698,7 @@ Freshwater overrides all Dawn button styles to use Freshwater's standard scheme 
 Use this when a control must **always** match Freshwater **standard button style 1** (the same tokens as `.fresh-button__standard-1--md` / `.fresh-button__standard-1--sm` plus `.fresh-button__standard--md` / `.fresh-button__standard--sm` sizing), even if Dawn classes, `.button--secondary`, app markup, or other CSS would normally change it.
 
 - **Class:** `fresh-button--force-standard-1` — add **only** this class; you do **not** need `fresh-button`.
-- **How it works:** Rules use `!important` on the properties that need to win. Fill, border, and text color use `var(--standard-button-*-1)` / hover variants from the **nearest Freshwater color scheme** ancestor (same as other standard-1 buttons). Keep the element inside a normal section or wrapper that defines those CSS variables.
+- **How it works:** The rules are scoped `body.fresh .fresh-button--force-standard-1`, which outranks Dawn's and Freshwater's button and link rules without `!important`. App CSS that uses `!important` or inline styles still wins; handle that in the client's `1-` layer. Fill, border, and text color use `var(--standard-button-*-1)` / hover variants from the **nearest Freshwater color scheme** ancestor (same as other standard-1 buttons). Keep the element inside a normal section or wrapper that defines those CSS variables.
 - **Responsive:** Layout and typography follow the theme’s **768px** (desktop) and **767px** (mobile) breakpoints like other Freshwater buttons.
 
 **Examples**
@@ -1219,11 +1267,13 @@ You can use Liquid to generate dynamic IDs:
 
 ### JavaScript Functions
 
-- `freshHandleModal(button)` - Handles modal opening from button click
-- `freshOpenModal(modalElement)` - Opens a modal
-- `freshCloseModal(modalElement)` - Closes a modal
-- `freshInitModalHandlers()` - Initializes event handlers for closing
-- `freshInitModalAutoWrap()` - Automatically wraps `.fresh-modal-content` elements in modal structure
+- `Freshwater.modal.handle(button)` - Handles modal opening from button click
+- `Freshwater.modal.open(modalElement)` - Opens a modal
+- `Freshwater.modal.close(modalElement)` - Closes a modal
+- `Freshwater.modal.initHandlers()` - Initializes event handlers for closing
+- `Freshwater.modal.initAutoWrap()` - Automatically wraps `.fresh-modal-content` elements in modal structure
+
+The old global names (`freshOpenModal`, `freshCloseModal`, …) still work as aliases.
 
 ### Event Handlers
 
@@ -1440,7 +1490,7 @@ The theme automatically detects anchor links (`href="#id"`) and:
 
 ### JavaScript Function
 
-- `freshSmoothScrollToInlineAnchors()` - Automatically initializes smooth scrolling for all anchor links on page load
+- `Freshwater.links.smoothScrollToInlineAnchors()` (alias `freshSmoothScrollToInlineAnchors()`) - Automatically initializes smooth scrolling for all anchor links on page load
 
 ### CSS Classes
 
@@ -1515,7 +1565,7 @@ When upgrading to a new Dawn version:
 - All custom files use `0-` prefix
 - All custom functions use `fresh` prefix (e.g., `freshGlobalInit`)
 - All custom variables use `fresh` prefix (e.g., `freshWindowResizeTimeout`)
-- Carousel initialization: `freshInitCarouselsTiny()` (uses Tiny-Slider, vanilla JS)
+- Carousel initialization: `Freshwater.carousel.init()` (alias `freshInitCarouselsTiny()`; uses Tiny-Slider, vanilla JS)
 
 ### Console Logging
 
@@ -1527,15 +1577,15 @@ This separation allows you to control Freshwater logs independently while keepin
 ### Accordion and List block icons (SVG)
 
 - **Accordion** and **list** blocks apply icon color via `fill` and `stroke` on `svg path`. **Arrow** and **arrow-circle** omit stroke in CSS (selectors use `svg.fresh-icon--arrow` / `svg.fresh-icon--arrow-circle` from `0-icon-1.liquid`) so filled chevrons are not doubled.
-- **Accordion** toggles between two SVGs per icon (`.icon1` / `.icon2`). The open-state `display` rules use `!important` so they override inline `display: none` on `.icon2` in `0-icon-1.liquid`.
+- **Accordion** toggles between two SVGs per icon (`.icon1` / `.icon2`). `.icon2` is hidden by `body.fresh .icon.icon2` in `0-freshwater.css.liquid` (no inline style), and the accordion's ID-scoped open/closed rules switch the two without `!important`.
 
 ---
 
 ## 📝 Version History
 
-**Current release:** **3.5.6** (see [CHANGELOG.md](CHANGELOG.md)).
+**Current release:** **3.7.0** (see [CHANGELOG.md](CHANGELOG.md)).
 
-For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/changelog).
+For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/CHANGELOG).
 
 ---
 
@@ -1597,6 +1647,6 @@ For issues or questions:
 ---
 
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.5.6
+**Freshwater Version:** 3.7.0
 
 {% endraw %}
