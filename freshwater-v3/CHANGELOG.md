@@ -15,7 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [3.7.1] - 2026-11-21
+
+A patch release for client repos: no theme code changes. Stores upgrading from 3.5.x or 3.6.x should go straight to 3.7.1 instead of 3.7.0.
+
 ### Fixed
+- **GitHub workflows no longer run in client repos.** Client repos pick up `.github/workflows/` through upstream merges, and both workflows ran there too. `prevent-shopify-bot-commits` failed every `shopify[bot]` commit, which on a client whose `main` is GitHub-connected to the live theme is most commits, and `publish-readme-to-docs` failed every push to `main` for lack of the docs token. Neither blocked anything, but client `main` would show red permanently. Both jobs now run only in `freshwaterdesigns/freshwater-v3`.
 - **Docs site publishing:** the `publish-readme-to-docs` workflow had failed on every merge since 2026-10-13. `freshwater-docs` only accepts changes through pull requests, and the workflow pushed straight to its `main`. It now pushes a `sync/freshwater-v3-<sha>` branch and opens a PR there, closing any older sync PR it replaces. Merge that PR to publish. The sync also deletes the stale hand-made `freshwater-v3/changelog.md` page (stuck at 3.1.0), and the README's "documentation site" changelog link now points to the generated `freshwater-v3/CHANGELOG` page.
 
 ---
