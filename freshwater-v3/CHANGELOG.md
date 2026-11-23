@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Hero Carousel — LCP logged at carousel init instead of first paint (desktop):** The first slide's hero image painted early (eager, `fetchpriority="high"`), but Chrome logged it again as a new LCP entry when Tiny-Slider started, about 1–2 s later on desktop. Tiny-Slider moves the slide list into its wrapper divs on init, and Chrome records a moved image as a new LCP candidate whenever its visible area has grown since its first paint. Two things made it grow:
+  - **Pre-init layout:** before init the first slide was a flex row, so its content shrank to the image's size (823 px wide in a 1440 px hero on freshwater-dev) and jumped to full width at init. The first slide now uses the same block / flex-column layout before init as after, so there's no jump. (`sections/0-hero-2.liquid`)
+  - **Sub-pixel shifts above the hero:** a fraction of a pixel of movement above the hero between first paint and init (e.g. a font swap) was enough. Hero Carousel now renders Tiny-Slider's outer/overflow/inner wrappers in Liquid (`.fresh-tns-ow > .fresh-tns-mw > .fresh-tns-iw`), and the patched `0-tiny-slider.min.js` adopts them instead of creating its own, so init no longer moves the slides. The patch only applies when those wrappers are present, so other carousels are unchanged. `destroy()` still restores the plain list, and a re-init takes the normal path.
+
+  freshwater-dev home, 1350×940 (Lighthouse desktop): LCP is the hero's first paint, about 0.8–1.0 s instead of 1.8 s. Mobile LCP already happened before init and is unchanged.
+
 ---
 
 ## [3.7.2] - 2026-11-23
