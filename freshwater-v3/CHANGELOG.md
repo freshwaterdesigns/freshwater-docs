@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Carousel dot labels (Multi Column and Hero Carousel):** Tiny Slider labelled every dot "Carousel Page N" (and the active one "Carousel Page N (Current Slide)") in hard-coded English, the last untranslated carousel label, and called the dots pages even with **One Dot Per Slide** on. Each dot now says which slide it brings in, in Dawn's translated slideshow wording ("Load slide 3 of 12"), and the active dot has `aria-current="true"`. In page mode the number is the first slide of that page (3 per view: 1, 4, 7, 10 of 12). The English-only "Carousel Pagination" label on the dot wrapper, which screen readers ignore on a plain `div`, is removed. (`assets/0-freshwater.js.liquid`, `snippets/0-theme-dawn-4.liquid`)
+
 ---
 
 ## [3.7.1] - 2026-11-21
