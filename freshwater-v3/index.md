@@ -4,13 +4,13 @@ layout: default
 ---
 
 {% raw %}
-# Freshwater v3.7.2
+# Freshwater v3.7.3
 
 **Based on Dawn 15.4.0**
 
 Freshwater is a custom Shopify theme built on top of Dawn 15.4.0. This theme maintains compatibility with Dawn's core functionality while adding custom features, sections, and styling.
 
-**Release:** **Freshwater 3.7.2**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged release was **3.7.1**.
+**Release:** **Freshwater 3.7.3**. See [CHANGELOG.md](CHANGELOG.md) for this version. Prior tagged release was **3.7.2**.
 
 ## 📑 Table of Contents
 
@@ -152,7 +152,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
      - Custom section/block settings
      - Cart drawer enhancements (subscription upsell + free shipping threshold)
    - Storefront account component: optional `storefront_api_token` for signed-in state in header account icon
-   - Updated theme version to show "15.4.0, Freshwater 3.7.2" (see `theme_info` in this file)
+   - Updated theme version to show "15.4.0, Freshwater 3.7.3" (see `theme_info` in this file)
 
 4. **Dawn CSS files — `color: rgba(var(--color-foreground), 0.75)` → `1`**
    Dawn ships `0.75` foreground-color opacity on `body` / `.color-scheme-*` (in `snippets/0-theme-dawn-2.liquid`) and on ~25 component selectors across these asset CSS files. Freshwater changes every instance to `1` so all text renders at full opacity. **On every Dawn upgrade, re-apply this change:**
@@ -251,9 +251,9 @@ These native Dawn files have been modified and should be tracked for upgrades:
 
 ---
 
-## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.7.2
+## 🚀 Conversion Guide: Dawn 15.4.0 → Freshwater v3.7.3
 
-Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.7.2:
+Follow these steps to convert a fresh Dawn 15.4.0 installation to Freshwater v3.7.3:
 
 ### Step 1: Backup Your Dawn Installation
 
@@ -364,7 +364,7 @@ render '0-header-mega-menu'
 3. Add them to your Dawn settings_schema.json
 4. Update the theme version in the `theme_info` section:
    ```json
-   "theme_version": "15.4.0, Freshwater 3.7.2"
+   "theme_version": "15.4.0, Freshwater 3.7.3"
    ```
 5. **Update `page_width` setting:** The `page_width` range has changed. If you're upgrading an existing Dawn theme, you must migrate the setting value first (see migration steps below).
 
@@ -654,7 +654,7 @@ freshscroll-faq                                                scroll to the sec
 - **Tiny-Slider** (`0-tiny-slider.*`) - Vanilla JS carousel library (no jQuery dependency)
   - **Version:** 2.9.4 (UMD build)
   - **Note:** We use version 2.9.4 specifically due to a bug in newer versions (2.9.5+) that causes `HierarchyRequestError: Failed to execute 'appendChild' on 'Node': Only one element on document allowed` when initializing carousels. Version 2.9.4 is stable and works correctly with our implementation.
-  - **Patched:** NaN viewport fallback, nav dot null guards, and the width probe in `getContainerWidth` (gets `display: block` so Dawn's `div:empty { display: none }` can't hide it, and stops at element nodes), and the subpixel probe in `tPL` (its 70 test divs get `display: block` for the same reason; the `localStorage` cache key has a `|fw-tPL` suffix so stale 3.6.0–3.7.1 results are cleared). `0-tiny-slider.css` is the compiled 2.9.4 file minus its first rule, `.tns-outer { padding: 0 !important }`. The `HierarchyRequestError` above turned out to come from that `div:empty` rule, which 2.9.4 also hit on breakpoint resizes. If you ever try a newer Tiny-Slider, re-apply the probe fix first; the 2.9.5+ error may have the same cause.
+  - **Patched:** NaN viewport fallback, nav dot null guards, and the width probe in `getContainerWidth` (gets `display: block` so Dawn's `div:empty { display: none }` can't hide it, and stops at element nodes), and the subpixel probe in `tPL` (its 70 test divs get `display: block` for the same reason; the `localStorage` cache key has a `|fw-tPL` suffix so stale 3.6.0–3.7.1 results are cleared), the `Object.keys` and `Element.prototype.remove` polyfills removed, and wrapper adoption: if the container already sits in `.fresh-tns-ow > .fresh-tns-mw > .fresh-tns-iw` (carousel mode only), Tiny-Slider uses those divs as its outer/overflow/inner wrappers instead of creating new ones and moving the container into them. Hero Carousel renders them in Liquid so init doesn't re-parent the LCP image. `destroy()` still restores the plain container, and a re-init then takes the normal path. `0-tiny-slider.css` is the compiled 2.9.4 file minus its first rule, `.tns-outer { padding: 0 !important }`. The `HierarchyRequestError` above turned out to come from that `div:empty` rule, which 2.9.4 also hit on breakpoint resizes. If you ever try a newer Tiny-Slider, re-apply the probe fix first; the 2.9.5+ error may have the same cause.
 - **Vanilla Lazyload** (`0-lazyload.min.js`) - For lazy loading images
 - **Bootstrap** (`0-bootstrap.min-1.css`) - CSS framework
 - **Magnify** (`0-magnify.js`) - Image zoom functionality
@@ -1583,7 +1583,7 @@ This separation allows you to control Freshwater logs independently while keepin
 
 ## 📝 Version History
 
-**Current release:** **3.7.2** (see [CHANGELOG.md](CHANGELOG.md)).
+**Current release:** **3.7.3** (see [CHANGELOG.md](CHANGELOG.md)).
 
 For a detailed changelog of all changes, see [CHANGELOG.md](CHANGELOG.md) or view it on the [documentation site](https://freshwaterdesigns.github.io/freshwater-docs/freshwater-v3/CHANGELOG).
 
@@ -1647,6 +1647,6 @@ For issues or questions:
 ---
 
 **Dawn Base Version:** 15.4.0  
-**Freshwater Version:** 3.7.2
+**Freshwater Version:** 3.7.3
 
 {% endraw %}
