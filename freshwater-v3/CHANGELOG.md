@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Video block — posters of below-the-fold videos loaded on page load:** Browsers fetch a `<video>` poster as soon as it's set (up to 1600 px wide). Since 3.7.3 the video itself waits until it's needed, but every poster still loaded on page load. In sections below the fold (`section.index > 2`), the poster is now set when the video comes within about one screen of the viewport, so it's ready before it scrolls into view. Sections 1–2, and the theme editor (where `section.index` is nil), still set it straight away, so a hero video's poster isn't delayed. (`snippets/0-block-video-1.liquid`)
+
 ---
 
 ## [3.7.3] - 2026-11-23
