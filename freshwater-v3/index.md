@@ -200,7 +200,7 @@ These native Dawn files have been modified and should be tracked for upgrades:
 - `1-client.js.liquid` - Client-specific JavaScript (editable)
 - `1-client.css.liquid` - Client-specific CSS (editable)
 - `0-component-cart-drawer.css` - Cart drawer styling (customized copy of Dawn)
-- `0-tiny-slider.min.js` / `0-tiny-slider.css` - Tiny-Slider carousel library (vanilla JS)
+- `0-tiny-slider.min.js` / `0-tiny-slider.css` - Tiny-Slider carousel library (vanilla JS). Loaded on every page by default; theme setting **0 Misc → Load carousel library on every page** off loads the JS only on pages with a Freshwater carousel (keep it on if client code calls `tns()`)
 - `0-lazyload.min.js` - Vanilla Lazyload library
 - `0-bootstrap.min-1.css` - Bootstrap CSS
 - `0-magnify.js` - Image magnify library
