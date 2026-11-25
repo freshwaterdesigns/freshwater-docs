@@ -15,6 +15,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **PDP gallery — video starts when its thumbnail is clicked:** Clicking (or pressing Enter/Space on) a video thumbnail now plays the video as soon as it can, with the native controls still shown. Before, the shopper had to click the thumbnail and then the play button. The click is the user gesture, so playback keeps its sound. If a browser still refuses, the video waits on its play button as before. Variant changes and the initial load don't autoplay. (`assets/0-product-gallery-1.js`)
+
+---
+
+## [3.8.0] - 2026-11-24
+
+A minor release: one new theme setting (on by default), lazier video posters, and translated drawer labels. No merchant JSON migration. Stores upgrading from 3.5.x, 3.6.x or 3.7.x should go straight to 3.8.0. Upgrade notes, detailed in the entries below:
+
+- **New setting, 0 Misc → Load carousel library on every page** (on by default, so nothing changes on upgrade). Turning it off loads Tiny-Slider only on pages with a Freshwater carousel. **Leave it on** for any store whose own code calls `tns()` (Natrava and Avantera do, in `1-fresh-script.js`), or whose `1-` sections build their own Tiny-Slider carousels.
+- **Video block posters below the fold** (section 3 onwards) are set when the video is about one screen away, not on page load. Check any `1-` code that reads a video block's `poster` attribute on load.
+- **Mobile drawer labels** "Account" and "Search" now come from the locale files, so stores in other languages see them translated. English is unchanged.
+
+### Added
+- **Theme setting: Load carousel library on every page** (**0 Misc**, on by default). Tiny-Slider (`0-tiny-slider.min.js`, 32 KB) loads on every page from `0-theme-freshwater-1`, whether or not the page has a carousel. Turned off, the layout no longer loads it. `0-freshwater.js` loads it the first time a page needs a Freshwater carousel enabled at the current width, and the carousel sections (`0-hero-2`, `0-multi-column-1`) preload it so init isn't delayed. Pages without carousels (most collection, product, cart and content pages) then make no Tiny-Slider request at all. **Leave it on for stores whose own code calls `tns()`.** Natrava and Avantera both patch Tiny-Slider in `1-fresh-script.js` and expect it to be loaded globally. With the setting on (the default, and the value every upgraded store gets), nothing changes. The Tiny-Slider CSS stays global either way (2 KB), so the stylesheet order doesn't change. (`config/settings_schema.json`, `snippets/0-theme-freshwater-1.liquid`, `assets/0-freshwater.js.liquid`, `sections/0-hero-2.liquid`, `sections/0-multi-column-1.liquid`)
+
+### Changed
+- **Carousel init skips pages without carousels before reading the layout.** `freshInitCarouselsTiny()` read `window.innerWidth`, which forces a style recalculation, before checking for carousels. On pages without carousels it now returns first. (`assets/0-freshwater.js.liquid`)
+
+### Fixed
+- **Mobile drawer — "Account" and "Search" labels were English-only:** The labels next to the account and search icons in the mobile menu were hard-coded. They now use Dawn's translated strings (`customer.account_fallback`, `general.search.search`), which exist in every locale the theme ships, so they follow the storefront language. English output is unchanged. (`snippets/0-header-drawer.liquid`, `snippets/0-menu-drawer-search-trigger.liquid`)
+- **Video block — posters of below-the-fold videos loaded on page load:** Browsers fetch a `<video>` poster as soon as it's set (up to 1600 px wide). Since 3.7.3 the video itself waits until it's needed, but every poster still loaded on page load. In sections below the fold (`section.index > 2`), the poster is now set when the video comes within about one screen of the viewport, so it's ready before it scrolls into view. Sections 1–2, and the theme editor (where `section.index` is nil), still set it straight away, so a hero video's poster isn't delayed. (`snippets/0-block-video-1.liquid`)
+
 ---
 
 ## [3.7.3] - 2026-11-23
